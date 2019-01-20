@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<!--[if IE 7]>
+<html class="ie ie7" lang="en-US">
+<![endif]-->
+<!--[if IE 8]>
+<html class="ie ie8" lang="en-US">
+<![endif]-->
+<!--[if !(IE 7) & !(IE 8)]><!-->
+<html lang="en-US">
+<!--<![endif]-->
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width" />
+<title>ImageIO.read() causes OutOfMemoryError | OpCode Tech</title>
+<link rel="profile" href="http://gmpg.org/xfn/11" />
+<link rel="pingback" href="https://opcodesolutions.com/tech/xmlrpc.php" />
+<!--[if lt IE 9]>
+<script src="https://opcodesolutions.com/tech/wp-content/themes/twentytwelve/js/html5.js" type="text/javascript"></script>
+<![endif]-->
+<link rel='dns-prefetch' href='https://fonts.googleapis.com/' />
+<link rel='dns-prefetch' href='https://s.w.org/' />
+<link href='https://fonts.gstatic.com' crossorigin rel='preconnect' />
+		<script type="text/javascript">
+			window._wpemojiSettings = {"baseUrl":"https:\/\/s.w.org\/images\/core\/emoji\/11\/72x72\/","ext":".png","svgUrl":"https:\/\/s.w.org\/images\/core\/emoji\/11\/svg\/","svgExt":".svg","source":{"concatemoji":"https:\/\/opcodesolutions.com\/tech\/wp-includes\/js\/wp-emoji-release.min.js?ver=5.0.3"}};
+			!function(a,b,c){function d(a,b){var c=String.fromCharCode;l.clearRect(0,0,k.width,k.height),l.fillText(c.apply(this,a),0,0);var d=k.toDataURL();l.clearRect(0,0,k.width,k.height),l.fillText(c.apply(this,b),0,0);var e=k.toDataURL();return d===e}function e(a){var b;if(!l||!l.fillText)return!1;switch(l.textBaseline="top",l.font="600 32px Arial",a){case"flag":return!(b=d([55356,56826,55356,56819],[55356,56826,8203,55356,56819]))&&(b=d([55356,57332,56128,56423,56128,56418,56128,56421,56128,56430,56128,56423,56128,56447],[55356,57332,8203,56128,56423,8203,56128,56418,8203,56128,56421,8203,56128,56430,8203,56128,56423,8203,56128,56447]),!b);case"emoji":return b=d([55358,56760,9792,65039],[55358,56760,8203,9792,65039]),!b}return!1}function f(a){var c=b.createElement("script");c.src=a,c.defer=c.type="text/javascript",b.getElementsByTagName("head")[0].appendChild(c)}var g,h,i,j,k=b.createElement("canvas"),l=k.getContext&&k.getContext("2d");for(j=Array("flag","emoji"),c.supports={everything:!0,everythingExceptFlag:!0},i=0;i<j.length;i++)c.supports[j[i]]=e(j[i]),c.supports.everything=c.supports.everything&&c.supports[j[i]],"flag"!==j[i]&&(c.supports.everythingExceptFlag=c.supports.everythingExceptFlag&&c.supports[j[i]]);c.supports.everythingExceptFlag=c.supports.everythingExceptFlag&&!c.supports.flag,c.DOMReady=!1,c.readyCallback=function(){c.DOMReady=!0},c.supports.everything||(h=function(){c.readyCallback()},b.addEventListener?(b.addEventListener("DOMContentLoaded",h,!1),a.addEventListener("load",h,!1)):(a.attachEvent("onload",h),b.attachEvent("onreadystatechange",function(){"complete"===b.readyState&&c.readyCallback()})),g=c.source||{},g.concatemoji?f(g.concatemoji):g.wpemoji&&g.twemoji&&(f(g.twemoji),f(g.wpemoji)))}(window,document,window._wpemojiSettings);
+		</script>
+		<style type="text/css">
+img.wp-smiley,
+img.emoji {
+	display: inline !important;
+	border: none !important;
+	box-shadow: none !important;
+	height: 1em !important;
+	width: 1em !important;
+	margin: 0 .07em !important;
+	vertical-align: -0.1em !important;
+	background: none !important;
+	padding: 0 !important;
+}
+</style>
+<link rel='stylesheet' id='crayon-css'  href='../wp-content/plugins/crayon-syntax-highlighter/css/min/crayon.min.css%3Fver=_2.7.2_beta.css' type='text/css' media='all' />
+<link rel='stylesheet' id='crayon-theme-eclipse-css'  href='../wp-content/plugins/crayon-syntax-highlighter/themes/eclipse/eclipse.css%3Fver=_2.7.2_beta.css' type='text/css' media='all' />
+<link rel='stylesheet' id='crayon-font-monaco-css'  href='../wp-content/plugins/crayon-syntax-highlighter/fonts/monaco.css%3Fver=_2.7.2_beta.css' type='text/css' media='all' />
+<link rel='stylesheet' id='wp-block-library-css'  href='../wp-includes/css/dist/block-library/style.min.css%3Fver=5.0.3.css' type='text/css' media='all' />
+<link rel='stylesheet' id='wp-block-library-theme-css'  href='../wp-includes/css/dist/block-library/theme.min.css%3Fver=5.0.3.css' type='text/css' media='all' />
+<link rel='stylesheet' id='twentytwelve-fonts-css'  href='https://fonts.googleapis.com/css?family=Open+Sans:400italic,700italic,400,700&#038;subset=latin,latin-ext' type='text/css' media='all' />
+<link rel='stylesheet' id='twentytwelve-style-css'  href='../wp-content/themes/twentytwelve/style.css%3Fver=5.0.3.css' type='text/css' media='all' />
+<link rel='stylesheet' id='twentytwelve-block-style-css'  href='../wp-content/themes/twentytwelve/css/blocks.css%3Fver=20181230.css' type='text/css' media='all' />
+<!--[if lt IE 9]>
+<link rel='stylesheet' id='twentytwelve-ie-css'  href='https://opcodesolutions.com/tech/wp-content/themes/twentytwelve/css/ie.css?ver=20121010' type='text/css' media='all' />
+<![endif]-->
+<script type='text/javascript' src='../wp-includes/js/jquery/jquery.js%3Fver=1.12.4'></script>
+<script type='text/javascript' src='../wp-includes/js/jquery/jquery-migrate.min.js%3Fver=1.4.1'></script>
+<script type='text/javascript'>
+/* <![CDATA[ */
+var CrayonSyntaxSettings = {"version":"_2.7.2_beta","is_admin":"0","ajaxurl":"https:\/\/opcodesolutions.com\/tech\/wp-admin\/admin-ajax.php","prefix":"crayon-","setting":"crayon-setting","selected":"crayon-setting-selected","changed":"crayon-setting-changed","special":"crayon-setting-special","orig_value":"data-orig-value","debug":""};
+var CrayonSyntaxStrings = {"copy":"Press %s to Copy, %s to Paste","minimize":"Click To Expand Code"};
+/* ]]> */
+</script>
+<script type='text/javascript' src='../wp-content/plugins/crayon-syntax-highlighter/js/min/crayon.min.js%3Fver=_2.7.2_beta'></script>
+<link rel="EditURI" type="application/rsd+xml" title="RSD" href="../xmlrpc.php%3Frsd" />
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="../wp-includes/wlwmanifest.xml" /> 
+<link rel='prev' title='HTTPS Wildcard Subdomain: DNS + Apache + Tomcat Config' href='../https-wildcard-subdomain-dns-apache-tomcat-config/index.html' />
+<link rel='next' title='How to Migrate 3 MySQL Databases to Amazon RDS in 5 Minutes' href='../how-to-migrate-3-mysql-databases-to-amazon-rds-in-5-minutes/index.html' />
+<meta name="generator" content="WordPress 5.0.3" />
+<link rel="canonical" href="index.html" />
+	<style type="text/css" id="twentytwelve-header-css">
+			.site-header h1 a,
+		.site-header h2 {
+			color: #8b0000;
+		}
+		</style>
+	</head>
+
+<body class="post-template-default single single-post postid-160 single-format-standard wp-embed-responsive custom-font-enabled single-author">
+<div id="page" class="hfeed site">
+	<header id="masthead" class="site-header" role="banner">
+		<hgroup>
+			<h1 class="site-title"><a href="../../tech.html" title="OpCode Tech" rel="home">OpCode Tech</a></h1>
+			<h2 class="site-description">Optimize Your Processes</h2>
+		</hgroup>
+
+		<nav id="site-navigation" class="main-navigation" role="navigation">
+			<button class="menu-toggle">Menu</button>
+			<a class="assistive-text" href="index.html#content" title="Skip to content">Skip to content</a>
+			<div class="menu-default-container"><ul id="menu-default" class="nav-menu"><li id="menu-item-19" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-19"><a href="../../tech.html">Home</a></li>
+<li id="menu-item-18" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-18"><a href="../category/news/index.html">News</a></li>
+<li id="menu-item-153" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-153"><a href="../category/how-to/index.html">How To</a></li>
+<li id="menu-item-17" class="menu-item menu-item-type-taxonomy menu-item-object-category current-post-ancestor current-menu-parent current-post-parent menu-item-17"><a href="../category/development/index.html">Development</a></li>
+<li id="menu-item-159" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-159"><a href="../contact/index.html">Contact</a></li>
+</ul></div>		</nav><!-- #site-navigation -->
+
+			</header><!-- #masthead -->
+
+	<div id="main" class="wrapper">
+
+	<div id="primary" class="site-content">
+		<div id="content" role="main">
+
+			
+				
+	<article id="post-160" class="post-160 post type-post status-publish format-standard hentry category-development">
+				<header class="entry-header">
+			
+						<h1 class="entry-title">ImageIO.read() causes OutOfMemoryError</h1>
+								</header><!-- .entry-header -->
+
+				<div class="entry-content">
+			<h2>The problem</h2>
+<p>Few days ago, a reader contacted me with a problem he had in a piece of code. The code was creating thumbnails from images and was throwing an <strong>OutOfMemoryError</strong> after few dozens of images.  Here is the simplified code, line 26 throws OutOfMemoryError:</p><!-- Crayon Syntax Highlighter v_2.7.2_beta -->
+
+		<div id="crayon-5c44b1f201cca502176181" class="crayon-syntax crayon-theme-eclipse crayon-font-monaco crayon-os-pc print-yes notranslate" data-settings=" minimize scroll-mouseover" style=" margin-top: 12px; margin-bottom: 12px; font-size: 12px !important; line-height: 15px !important;">
+		
+			<div class="crayon-toolbar" data-settings=" show" style="font-size: 12px !important;height: 18px !important; line-height: 18px !important;"><span class="crayon-title">ImageIO OutOfMemoryError</span>
+			<div class="crayon-tools" style="font-size: 12px !important;height: 18px !important; line-height: 18px !important;"><div class="crayon-button crayon-nums-button" title="Toggle Line Numbers"><div class="crayon-button-icon"></div></div><div class="crayon-button crayon-plain-button" title="Toggle Plain Code"><div class="crayon-button-icon"></div></div><div class="crayon-button crayon-wrap-button" title="Toggle Line Wrap"><div class="crayon-button-icon"></div></div><div class="crayon-button crayon-expand-button" title="Expand Code"><div class="crayon-button-icon"></div></div><div class="crayon-button crayon-copy-button" title="Copy"><div class="crayon-button-icon"></div></div><div class="crayon-button crayon-popup-button" title="Open Code In New Window"><div class="crayon-button-icon"></div></div><span class="crayon-language">Java</span></div></div>
+			<div class="crayon-info" style="min-height: 16.8px !important; line-height: 16.8px !important;"></div>
+			<div class="crayon-plain-wrap"><textarea wrap="soft" class="crayon-plain print-no" data-settings="dblclick" readonly style="-moz-tab-size:4; -o-tab-size:4; -webkit-tab-size:4; tab-size:4; font-size: 12px !important; line-height: 15px !important;">
+
+package com.opcodesolutions.demo;
+
+import java.awt.Image;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.imageio.ImageIO;
+
+public class Thumbnails {
+
+	public static void main(String[] args) throws IOException {
+
+		List&lt;Image&gt; thumbnails = new ArrayList&lt;&gt;();
+
+		for (File file : new File("/path/to/images/").listFiles()) {
+
+			if (!file.getName().endsWith(".jpg")) {
+				// File is NOT a JPEG
+				continue;
+			}
+
+			BufferedImage fullSizeImage = ImageIO.read(file); // OutOfMemoryError
+			if (fullSizeImage == null) {
+				// Could not parse JPEG, just ignore
+				continue;
+			}
+
+			// Create thumbnail
+			Image thumbnail = fullSizeImage
+				.getScaledInstance(150, 150, Image.SCALE_DEFAULT);
+			thumbnails.add(thumbnail);
+		}
+
+		// Do more stuff with thumbnails
+
+	}
+
+}
+</textarea></div>
+			<div class="crayon-main" style="">
+				<table class="crayon-table">
+					<tr class="crayon-row">
+				<td class="crayon-nums " data-settings="show">
+					<div class="crayon-nums-content" style="font-size: 12px !important; line-height: 15px !important;"><div class="crayon-num" data-line="crayon-5c44b1f201cca502176181-1">1</div><div class="crayon-num crayon-striped-num" data-line="crayon-5c44b1f201cca502176181-2">2</div><div class="crayon-num" data-line="crayon-5c44b1f201cca502176181-3">3</div><div class="crayon-num crayon-striped-num" data-line="crayon-5c44b1f201cca502176181-4">4</div><div class="crayon-num" data-line="crayon-5c44b1f201cca502176181-5">5</div><div class="crayon-num crayon-striped-num" data-line="crayon-5c44b1f201cca502176181-6">6</div><div class="crayon-num" data-line="crayon-5c44b1f201cca502176181-7">7</div><div class="crayon-num crayon-striped-num" data-line="crayon-5c44b1f201cca502176181-8">8</div><div class="crayon-num" data-line="crayon-5c44b1f201cca502176181-9">9</div><div class="crayon-num crayon-striped-num" data-line="crayon-5c44b1f201cca502176181-10">10</div><div class="crayon-num" data-line="crayon-5c44b1f201cca502176181-11">11</div><div class="crayon-num crayon-striped-num" data-line="crayon-5c44b1f201cca502176181-12">12</div><div class="crayon-num" data-line="crayon-5c44b1f201cca502176181-13">13</div><div class="crayon-num crayon-striped-num" data-line="crayon-5c44b1f201cca502176181-14">14</div><div class="crayon-num" data-line="crayon-5c44b1f201cca502176181-15">15</div><div class="crayon-num crayon-striped-num" data-line="crayon-5c44b1f201cca502176181-16">16</div><div class="crayon-num" data-line="crayon-5c44b1f201cca502176181-17">17</div><div class="crayon-num crayon-striped-num" data-line="crayon-5c44b1f201cca502176181-18">18</div><div class="crayon-num" data-line="crayon-5c44b1f201cca502176181-19">19</div><div class="crayon-num crayon-striped-num" data-line="crayon-5c44b1f201cca502176181-20">20</div><div class="crayon-num" data-line="crayon-5c44b1f201cca502176181-21">21</div><div class="crayon-num crayon-striped-num" data-line="crayon-5c44b1f201cca502176181-22">22</div><div class="crayon-num" data-line="crayon-5c44b1f201cca502176181-23">23</div><div class="crayon-num crayon-striped-num" data-line="crayon-5c44b1f201cca502176181-24">24</div><div class="crayon-num" data-line="crayon-5c44b1f201cca502176181-25">25</div><div class="crayon-num crayon-marked-num crayon-top crayon-bottom crayon-striped-num" data-line="crayon-5c44b1f201cca502176181-26">26</div><div class="crayon-num" data-line="crayon-5c44b1f201cca502176181-27">27</div><div class="crayon-num crayon-striped-num" data-line="crayon-5c44b1f201cca502176181-28">28</div><div class="crayon-num" data-line="crayon-5c44b1f201cca502176181-29">29</div><div class="crayon-num crayon-striped-num" data-line="crayon-5c44b1f201cca502176181-30">30</div><div class="crayon-num" data-line="crayon-5c44b1f201cca502176181-31">31</div><div class="crayon-num crayon-striped-num" data-line="crayon-5c44b1f201cca502176181-32">32</div><div class="crayon-num" data-line="crayon-5c44b1f201cca502176181-33">33</div><div class="crayon-num crayon-striped-num" data-line="crayon-5c44b1f201cca502176181-34">34</div><div class="crayon-num" data-line="crayon-5c44b1f201cca502176181-35">35</div><div class="crayon-num crayon-striped-num" data-line="crayon-5c44b1f201cca502176181-36">36</div><div class="crayon-num" data-line="crayon-5c44b1f201cca502176181-37">37</div><div class="crayon-num crayon-striped-num" data-line="crayon-5c44b1f201cca502176181-38">38</div><div class="crayon-num" data-line="crayon-5c44b1f201cca502176181-39">39</div><div class="crayon-num crayon-striped-num" data-line="crayon-5c44b1f201cca502176181-40">40</div><div class="crayon-num" data-line="crayon-5c44b1f201cca502176181-41">41</div><div class="crayon-num crayon-striped-num" data-line="crayon-5c44b1f201cca502176181-42">42</div><div class="crayon-num" data-line="crayon-5c44b1f201cca502176181-43">43</div></div>
+				</td>
+						<td class="crayon-code"><div class="crayon-pre" style="font-size: 12px !important; line-height: 15px !important; -moz-tab-size:4; -o-tab-size:4; -webkit-tab-size:4; tab-size:4;"><div class="crayon-line" id="crayon-5c44b1f201cca502176181-1">&nbsp;</div><div class="crayon-line crayon-striped-line" id="crayon-5c44b1f201cca502176181-2"><span class="crayon-t">package</span><span class="crayon-h"> </span><span class="crayon-v">com</span><span class="crayon-sy">.</span><span class="crayon-v">opcodesolutions</span><span class="crayon-sy">.</span><span class="crayon-v">demo</span><span class="crayon-sy">;</span></div><div class="crayon-line" id="crayon-5c44b1f201cca502176181-3">&nbsp;</div><div class="crayon-line crayon-striped-line" id="crayon-5c44b1f201cca502176181-4"><span class="crayon-r">import</span><span class="crayon-h"> </span><span class="crayon-v">java</span><span class="crayon-sy">.</span><span class="crayon-v">awt</span><span class="crayon-sy">.</span><span class="crayon-v">Image</span><span class="crayon-sy">;</span></div><div class="crayon-line" id="crayon-5c44b1f201cca502176181-5"><span class="crayon-r">import</span><span class="crayon-h"> </span><span class="crayon-v">java</span><span class="crayon-sy">.</span><span class="crayon-v">awt</span><span class="crayon-sy">.</span><span class="crayon-v">image</span><span class="crayon-sy">.</span><span class="crayon-v">BufferedImage</span><span class="crayon-sy">;</span></div><div class="crayon-line crayon-striped-line" id="crayon-5c44b1f201cca502176181-6"><span class="crayon-r">import</span><span class="crayon-h"> </span><span class="crayon-v">java</span><span class="crayon-sy">.</span><span class="crayon-v">io</span><span class="crayon-sy">.</span><span class="crayon-v">File</span><span class="crayon-sy">;</span></div><div class="crayon-line" id="crayon-5c44b1f201cca502176181-7"><span class="crayon-r">import</span><span class="crayon-h"> </span><span class="crayon-v">java</span><span class="crayon-sy">.</span><span class="crayon-v">io</span><span class="crayon-sy">.</span><span class="crayon-v">IOException</span><span class="crayon-sy">;</span></div><div class="crayon-line crayon-striped-line" id="crayon-5c44b1f201cca502176181-8"><span class="crayon-r">import</span><span class="crayon-h"> </span><span class="crayon-v">java</span><span class="crayon-sy">.</span><span class="crayon-v">util</span><span class="crayon-sy">.</span><span class="crayon-v">ArrayList</span><span class="crayon-sy">;</span></div><div class="crayon-line" id="crayon-5c44b1f201cca502176181-9"><span class="crayon-r">import</span><span class="crayon-h"> </span><span class="crayon-v">java</span><span class="crayon-sy">.</span><span class="crayon-v">util</span><span class="crayon-sy">.</span><span class="crayon-v">List</span><span class="crayon-sy">;</span></div><div class="crayon-line crayon-striped-line" id="crayon-5c44b1f201cca502176181-10">&nbsp;</div><div class="crayon-line" id="crayon-5c44b1f201cca502176181-11"><span class="crayon-r">import</span><span class="crayon-h"> </span><span class="crayon-v">javax</span><span class="crayon-sy">.</span><span class="crayon-v">imageio</span><span class="crayon-sy">.</span><span class="crayon-v">ImageIO</span><span class="crayon-sy">;</span></div><div class="crayon-line crayon-striped-line" id="crayon-5c44b1f201cca502176181-12">&nbsp;</div><div class="crayon-line" id="crayon-5c44b1f201cca502176181-13"><span class="crayon-m">public</span><span class="crayon-h"> </span><span class="crayon-t">class</span><span class="crayon-h"> </span><span class="crayon-e">Thumbnails</span><span class="crayon-h"> </span><span class="crayon-sy">{</span></div><div class="crayon-line crayon-striped-line" id="crayon-5c44b1f201cca502176181-14">&nbsp;</div><div class="crayon-line" id="crayon-5c44b1f201cca502176181-15"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-m">public</span><span class="crayon-h"> </span><span class="crayon-m">static</span><span class="crayon-h"> </span><span class="crayon-t">void</span><span class="crayon-h"> </span><span class="crayon-e">main</span><span class="crayon-sy">(</span><span class="crayon-t">String</span><span class="crayon-sy">[</span><span class="crayon-sy">]</span><span class="crayon-h"> </span><span class="crayon-v">args</span><span class="crayon-sy">)</span><span class="crayon-h"> </span><span class="crayon-m">throws</span><span class="crayon-h"> </span><span class="crayon-e">IOException</span><span class="crayon-h"> </span><span class="crayon-sy">{</span></div><div class="crayon-line crayon-striped-line" id="crayon-5c44b1f201cca502176181-16">&nbsp;</div><div class="crayon-line" id="crayon-5c44b1f201cca502176181-17"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-v">List</span><span class="crayon-e ">&lt;Image&gt;</span><span class="crayon-h"> </span><span class="crayon-v">thumbnails</span><span class="crayon-h"> </span><span class="crayon-o">=</span><span class="crayon-h"> </span><span class="crayon-r">new</span><span class="crayon-h"> </span><span class="crayon-v">ArrayList</span><span class="crayon-o">&lt;&gt;</span><span class="crayon-sy">(</span><span class="crayon-sy">)</span><span class="crayon-sy">;</span></div><div class="crayon-line crayon-striped-line" id="crayon-5c44b1f201cca502176181-18">&nbsp;</div><div class="crayon-line" id="crayon-5c44b1f201cca502176181-19"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-st">for</span><span class="crayon-h"> </span><span class="crayon-sy">(</span><span class="crayon-e">File </span><span class="crayon-v">file</span><span class="crayon-h"> </span><span class="crayon-o">:</span><span class="crayon-h"> </span><span class="crayon-r">new</span><span class="crayon-h"> </span><span class="crayon-e">File</span><span class="crayon-sy">(</span><span class="crayon-s">"/path/to/images/"</span><span class="crayon-sy">)</span><span class="crayon-sy">.</span><span class="crayon-e">listFiles</span><span class="crayon-sy">(</span><span class="crayon-sy">)</span><span class="crayon-sy">)</span><span class="crayon-h"> </span><span class="crayon-sy">{</span></div><div class="crayon-line crayon-striped-line" id="crayon-5c44b1f201cca502176181-20">&nbsp;</div><div class="crayon-line" id="crayon-5c44b1f201cca502176181-21"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-st">if</span><span class="crayon-h"> </span><span class="crayon-sy">(</span><span class="crayon-o">!</span><span class="crayon-v">file</span><span class="crayon-sy">.</span><span class="crayon-e">getName</span><span class="crayon-sy">(</span><span class="crayon-sy">)</span><span class="crayon-sy">.</span><span class="crayon-e">endsWith</span><span class="crayon-sy">(</span><span class="crayon-s">".jpg"</span><span class="crayon-sy">)</span><span class="crayon-sy">)</span><span class="crayon-h"> </span><span class="crayon-sy">{</span></div><div class="crayon-line crayon-striped-line" id="crayon-5c44b1f201cca502176181-22"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-c">// File is NOT a JPEG</span></div><div class="crayon-line" id="crayon-5c44b1f201cca502176181-23"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-st">continue</span><span class="crayon-sy">;</span></div><div class="crayon-line crayon-striped-line" id="crayon-5c44b1f201cca502176181-24"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-sy">}</span></div><div class="crayon-line" id="crayon-5c44b1f201cca502176181-25">&nbsp;</div><div class="crayon-line crayon-marked-line crayon-top crayon-bottom crayon-striped-line" id="crayon-5c44b1f201cca502176181-26"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-e">BufferedImage </span><span class="crayon-v">fullSizeImage</span><span class="crayon-h"> </span><span class="crayon-o">=</span><span class="crayon-h"> </span><span class="crayon-v">ImageIO</span><span class="crayon-sy">.</span><span class="crayon-e">read</span><span class="crayon-sy">(</span><span class="crayon-v">file</span><span class="crayon-sy">)</span><span class="crayon-sy">;</span><span class="crayon-h"> </span><span class="crayon-c">// OutOfMemoryError</span></div><div class="crayon-line" id="crayon-5c44b1f201cca502176181-27"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-st">if</span><span class="crayon-h"> </span><span class="crayon-sy">(</span><span class="crayon-v">fullSizeImage</span><span class="crayon-h"> </span><span class="crayon-o">==</span><span class="crayon-h"> </span><span class="crayon-t">null</span><span class="crayon-sy">)</span><span class="crayon-h"> </span><span class="crayon-sy">{</span></div><div class="crayon-line crayon-striped-line" id="crayon-5c44b1f201cca502176181-28"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-c">// Could not parse JPEG, just ignore</span></div><div class="crayon-line" id="crayon-5c44b1f201cca502176181-29"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-st">continue</span><span class="crayon-sy">;</span></div><div class="crayon-line crayon-striped-line" id="crayon-5c44b1f201cca502176181-30"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-sy">}</span></div><div class="crayon-line" id="crayon-5c44b1f201cca502176181-31">&nbsp;</div><div class="crayon-line crayon-striped-line" id="crayon-5c44b1f201cca502176181-32"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-c">// Create thumbnail</span></div><div class="crayon-line" id="crayon-5c44b1f201cca502176181-33"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-e">Image </span><span class="crayon-v">thumbnail</span><span class="crayon-h"> </span><span class="crayon-o">=</span><span class="crayon-h"> </span><span class="crayon-i">fullSizeImage</span></div><div class="crayon-line crayon-striped-line" id="crayon-5c44b1f201cca502176181-34"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-sy">.</span><span class="crayon-e">getScaledInstance</span><span class="crayon-sy">(</span><span class="crayon-cn">150</span><span class="crayon-sy">,</span><span class="crayon-h"> </span><span class="crayon-cn">150</span><span class="crayon-sy">,</span><span class="crayon-h"> </span><span class="crayon-v">Image</span><span class="crayon-sy">.</span><span class="crayon-v">SCALE_DEFAULT</span><span class="crayon-sy">)</span><span class="crayon-sy">;</span></div><div class="crayon-line" id="crayon-5c44b1f201cca502176181-35"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-v">thumbnails</span><span class="crayon-sy">.</span><span class="crayon-e">add</span><span class="crayon-sy">(</span><span class="crayon-v">thumbnail</span><span class="crayon-sy">)</span><span class="crayon-sy">;</span></div><div class="crayon-line crayon-striped-line" id="crayon-5c44b1f201cca502176181-36"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-sy">}</span></div><div class="crayon-line" id="crayon-5c44b1f201cca502176181-37">&nbsp;</div><div class="crayon-line crayon-striped-line" id="crayon-5c44b1f201cca502176181-38"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-c">// Do more stuff with thumbnails</span></div><div class="crayon-line" id="crayon-5c44b1f201cca502176181-39">&nbsp;</div><div class="crayon-line crayon-striped-line" id="crayon-5c44b1f201cca502176181-40"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-sy">}</span></div><div class="crayon-line" id="crayon-5c44b1f201cca502176181-41">&nbsp;</div><div class="crayon-line crayon-striped-line" id="crayon-5c44b1f201cca502176181-42"><span class="crayon-sy">}</span></div><div class="crayon-line" id="crayon-5c44b1f201cca502176181-43">&nbsp;</div></div></td>
+					</tr>
+				</table>
+			</div>
+		</div>
+<!-- [Format Time: 0.0038 seconds] -->
+<p>And here is the stacktrace with the OutOfMemoryError:</p><!-- Crayon Syntax Highlighter v_2.7.2_beta -->
+
+		<div id="crayon-5c44b1f201cd3677013630" class="crayon-syntax crayon-theme-eclipse crayon-font-monaco crayon-os-pc print-yes notranslate" data-settings=" minimize scroll-mouseover" style=" margin-top: 12px; margin-bottom: 12px; font-size: 12px !important; line-height: 15px !important;">
+		
+			<div class="crayon-toolbar" data-settings=" show" style="font-size: 12px !important;height: 18px !important; line-height: 18px !important;"><span class="crayon-title">OutOfMemoryError Stacktrace</span>
+			<div class="crayon-tools" style="font-size: 12px !important;height: 18px !important; line-height: 18px !important;"><div class="crayon-button crayon-nums-button" title="Toggle Line Numbers"><div class="crayon-button-icon"></div></div><div class="crayon-button crayon-plain-button" title="Toggle Plain Code"><div class="crayon-button-icon"></div></div><div class="crayon-button crayon-wrap-button" title="Toggle Line Wrap"><div class="crayon-button-icon"></div></div><div class="crayon-button crayon-expand-button" title="Expand Code"><div class="crayon-button-icon"></div></div><div class="crayon-button crayon-copy-button" title="Copy"><div class="crayon-button-icon"></div></div><div class="crayon-button crayon-popup-button" title="Open Code In New Window"><div class="crayon-button-icon"></div></div></div></div>
+			<div class="crayon-info" style="min-height: 16.8px !important; line-height: 16.8px !important;"></div>
+			<div class="crayon-plain-wrap"><textarea wrap="soft" class="crayon-plain print-no" data-settings="dblclick" readonly style="-moz-tab-size:4; -o-tab-size:4; -webkit-tab-size:4; tab-size:4; font-size: 12px !important; line-height: 15px !important;">
+
+Exception in thread "main" java.lang.OutOfMemoryError: Java heap space
+	at java.awt.image.DataBufferByte.&lt;init&gt;(DataBufferByte.java:92)
+	at java.awt.image.ComponentSampleModel.createDataBuffer(ComponentSampleModel.java:415)
+	at java.awt.image.Raster.createWritableRaster(Raster.java:941)
+	at javax.imageio.ImageTypeSpecifier.createBufferedImage(ImageTypeSpecifier.java:1073)
+	at javax.imageio.ImageReader.getDestination(ImageReader.java:2896)
+	at com.sun.imageio.plugins.jpeg.JPEGImageReader.readInternal(JPEGImageReader.java:1066)
+	at com.sun.imageio.plugins.jpeg.JPEGImageReader.read(JPEGImageReader.java:1034)
+	at javax.imageio.ImageIO.read(ImageIO.java:1448)
+	at javax.imageio.ImageIO.read(ImageIO.java:1308)
+	at com.opcodesolutions.demo.Thumbnails.main(Thumbnails.java:26)
+</textarea></div>
+			<div class="crayon-main" style="">
+				<table class="crayon-table">
+					<tr class="crayon-row">
+				<td class="crayon-nums " data-settings="show">
+					<div class="crayon-nums-content" style="font-size: 12px !important; line-height: 15px !important;"><div class="crayon-num" data-line="crayon-5c44b1f201cd3677013630-1">1</div><div class="crayon-num crayon-striped-num" data-line="crayon-5c44b1f201cd3677013630-2">2</div><div class="crayon-num" data-line="crayon-5c44b1f201cd3677013630-3">3</div><div class="crayon-num crayon-striped-num" data-line="crayon-5c44b1f201cd3677013630-4">4</div><div class="crayon-num" data-line="crayon-5c44b1f201cd3677013630-5">5</div><div class="crayon-num crayon-striped-num" data-line="crayon-5c44b1f201cd3677013630-6">6</div><div class="crayon-num" data-line="crayon-5c44b1f201cd3677013630-7">7</div><div class="crayon-num crayon-striped-num" data-line="crayon-5c44b1f201cd3677013630-8">8</div><div class="crayon-num" data-line="crayon-5c44b1f201cd3677013630-9">9</div><div class="crayon-num crayon-striped-num" data-line="crayon-5c44b1f201cd3677013630-10">10</div><div class="crayon-num" data-line="crayon-5c44b1f201cd3677013630-11">11</div><div class="crayon-num crayon-marked-num crayon-top crayon-bottom crayon-striped-num" data-line="crayon-5c44b1f201cd3677013630-12">12</div><div class="crayon-num" data-line="crayon-5c44b1f201cd3677013630-13">13</div></div>
+				</td>
+						<td class="crayon-code"><div class="crayon-pre" style="font-size: 12px !important; line-height: 15px !important; -moz-tab-size:4; -o-tab-size:4; -webkit-tab-size:4; tab-size:4;"><div class="crayon-line" id="crayon-5c44b1f201cd3677013630-1">&nbsp;</div><div class="crayon-line crayon-striped-line" id="crayon-5c44b1f201cd3677013630-2"><span class="crayon-e">Exception </span><span class="crayon-st">in</span><span class="crayon-h"> </span><span class="crayon-i">thread</span><span class="crayon-h"> </span><span class="crayon-s">"main"</span><span class="crayon-h"> </span><span class="crayon-v">java</span><span class="crayon-sy">.</span><span class="crayon-v">lang</span><span class="crayon-sy">.</span><span class="crayon-v">OutOfMemoryError</span><span class="crayon-o">:</span><span class="crayon-h"> </span><span class="crayon-e">Java </span><span class="crayon-e">heap </span><span class="crayon-e">space</span></div><div class="crayon-line" id="crayon-5c44b1f201cd3677013630-3"><span class="crayon-e">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-e">at </span><span class="crayon-v">java</span><span class="crayon-sy">.</span><span class="crayon-v">awt</span><span class="crayon-sy">.</span><span class="crayon-v">image</span><span class="crayon-sy">.</span><span class="crayon-v">DataBufferByte</span><span class="crayon-sy">.</span><span class="crayon-o">&lt;</span><span class="crayon-v">init</span><span class="crayon-o">&gt;</span><span class="crayon-sy">(</span><span class="crayon-v">DataBufferByte</span><span class="crayon-sy">.</span><span class="crayon-v">java</span><span class="crayon-o">:</span><span class="crayon-cn">92</span><span class="crayon-sy">)</span></div><div class="crayon-line crayon-striped-line" id="crayon-5c44b1f201cd3677013630-4"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-e">at </span><span class="crayon-v">java</span><span class="crayon-sy">.</span><span class="crayon-v">awt</span><span class="crayon-sy">.</span><span class="crayon-v">image</span><span class="crayon-sy">.</span><span class="crayon-v">ComponentSampleModel</span><span class="crayon-sy">.</span><span class="crayon-e">createDataBuffer</span><span class="crayon-sy">(</span><span class="crayon-v">ComponentSampleModel</span><span class="crayon-sy">.</span><span class="crayon-v">java</span><span class="crayon-o">:</span><span class="crayon-cn">415</span><span class="crayon-sy">)</span></div><div class="crayon-line" id="crayon-5c44b1f201cd3677013630-5"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-e">at </span><span class="crayon-v">java</span><span class="crayon-sy">.</span><span class="crayon-v">awt</span><span class="crayon-sy">.</span><span class="crayon-v">image</span><span class="crayon-sy">.</span><span class="crayon-v">Raster</span><span class="crayon-sy">.</span><span class="crayon-e">createWritableRaster</span><span class="crayon-sy">(</span><span class="crayon-v">Raster</span><span class="crayon-sy">.</span><span class="crayon-v">java</span><span class="crayon-o">:</span><span class="crayon-cn">941</span><span class="crayon-sy">)</span></div><div class="crayon-line crayon-striped-line" id="crayon-5c44b1f201cd3677013630-6"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-e">at </span><span class="crayon-v">javax</span><span class="crayon-sy">.</span><span class="crayon-v">imageio</span><span class="crayon-sy">.</span><span class="crayon-v">ImageTypeSpecifier</span><span class="crayon-sy">.</span><span class="crayon-e">createBufferedImage</span><span class="crayon-sy">(</span><span class="crayon-v">ImageTypeSpecifier</span><span class="crayon-sy">.</span><span class="crayon-v">java</span><span class="crayon-o">:</span><span class="crayon-cn">1073</span><span class="crayon-sy">)</span></div><div class="crayon-line" id="crayon-5c44b1f201cd3677013630-7"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-e">at </span><span class="crayon-v">javax</span><span class="crayon-sy">.</span><span class="crayon-v">imageio</span><span class="crayon-sy">.</span><span class="crayon-v">ImageReader</span><span class="crayon-sy">.</span><span class="crayon-e">getDestination</span><span class="crayon-sy">(</span><span class="crayon-v">ImageReader</span><span class="crayon-sy">.</span><span class="crayon-v">java</span><span class="crayon-o">:</span><span class="crayon-cn">2896</span><span class="crayon-sy">)</span></div><div class="crayon-line crayon-striped-line" id="crayon-5c44b1f201cd3677013630-8"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-e">at </span><span class="crayon-v">com</span><span class="crayon-sy">.</span><span class="crayon-v">sun</span><span class="crayon-sy">.</span><span class="crayon-v">imageio</span><span class="crayon-sy">.</span><span class="crayon-v">plugins</span><span class="crayon-sy">.</span><span class="crayon-v">jpeg</span><span class="crayon-sy">.</span><span class="crayon-v">JPEGImageReader</span><span class="crayon-sy">.</span><span class="crayon-e">readInternal</span><span class="crayon-sy">(</span><span class="crayon-v">JPEGImageReader</span><span class="crayon-sy">.</span><span class="crayon-v">java</span><span class="crayon-o">:</span><span class="crayon-cn">1066</span><span class="crayon-sy">)</span></div><div class="crayon-line" id="crayon-5c44b1f201cd3677013630-9"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-e">at </span><span class="crayon-v">com</span><span class="crayon-sy">.</span><span class="crayon-v">sun</span><span class="crayon-sy">.</span><span class="crayon-v">imageio</span><span class="crayon-sy">.</span><span class="crayon-v">plugins</span><span class="crayon-sy">.</span><span class="crayon-v">jpeg</span><span class="crayon-sy">.</span><span class="crayon-v">JPEGImageReader</span><span class="crayon-sy">.</span><span class="crayon-e">read</span><span class="crayon-sy">(</span><span class="crayon-v">JPEGImageReader</span><span class="crayon-sy">.</span><span class="crayon-v">java</span><span class="crayon-o">:</span><span class="crayon-cn">1034</span><span class="crayon-sy">)</span></div><div class="crayon-line crayon-striped-line" id="crayon-5c44b1f201cd3677013630-10"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-e">at </span><span class="crayon-v">javax</span><span class="crayon-sy">.</span><span class="crayon-v">imageio</span><span class="crayon-sy">.</span><span class="crayon-v">ImageIO</span><span class="crayon-sy">.</span><span class="crayon-e">read</span><span class="crayon-sy">(</span><span class="crayon-v">ImageIO</span><span class="crayon-sy">.</span><span class="crayon-v">java</span><span class="crayon-o">:</span><span class="crayon-cn">1448</span><span class="crayon-sy">)</span></div><div class="crayon-line" id="crayon-5c44b1f201cd3677013630-11"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-e">at </span><span class="crayon-v">javax</span><span class="crayon-sy">.</span><span class="crayon-v">imageio</span><span class="crayon-sy">.</span><span class="crayon-v">ImageIO</span><span class="crayon-sy">.</span><span class="crayon-e">read</span><span class="crayon-sy">(</span><span class="crayon-v">ImageIO</span><span class="crayon-sy">.</span><span class="crayon-v">java</span><span class="crayon-o">:</span><span class="crayon-cn">1308</span><span class="crayon-sy">)</span></div><div class="crayon-line crayon-marked-line crayon-top crayon-bottom crayon-striped-line" id="crayon-5c44b1f201cd3677013630-12"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-e">at </span><span class="crayon-v">com</span><span class="crayon-sy">.</span><span class="crayon-v">opcodesolutions</span><span class="crayon-sy">.</span><span class="crayon-v">demo</span><span class="crayon-sy">.</span><span class="crayon-v">Thumbnails</span><span class="crayon-sy">.</span><span class="crayon-e">main</span><span class="crayon-sy">(</span><span class="crayon-v">Thumbnails</span><span class="crayon-sy">.</span><span class="crayon-v">java</span><span class="crayon-o">:</span><span class="crayon-cn">26</span><span class="crayon-sy">)</span></div><div class="crayon-line" id="crayon-5c44b1f201cd3677013630-13">&nbsp;</div></div></td>
+					</tr>
+				</table>
+			</div>
+		</div>
+<!-- [Format Time: 0.0031 seconds] -->
+<p></p>
+<h2>The cause of the OutOfMemoryError</h2>
+<p>The cause of that problem is not obvious. The stacktrace (and the title of this article) is somewhat misleading. Here is what happens: The call to <strong>fullSizeImage.getScaledInstance()</strong> (lines 33-34) produces a smaller image <em>thumbnail</em>, but that thumbnail object<strong> keeps a reference</strong> to the <em>fullSizeImage</em>. Since JPEG files are highly compressed, reading and parsing them takes a significant amount of memory and that memory can never be freed.</p>
+<h2>The solution: Do not use Image.getScaledInstance()</h2>
+<p>The solution was to replace the call to <strong>fullSizeImage.getScaledInstance()</strong> with the lines 34-38 highlighted below. That solution allowed the code to read thousands of images, because the <em>fullSizeImage</em> was no longer kept in memory.</p><!-- Crayon Syntax Highlighter v_2.7.2_beta -->
+
+		<div id="crayon-5c44b1f201cd7428743987" class="crayon-syntax crayon-theme-eclipse crayon-font-monaco crayon-os-pc print-yes notranslate" data-settings=" minimize scroll-mouseover" style=" margin-top: 12px; margin-bottom: 12px; font-size: 12px !important; line-height: 15px !important;">
+		
+			<div class="crayon-toolbar" data-settings=" show" style="font-size: 12px !important;height: 18px !important; line-height: 18px !important;"><span class="crayon-title">Resize an image</span>
+			<div class="crayon-tools" style="font-size: 12px !important;height: 18px !important; line-height: 18px !important;"><div class="crayon-button crayon-nums-button" title="Toggle Line Numbers"><div class="crayon-button-icon"></div></div><div class="crayon-button crayon-plain-button" title="Toggle Plain Code"><div class="crayon-button-icon"></div></div><div class="crayon-button crayon-wrap-button" title="Toggle Line Wrap"><div class="crayon-button-icon"></div></div><div class="crayon-button crayon-expand-button" title="Expand Code"><div class="crayon-button-icon"></div></div><div class="crayon-button crayon-copy-button" title="Copy"><div class="crayon-button-icon"></div></div><div class="crayon-button crayon-popup-button" title="Open Code In New Window"><div class="crayon-button-icon"></div></div><span class="crayon-language">Java</span></div></div>
+			<div class="crayon-info" style="min-height: 16.8px !important; line-height: 16.8px !important;"></div>
+			<div class="crayon-plain-wrap"><textarea wrap="soft" class="crayon-plain print-no" data-settings="dblclick" readonly style="-moz-tab-size:4; -o-tab-size:4; -webkit-tab-size:4; tab-size:4; font-size: 12px !important; line-height: 15px !important;">
+
+package com.opcodesolutions.demo;
+
+import java.awt.Graphics2D;
+import java.awt.Image;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.imageio.ImageIO;
+
+public class Thumbnails {
+
+	public static void main(String[] args) throws IOException {
+
+		List&lt;Image&gt; thumbnails = new ArrayList&lt;&gt;();
+
+		for (File file : new File("/path/to/images/").listFiles()) {
+
+			if (!file.getName().endsWith(".jpg")) {
+				// File is NOT a JPEG
+				continue;
+			}
+
+			BufferedImage fullSizeImage = ImageIO.read(file);
+			if (fullSizeImage == null) {
+				// Could not parse JPEG, just ignore
+				continue;
+			}
+
+			// Create thumbnail
+			BufferedImage thumbnail = new BufferedImage(150, 150,
+				BufferedImage.TYPE_INT_ARGB);
+			Graphics2D g = thumbnail.createGraphics();
+			g.drawImage(fullSizeImage, 0, 0, 150, 150, null);
+			g.dispose();
+			thumbnails.add(thumbnail);
+		}
+
+		// Do more stuff with thumbnails
+
+	}
+
+}
+</textarea></div>
+			<div class="crayon-main" style="">
+				<table class="crayon-table">
+					<tr class="crayon-row">
+				<td class="crayon-nums " data-settings="show">
+					<div class="crayon-nums-content" style="font-size: 12px !important; line-height: 15px !important;"><div class="crayon-num" data-line="crayon-5c44b1f201cd7428743987-1">1</div><div class="crayon-num crayon-striped-num" data-line="crayon-5c44b1f201cd7428743987-2">2</div><div class="crayon-num" data-line="crayon-5c44b1f201cd7428743987-3">3</div><div class="crayon-num crayon-striped-num" data-line="crayon-5c44b1f201cd7428743987-4">4</div><div class="crayon-num" data-line="crayon-5c44b1f201cd7428743987-5">5</div><div class="crayon-num crayon-striped-num" data-line="crayon-5c44b1f201cd7428743987-6">6</div><div class="crayon-num" data-line="crayon-5c44b1f201cd7428743987-7">7</div><div class="crayon-num crayon-striped-num" data-line="crayon-5c44b1f201cd7428743987-8">8</div><div class="crayon-num" data-line="crayon-5c44b1f201cd7428743987-9">9</div><div class="crayon-num crayon-striped-num" data-line="crayon-5c44b1f201cd7428743987-10">10</div><div class="crayon-num" data-line="crayon-5c44b1f201cd7428743987-11">11</div><div class="crayon-num crayon-striped-num" data-line="crayon-5c44b1f201cd7428743987-12">12</div><div class="crayon-num" data-line="crayon-5c44b1f201cd7428743987-13">13</div><div class="crayon-num crayon-striped-num" data-line="crayon-5c44b1f201cd7428743987-14">14</div><div class="crayon-num" data-line="crayon-5c44b1f201cd7428743987-15">15</div><div class="crayon-num crayon-striped-num" data-line="crayon-5c44b1f201cd7428743987-16">16</div><div class="crayon-num" data-line="crayon-5c44b1f201cd7428743987-17">17</div><div class="crayon-num crayon-striped-num" data-line="crayon-5c44b1f201cd7428743987-18">18</div><div class="crayon-num" data-line="crayon-5c44b1f201cd7428743987-19">19</div><div class="crayon-num crayon-striped-num" data-line="crayon-5c44b1f201cd7428743987-20">20</div><div class="crayon-num" data-line="crayon-5c44b1f201cd7428743987-21">21</div><div class="crayon-num crayon-striped-num" data-line="crayon-5c44b1f201cd7428743987-22">22</div><div class="crayon-num" data-line="crayon-5c44b1f201cd7428743987-23">23</div><div class="crayon-num crayon-striped-num" data-line="crayon-5c44b1f201cd7428743987-24">24</div><div class="crayon-num" data-line="crayon-5c44b1f201cd7428743987-25">25</div><div class="crayon-num crayon-striped-num" data-line="crayon-5c44b1f201cd7428743987-26">26</div><div class="crayon-num" data-line="crayon-5c44b1f201cd7428743987-27">27</div><div class="crayon-num crayon-striped-num" data-line="crayon-5c44b1f201cd7428743987-28">28</div><div class="crayon-num" data-line="crayon-5c44b1f201cd7428743987-29">29</div><div class="crayon-num crayon-striped-num" data-line="crayon-5c44b1f201cd7428743987-30">30</div><div class="crayon-num" data-line="crayon-5c44b1f201cd7428743987-31">31</div><div class="crayon-num crayon-striped-num" data-line="crayon-5c44b1f201cd7428743987-32">32</div><div class="crayon-num" data-line="crayon-5c44b1f201cd7428743987-33">33</div><div class="crayon-num crayon-marked-num crayon-top crayon-striped-num" data-line="crayon-5c44b1f201cd7428743987-34">34</div><div class="crayon-num crayon-marked-num" data-line="crayon-5c44b1f201cd7428743987-35">35</div><div class="crayon-num crayon-marked-num crayon-striped-num" data-line="crayon-5c44b1f201cd7428743987-36">36</div><div class="crayon-num crayon-marked-num" data-line="crayon-5c44b1f201cd7428743987-37">37</div><div class="crayon-num crayon-marked-num crayon-bottom crayon-striped-num" data-line="crayon-5c44b1f201cd7428743987-38">38</div><div class="crayon-num" data-line="crayon-5c44b1f201cd7428743987-39">39</div><div class="crayon-num crayon-striped-num" data-line="crayon-5c44b1f201cd7428743987-40">40</div><div class="crayon-num" data-line="crayon-5c44b1f201cd7428743987-41">41</div><div class="crayon-num crayon-striped-num" data-line="crayon-5c44b1f201cd7428743987-42">42</div><div class="crayon-num" data-line="crayon-5c44b1f201cd7428743987-43">43</div><div class="crayon-num crayon-striped-num" data-line="crayon-5c44b1f201cd7428743987-44">44</div><div class="crayon-num" data-line="crayon-5c44b1f201cd7428743987-45">45</div><div class="crayon-num crayon-striped-num" data-line="crayon-5c44b1f201cd7428743987-46">46</div><div class="crayon-num" data-line="crayon-5c44b1f201cd7428743987-47">47</div></div>
+				</td>
+						<td class="crayon-code"><div class="crayon-pre" style="font-size: 12px !important; line-height: 15px !important; -moz-tab-size:4; -o-tab-size:4; -webkit-tab-size:4; tab-size:4;"><div class="crayon-line" id="crayon-5c44b1f201cd7428743987-1">&nbsp;</div><div class="crayon-line crayon-striped-line" id="crayon-5c44b1f201cd7428743987-2"><span class="crayon-t">package</span><span class="crayon-h"> </span><span class="crayon-v">com</span><span class="crayon-sy">.</span><span class="crayon-v">opcodesolutions</span><span class="crayon-sy">.</span><span class="crayon-v">demo</span><span class="crayon-sy">;</span></div><div class="crayon-line" id="crayon-5c44b1f201cd7428743987-3">&nbsp;</div><div class="crayon-line crayon-striped-line" id="crayon-5c44b1f201cd7428743987-4"><span class="crayon-r">import</span><span class="crayon-h"> </span><span class="crayon-v">java</span><span class="crayon-sy">.</span><span class="crayon-v">awt</span><span class="crayon-sy">.</span><span class="crayon-v">Graphics2D</span><span class="crayon-sy">;</span></div><div class="crayon-line" id="crayon-5c44b1f201cd7428743987-5"><span class="crayon-r">import</span><span class="crayon-h"> </span><span class="crayon-v">java</span><span class="crayon-sy">.</span><span class="crayon-v">awt</span><span class="crayon-sy">.</span><span class="crayon-v">Image</span><span class="crayon-sy">;</span></div><div class="crayon-line crayon-striped-line" id="crayon-5c44b1f201cd7428743987-6"><span class="crayon-r">import</span><span class="crayon-h"> </span><span class="crayon-v">java</span><span class="crayon-sy">.</span><span class="crayon-v">awt</span><span class="crayon-sy">.</span><span class="crayon-v">image</span><span class="crayon-sy">.</span><span class="crayon-v">BufferedImage</span><span class="crayon-sy">;</span></div><div class="crayon-line" id="crayon-5c44b1f201cd7428743987-7"><span class="crayon-r">import</span><span class="crayon-h"> </span><span class="crayon-v">java</span><span class="crayon-sy">.</span><span class="crayon-v">io</span><span class="crayon-sy">.</span><span class="crayon-v">File</span><span class="crayon-sy">;</span></div><div class="crayon-line crayon-striped-line" id="crayon-5c44b1f201cd7428743987-8"><span class="crayon-r">import</span><span class="crayon-h"> </span><span class="crayon-v">java</span><span class="crayon-sy">.</span><span class="crayon-v">io</span><span class="crayon-sy">.</span><span class="crayon-v">IOException</span><span class="crayon-sy">;</span></div><div class="crayon-line" id="crayon-5c44b1f201cd7428743987-9"><span class="crayon-r">import</span><span class="crayon-h"> </span><span class="crayon-v">java</span><span class="crayon-sy">.</span><span class="crayon-v">util</span><span class="crayon-sy">.</span><span class="crayon-v">ArrayList</span><span class="crayon-sy">;</span></div><div class="crayon-line crayon-striped-line" id="crayon-5c44b1f201cd7428743987-10"><span class="crayon-r">import</span><span class="crayon-h"> </span><span class="crayon-v">java</span><span class="crayon-sy">.</span><span class="crayon-v">util</span><span class="crayon-sy">.</span><span class="crayon-v">List</span><span class="crayon-sy">;</span></div><div class="crayon-line" id="crayon-5c44b1f201cd7428743987-11">&nbsp;</div><div class="crayon-line crayon-striped-line" id="crayon-5c44b1f201cd7428743987-12"><span class="crayon-r">import</span><span class="crayon-h"> </span><span class="crayon-v">javax</span><span class="crayon-sy">.</span><span class="crayon-v">imageio</span><span class="crayon-sy">.</span><span class="crayon-v">ImageIO</span><span class="crayon-sy">;</span></div><div class="crayon-line" id="crayon-5c44b1f201cd7428743987-13">&nbsp;</div><div class="crayon-line crayon-striped-line" id="crayon-5c44b1f201cd7428743987-14"><span class="crayon-m">public</span><span class="crayon-h"> </span><span class="crayon-t">class</span><span class="crayon-h"> </span><span class="crayon-e">Thumbnails</span><span class="crayon-h"> </span><span class="crayon-sy">{</span></div><div class="crayon-line" id="crayon-5c44b1f201cd7428743987-15">&nbsp;</div><div class="crayon-line crayon-striped-line" id="crayon-5c44b1f201cd7428743987-16"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-m">public</span><span class="crayon-h"> </span><span class="crayon-m">static</span><span class="crayon-h"> </span><span class="crayon-t">void</span><span class="crayon-h"> </span><span class="crayon-e">main</span><span class="crayon-sy">(</span><span class="crayon-t">String</span><span class="crayon-sy">[</span><span class="crayon-sy">]</span><span class="crayon-h"> </span><span class="crayon-v">args</span><span class="crayon-sy">)</span><span class="crayon-h"> </span><span class="crayon-m">throws</span><span class="crayon-h"> </span><span class="crayon-e">IOException</span><span class="crayon-h"> </span><span class="crayon-sy">{</span></div><div class="crayon-line" id="crayon-5c44b1f201cd7428743987-17">&nbsp;</div><div class="crayon-line crayon-striped-line" id="crayon-5c44b1f201cd7428743987-18"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-v">List</span><span class="crayon-e ">&lt;Image&gt;</span><span class="crayon-h"> </span><span class="crayon-v">thumbnails</span><span class="crayon-h"> </span><span class="crayon-o">=</span><span class="crayon-h"> </span><span class="crayon-r">new</span><span class="crayon-h"> </span><span class="crayon-v">ArrayList</span><span class="crayon-o">&lt;&gt;</span><span class="crayon-sy">(</span><span class="crayon-sy">)</span><span class="crayon-sy">;</span></div><div class="crayon-line" id="crayon-5c44b1f201cd7428743987-19">&nbsp;</div><div class="crayon-line crayon-striped-line" id="crayon-5c44b1f201cd7428743987-20"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-st">for</span><span class="crayon-h"> </span><span class="crayon-sy">(</span><span class="crayon-e">File </span><span class="crayon-v">file</span><span class="crayon-h"> </span><span class="crayon-o">:</span><span class="crayon-h"> </span><span class="crayon-r">new</span><span class="crayon-h"> </span><span class="crayon-e">File</span><span class="crayon-sy">(</span><span class="crayon-s">"/path/to/images/"</span><span class="crayon-sy">)</span><span class="crayon-sy">.</span><span class="crayon-e">listFiles</span><span class="crayon-sy">(</span><span class="crayon-sy">)</span><span class="crayon-sy">)</span><span class="crayon-h"> </span><span class="crayon-sy">{</span></div><div class="crayon-line" id="crayon-5c44b1f201cd7428743987-21">&nbsp;</div><div class="crayon-line crayon-striped-line" id="crayon-5c44b1f201cd7428743987-22"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-st">if</span><span class="crayon-h"> </span><span class="crayon-sy">(</span><span class="crayon-o">!</span><span class="crayon-v">file</span><span class="crayon-sy">.</span><span class="crayon-e">getName</span><span class="crayon-sy">(</span><span class="crayon-sy">)</span><span class="crayon-sy">.</span><span class="crayon-e">endsWith</span><span class="crayon-sy">(</span><span class="crayon-s">".jpg"</span><span class="crayon-sy">)</span><span class="crayon-sy">)</span><span class="crayon-h"> </span><span class="crayon-sy">{</span></div><div class="crayon-line" id="crayon-5c44b1f201cd7428743987-23"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-c">// File is NOT a JPEG</span></div><div class="crayon-line crayon-striped-line" id="crayon-5c44b1f201cd7428743987-24"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-st">continue</span><span class="crayon-sy">;</span></div><div class="crayon-line" id="crayon-5c44b1f201cd7428743987-25"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-sy">}</span></div><div class="crayon-line crayon-striped-line" id="crayon-5c44b1f201cd7428743987-26">&nbsp;</div><div class="crayon-line" id="crayon-5c44b1f201cd7428743987-27"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-e">BufferedImage </span><span class="crayon-v">fullSizeImage</span><span class="crayon-h"> </span><span class="crayon-o">=</span><span class="crayon-h"> </span><span class="crayon-v">ImageIO</span><span class="crayon-sy">.</span><span class="crayon-e">read</span><span class="crayon-sy">(</span><span class="crayon-v">file</span><span class="crayon-sy">)</span><span class="crayon-sy">;</span></div><div class="crayon-line crayon-striped-line" id="crayon-5c44b1f201cd7428743987-28"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-st">if</span><span class="crayon-h"> </span><span class="crayon-sy">(</span><span class="crayon-v">fullSizeImage</span><span class="crayon-h"> </span><span class="crayon-o">==</span><span class="crayon-h"> </span><span class="crayon-t">null</span><span class="crayon-sy">)</span><span class="crayon-h"> </span><span class="crayon-sy">{</span></div><div class="crayon-line" id="crayon-5c44b1f201cd7428743987-29"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-c">// Could not parse JPEG, just ignore</span></div><div class="crayon-line crayon-striped-line" id="crayon-5c44b1f201cd7428743987-30"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-st">continue</span><span class="crayon-sy">;</span></div><div class="crayon-line" id="crayon-5c44b1f201cd7428743987-31"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-sy">}</span></div><div class="crayon-line crayon-striped-line" id="crayon-5c44b1f201cd7428743987-32">&nbsp;</div><div class="crayon-line" id="crayon-5c44b1f201cd7428743987-33"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-c">// Create thumbnail</span></div><div class="crayon-line crayon-marked-line crayon-top crayon-striped-line" id="crayon-5c44b1f201cd7428743987-34"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-e">BufferedImage </span><span class="crayon-v">thumbnail</span><span class="crayon-h"> </span><span class="crayon-o">=</span><span class="crayon-h"> </span><span class="crayon-r">new</span><span class="crayon-h"> </span><span class="crayon-e">BufferedImage</span><span class="crayon-sy">(</span><span class="crayon-cn">150</span><span class="crayon-sy">,</span><span class="crayon-h"> </span><span class="crayon-cn">150</span><span class="crayon-sy">,</span></div><div class="crayon-line crayon-marked-line" id="crayon-5c44b1f201cd7428743987-35"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-v">BufferedImage</span><span class="crayon-sy">.</span><span class="crayon-v">TYPE_INT_ARGB</span><span class="crayon-sy">)</span><span class="crayon-sy">;</span></div><div class="crayon-line crayon-marked-line crayon-striped-line" id="crayon-5c44b1f201cd7428743987-36"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-i">Graphics2D</span><span class="crayon-h"> </span><span class="crayon-v">g</span><span class="crayon-h"> </span><span class="crayon-o">=</span><span class="crayon-h"> </span><span class="crayon-v">thumbnail</span><span class="crayon-sy">.</span><span class="crayon-e">createGraphics</span><span class="crayon-sy">(</span><span class="crayon-sy">)</span><span class="crayon-sy">;</span></div><div class="crayon-line crayon-marked-line" id="crayon-5c44b1f201cd7428743987-37"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-v">g</span><span class="crayon-sy">.</span><span class="crayon-e">drawImage</span><span class="crayon-sy">(</span><span class="crayon-v">fullSizeImage</span><span class="crayon-sy">,</span><span class="crayon-h"> </span><span class="crayon-cn">0</span><span class="crayon-sy">,</span><span class="crayon-h"> </span><span class="crayon-cn">0</span><span class="crayon-sy">,</span><span class="crayon-h"> </span><span class="crayon-cn">150</span><span class="crayon-sy">,</span><span class="crayon-h"> </span><span class="crayon-cn">150</span><span class="crayon-sy">,</span><span class="crayon-h"> </span><span class="crayon-t">null</span><span class="crayon-sy">)</span><span class="crayon-sy">;</span></div><div class="crayon-line crayon-marked-line crayon-bottom crayon-striped-line" id="crayon-5c44b1f201cd7428743987-38"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-v">g</span><span class="crayon-sy">.</span><span class="crayon-e">dispose</span><span class="crayon-sy">(</span><span class="crayon-sy">)</span><span class="crayon-sy">;</span></div><div class="crayon-line" id="crayon-5c44b1f201cd7428743987-39"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-v">thumbnails</span><span class="crayon-sy">.</span><span class="crayon-e">add</span><span class="crayon-sy">(</span><span class="crayon-v">thumbnail</span><span class="crayon-sy">)</span><span class="crayon-sy">;</span></div><div class="crayon-line crayon-striped-line" id="crayon-5c44b1f201cd7428743987-40"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-sy">}</span></div><div class="crayon-line" id="crayon-5c44b1f201cd7428743987-41">&nbsp;</div><div class="crayon-line crayon-striped-line" id="crayon-5c44b1f201cd7428743987-42"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-c">// Do more stuff with thumbnails</span></div><div class="crayon-line" id="crayon-5c44b1f201cd7428743987-43">&nbsp;</div><div class="crayon-line crayon-striped-line" id="crayon-5c44b1f201cd7428743987-44"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-sy">}</span></div><div class="crayon-line" id="crayon-5c44b1f201cd7428743987-45">&nbsp;</div><div class="crayon-line crayon-striped-line" id="crayon-5c44b1f201cd7428743987-46"><span class="crayon-sy">}</span></div><div class="crayon-line" id="crayon-5c44b1f201cd7428743987-47">&nbsp;</div></div></td>
+					</tr>
+				</table>
+			</div>
+		</div>
+<!-- [Format Time: 0.0045 seconds] -->
+<p></p>
+<h2>References</h2>
+<p>From Oracle&#8217;s website: <a title="How do I create a resized copy of an image?" href="http://www.oracle.com/technetwork/java/index-137037.html#Q_How_do_I_create_a_resized_copy" target="_blank" rel="noopener">How do I create a resized copy of an image?</a></p>
+<p>For this particular problem, I did not need to produce a heap dump, because the code was small enough. With a few tests and a few searches on Google, I could figure-out what was happening. However, if you have no idea where the OutOfMemoryError comes from, you may want to read this article: <a title="java.lang.OutOfMemoryError: Java heap space" href="../solve-java-lang-outofmemoryerror-java-heap-space/index.html">How to fix java.lang.OutOfMemoryError: Java heap space</a></p>
+					</div><!-- .entry-content -->
+		
+		<footer class="entry-meta">
+			This entry was posted in <a href="../category/development/index.html" rel="category tag">Development</a> on <a href="index.html" title="4:35 pm" rel="bookmark"><time class="entry-date" datetime="2014-11-24T16:35:50+00:00">November 24, 2014</time></a><span class="by-author"> by <span class="author vcard"><a class="url fn n" href="../author/jdemers/index.html" title="View all posts by Jonathan Demers" rel="author">Jonathan Demers</a></span></span>.								</footer><!-- .entry-meta -->
+	</article><!-- #post -->
+
+				<nav class="nav-single">
+					<h3 class="assistive-text">Post navigation</h3>
+					<span class="nav-previous"><a href="../https-wildcard-subdomain-dns-apache-tomcat-config/index.html" rel="prev"><span class="meta-nav">&larr;</span> HTTPS Wildcard Subdomain: DNS + Apache + Tomcat Config</a></span>
+					<span class="nav-next"><a href="../how-to-migrate-3-mysql-databases-to-amazon-rds-in-5-minutes/index.html" rel="next">How to Migrate 3 MySQL Databases to Amazon RDS in 5 Minutes <span class="meta-nav">&rarr;</span></a></span>
+				</nav><!-- .nav-single -->
+
+				
+<div id="comments" class="comments-area">
+
+	
+	
+	
+</div><!-- #comments .comments-area -->
+
+			
+		</div><!-- #content -->
+	</div><!-- #primary -->
+
+
+			<div id="secondary" class="widget-area" role="complementary">
+					<aside id="recent-posts-2" class="widget widget_recent_entries">		<h3 class="widget-title">More Articles</h3>		<ul>
+											<li>
+					<a href="../how-to-migrate-3-mysql-databases-to-amazon-rds-in-5-minutes/index.html">How to Migrate 3 MySQL Databases to Amazon RDS in 5 Minutes</a>
+									</li>
+											<li>
+					<a href="index.html">ImageIO.read() causes OutOfMemoryError</a>
+									</li>
+											<li>
+					<a href="../https-wildcard-subdomain-dns-apache-tomcat-config/index.html">HTTPS Wildcard Subdomain: DNS + Apache + Tomcat Config</a>
+									</li>
+											<li>
+					<a href="../ubuntu-apache-reverse-proxy-rewrite-html-links/index.html">Ubuntu Apache Reverse Proxy Rewrite HTML Links</a>
+									</li>
+											<li>
+					<a href="../programmatically-configure-hibernate-jpa-with-dbcp/index.html">Programmatically Configure Hibernate (JPA) with DBCP</a>
+									</li>
+					</ul>
+		</aside><aside id="categories-2" class="widget widget_categories"><h3 class="widget-title">Categories</h3>		<ul>
+	<li class="cat-item cat-item-2"><a href="../category/development/index.html" >Development</a>
+</li>
+	<li class="cat-item cat-item-50"><a href="../category/how-to/index.html" >How To</a>
+</li>
+	<li class="cat-item cat-item-12"><a href="../category/news/index.html" >News</a>
+</li>
+		</ul>
+</aside>		</div><!-- #secondary -->
+		</div><!-- #main .wrapper -->
+	<footer id="colophon" role="contentinfo">
+		<div class="site-info">
+									<a href="https://wordpress.org/" class="imprint" title="Semantic Personal Publishing Platform">
+				Proudly powered by WordPress			</a>
+		</div><!-- .site-info -->
+	</footer><!-- #colophon -->
+</div><!-- #page -->
+
+<script type='text/javascript' src='../wp-content/themes/twentytwelve/js/navigation.js%3Fver=20140711'></script>
+<script type='text/javascript' src='../wp-includes/js/wp-embed.min.js%3Fver=5.0.3'></script>
+</body>
+</html>

@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<!--[if IE 7]>
+<html class="ie ie7" lang="en-US">
+<![endif]-->
+<!--[if IE 8]>
+<html class="ie ie8" lang="en-US">
+<![endif]-->
+<!--[if !(IE 7) & !(IE 8)]><!-->
+<html lang="en-US">
+<!--<![endif]-->
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width" />
+<title>Programmatically Configure Hibernate (JPA) with DBCP | OpCode Tech</title>
+<link rel="profile" href="http://gmpg.org/xfn/11" />
+<link rel="pingback" href="https://opcodesolutions.com/tech/xmlrpc.php" />
+<!--[if lt IE 9]>
+<script src="https://opcodesolutions.com/tech/wp-content/themes/twentytwelve/js/html5.js" type="text/javascript"></script>
+<![endif]-->
+<link rel='dns-prefetch' href='https://fonts.googleapis.com/' />
+<link rel='dns-prefetch' href='https://s.w.org/' />
+<link href='https://fonts.gstatic.com' crossorigin rel='preconnect' />
+		<script type="text/javascript">
+			window._wpemojiSettings = {"baseUrl":"https:\/\/s.w.org\/images\/core\/emoji\/11\/72x72\/","ext":".png","svgUrl":"https:\/\/s.w.org\/images\/core\/emoji\/11\/svg\/","svgExt":".svg","source":{"concatemoji":"https:\/\/opcodesolutions.com\/tech\/wp-includes\/js\/wp-emoji-release.min.js?ver=5.0.3"}};
+			!function(a,b,c){function d(a,b){var c=String.fromCharCode;l.clearRect(0,0,k.width,k.height),l.fillText(c.apply(this,a),0,0);var d=k.toDataURL();l.clearRect(0,0,k.width,k.height),l.fillText(c.apply(this,b),0,0);var e=k.toDataURL();return d===e}function e(a){var b;if(!l||!l.fillText)return!1;switch(l.textBaseline="top",l.font="600 32px Arial",a){case"flag":return!(b=d([55356,56826,55356,56819],[55356,56826,8203,55356,56819]))&&(b=d([55356,57332,56128,56423,56128,56418,56128,56421,56128,56430,56128,56423,56128,56447],[55356,57332,8203,56128,56423,8203,56128,56418,8203,56128,56421,8203,56128,56430,8203,56128,56423,8203,56128,56447]),!b);case"emoji":return b=d([55358,56760,9792,65039],[55358,56760,8203,9792,65039]),!b}return!1}function f(a){var c=b.createElement("script");c.src=a,c.defer=c.type="text/javascript",b.getElementsByTagName("head")[0].appendChild(c)}var g,h,i,j,k=b.createElement("canvas"),l=k.getContext&&k.getContext("2d");for(j=Array("flag","emoji"),c.supports={everything:!0,everythingExceptFlag:!0},i=0;i<j.length;i++)c.supports[j[i]]=e(j[i]),c.supports.everything=c.supports.everything&&c.supports[j[i]],"flag"!==j[i]&&(c.supports.everythingExceptFlag=c.supports.everythingExceptFlag&&c.supports[j[i]]);c.supports.everythingExceptFlag=c.supports.everythingExceptFlag&&!c.supports.flag,c.DOMReady=!1,c.readyCallback=function(){c.DOMReady=!0},c.supports.everything||(h=function(){c.readyCallback()},b.addEventListener?(b.addEventListener("DOMContentLoaded",h,!1),a.addEventListener("load",h,!1)):(a.attachEvent("onload",h),b.attachEvent("onreadystatechange",function(){"complete"===b.readyState&&c.readyCallback()})),g=c.source||{},g.concatemoji?f(g.concatemoji):g.wpemoji&&g.twemoji&&(f(g.twemoji),f(g.wpemoji)))}(window,document,window._wpemojiSettings);
+		</script>
+		<style type="text/css">
+img.wp-smiley,
+img.emoji {
+	display: inline !important;
+	border: none !important;
+	box-shadow: none !important;
+	height: 1em !important;
+	width: 1em !important;
+	margin: 0 .07em !important;
+	vertical-align: -0.1em !important;
+	background: none !important;
+	padding: 0 !important;
+}
+</style>
+<link rel='stylesheet' id='crayon-css'  href='../wp-content/plugins/crayon-syntax-highlighter/css/min/crayon.min.css%3Fver=_2.7.2_beta.css' type='text/css' media='all' />
+<link rel='stylesheet' id='crayon-theme-eclipse-css'  href='../wp-content/plugins/crayon-syntax-highlighter/themes/eclipse/eclipse.css%3Fver=_2.7.2_beta.css' type='text/css' media='all' />
+<link rel='stylesheet' id='crayon-font-monaco-css'  href='../wp-content/plugins/crayon-syntax-highlighter/fonts/monaco.css%3Fver=_2.7.2_beta.css' type='text/css' media='all' />
+<link rel='stylesheet' id='wp-block-library-css'  href='../wp-includes/css/dist/block-library/style.min.css%3Fver=5.0.3.css' type='text/css' media='all' />
+<link rel='stylesheet' id='wp-block-library-theme-css'  href='../wp-includes/css/dist/block-library/theme.min.css%3Fver=5.0.3.css' type='text/css' media='all' />
+<link rel='stylesheet' id='twentytwelve-fonts-css'  href='https://fonts.googleapis.com/css?family=Open+Sans:400italic,700italic,400,700&#038;subset=latin,latin-ext' type='text/css' media='all' />
+<link rel='stylesheet' id='twentytwelve-style-css'  href='../wp-content/themes/twentytwelve/style.css%3Fver=5.0.3.css' type='text/css' media='all' />
+<link rel='stylesheet' id='twentytwelve-block-style-css'  href='../wp-content/themes/twentytwelve/css/blocks.css%3Fver=20181230.css' type='text/css' media='all' />
+<!--[if lt IE 9]>
+<link rel='stylesheet' id='twentytwelve-ie-css'  href='https://opcodesolutions.com/tech/wp-content/themes/twentytwelve/css/ie.css?ver=20121010' type='text/css' media='all' />
+<![endif]-->
+<script type='text/javascript' src='../wp-includes/js/jquery/jquery.js%3Fver=1.12.4'></script>
+<script type='text/javascript' src='../wp-includes/js/jquery/jquery-migrate.min.js%3Fver=1.4.1'></script>
+<script type='text/javascript'>
+/* <![CDATA[ */
+var CrayonSyntaxSettings = {"version":"_2.7.2_beta","is_admin":"0","ajaxurl":"https:\/\/opcodesolutions.com\/tech\/wp-admin\/admin-ajax.php","prefix":"crayon-","setting":"crayon-setting","selected":"crayon-setting-selected","changed":"crayon-setting-changed","special":"crayon-setting-special","orig_value":"data-orig-value","debug":""};
+var CrayonSyntaxStrings = {"copy":"Press %s to Copy, %s to Paste","minimize":"Click To Expand Code"};
+/* ]]> */
+</script>
+<script type='text/javascript' src='../wp-content/plugins/crayon-syntax-highlighter/js/min/crayon.min.js%3Fver=_2.7.2_beta'></script>
+<link rel="EditURI" type="application/rsd+xml" title="RSD" href="../xmlrpc.php%3Frsd" />
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="../wp-includes/wlwmanifest.xml" /> 
+<link rel='prev' title='How to fix java.lang.OutOfMemoryError: Java heap space' href='../solve-java-lang-outofmemoryerror-java-heap-space/index.html' />
+<link rel='next' title='Ubuntu Apache Reverse Proxy Rewrite HTML Links' href='../ubuntu-apache-reverse-proxy-rewrite-html-links/index.html' />
+<meta name="generator" content="WordPress 5.0.3" />
+<link rel="canonical" href="index.html" />
+	<style type="text/css" id="twentytwelve-header-css">
+			.site-header h1 a,
+		.site-header h2 {
+			color: #8b0000;
+		}
+		</style>
+	</head>
+
+<body class="post-template-default single single-post postid-59 single-format-standard wp-embed-responsive custom-font-enabled single-author">
+<div id="page" class="hfeed site">
+	<header id="masthead" class="site-header" role="banner">
+		<hgroup>
+			<h1 class="site-title"><a href="../../tech.html" title="OpCode Tech" rel="home">OpCode Tech</a></h1>
+			<h2 class="site-description">Optimize Your Processes</h2>
+		</hgroup>
+
+		<nav id="site-navigation" class="main-navigation" role="navigation">
+			<button class="menu-toggle">Menu</button>
+			<a class="assistive-text" href="index.html#content" title="Skip to content">Skip to content</a>
+			<div class="menu-default-container"><ul id="menu-default" class="nav-menu"><li id="menu-item-19" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-19"><a href="../../tech.html">Home</a></li>
+<li id="menu-item-18" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-18"><a href="../category/news/index.html">News</a></li>
+<li id="menu-item-153" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-153"><a href="../category/how-to/index.html">How To</a></li>
+<li id="menu-item-17" class="menu-item menu-item-type-taxonomy menu-item-object-category current-post-ancestor current-menu-parent current-post-parent menu-item-17"><a href="../category/development/index.html">Development</a></li>
+<li id="menu-item-159" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-159"><a href="../contact/index.html">Contact</a></li>
+</ul></div>		</nav><!-- #site-navigation -->
+
+			</header><!-- #masthead -->
+
+	<div id="main" class="wrapper">
+
+	<div id="primary" class="site-content">
+		<div id="content" role="main">
+
+			
+				
+	<article id="post-59" class="post-59 post type-post status-publish format-standard hentry category-development">
+				<header class="entry-header">
+			
+						<h1 class="entry-title">Programmatically Configure Hibernate (JPA) with DBCP</h1>
+								</header><!-- .entry-header -->
+
+				<div class="entry-content">
+			<p>I recently had deadlock issues with c3p0 and statement caching. Long story short, after investigating c3p0 code, I decided to switch to <a title="Apache Commons DBCP" href="http://commons.apache.org/proper/commons-dbcp/">DBCP</a> (maybe I&#8217;ll write a post with the long story).</p>
+<p>I am not a big fan of Spring (here again, maybe I&#8217;ll write a post about that). If you are like me, here is how to programmatically configure <a title="Hibernate" href="http://hibernate.org/">Hibernate</a> (JPA) to use DBCP, without Spring and without JNDI.</p><!-- Crayon Syntax Highlighter v_2.7.2_beta -->
+
+		<div id="crayon-5c44b1f33a27f141077670" class="crayon-syntax crayon-theme-eclipse crayon-font-monaco crayon-os-pc print-yes notranslate" data-settings=" minimize scroll-mouseover" style=" margin-top: 12px; margin-bottom: 12px; font-size: 12px !important; line-height: 15px !important;">
+		
+			<div class="crayon-toolbar" data-settings=" show" style="font-size: 12px !important;height: 18px !important; line-height: 18px !important;"><span class="crayon-title">Configure Hibernate (JPA) with DBCP</span>
+			<div class="crayon-tools" style="font-size: 12px !important;height: 18px !important; line-height: 18px !important;"><div class="crayon-button crayon-nums-button" title="Toggle Line Numbers"><div class="crayon-button-icon"></div></div><div class="crayon-button crayon-plain-button" title="Toggle Plain Code"><div class="crayon-button-icon"></div></div><div class="crayon-button crayon-wrap-button" title="Toggle Line Wrap"><div class="crayon-button-icon"></div></div><div class="crayon-button crayon-expand-button" title="Expand Code"><div class="crayon-button-icon"></div></div><div class="crayon-button crayon-copy-button" title="Copy"><div class="crayon-button-icon"></div></div><div class="crayon-button crayon-popup-button" title="Open Code In New Window"><div class="crayon-button-icon"></div></div><span class="crayon-language">Java</span></div></div>
+			<div class="crayon-info" style="min-height: 16.8px !important; line-height: 16.8px !important;"></div>
+			<div class="crayon-plain-wrap"><textarea wrap="soft" class="crayon-plain print-no" data-settings="dblclick" readonly style="-moz-tab-size:4; -o-tab-size:4; -webkit-tab-size:4; tab-size:4; font-size: 12px !important; line-height: 15px !important;">
+
+package com.opcodesolutions.demo;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
+import javax.persistence.TypedQuery;
+
+import org.apache.commons.dbcp2.BasicDataSource;
+import org.hibernate.cfg.AvailableSettings;
+
+import com.opcodesolutions.generic.jpa.entity.User;
+
+public class HibernateJPAWithDBCP {
+
+	public static void main(String[] args) {
+
+		// Create and configure DBCP DataSource
+		BasicDataSource dbcpDataSource = new BasicDataSource();
+		dbcpDataSource.setDriverClassName("com.mysql.jdbc.Driver");
+		dbcpDataSource.setUrl("jdbc:mysql://localhost:3306/database");
+		dbcpDataSource.setUsername("user");
+		dbcpDataSource.setPassword("************");
+
+		// Enable statement caching (Optional)
+		dbcpDataSource.setPoolPreparedStatements(true);
+		dbcpDataSource.setMaxOpenPreparedStatements(50);
+
+		// JPA properties
+		Map&lt;String, Object&gt; properties = new HashMap&lt;&gt;();
+
+		// This line will tell hibernate (JPA) to use DBCP
+		properties.put(AvailableSettings.DATASOURCE, dbcpDataSource);
+
+		// Create the EntityManagerFactory with JPA properties
+		EntityManagerFactory factory =
+			Persistence.createEntityManagerFactory("User", properties);
+
+		// Test with simple query
+		EntityManager entityManager = factory.createEntityManager();
+		TypedQuery&lt;User&gt; query =
+			entityManager.createQuery("select u from User u", User.class);
+		for (User user : query.getResultList()) {
+			System.out.println(user.getFullName());
+		}
+
+	}
+}
+</textarea></div>
+			<div class="crayon-main" style="">
+				<table class="crayon-table">
+					<tr class="crayon-row">
+				<td class="crayon-nums " data-settings="show">
+					<div class="crayon-nums-content" style="font-size: 12px !important; line-height: 15px !important;"><div class="crayon-num" data-line="crayon-5c44b1f33a27f141077670-1">1</div><div class="crayon-num crayon-striped-num" data-line="crayon-5c44b1f33a27f141077670-2">2</div><div class="crayon-num" data-line="crayon-5c44b1f33a27f141077670-3">3</div><div class="crayon-num crayon-striped-num" data-line="crayon-5c44b1f33a27f141077670-4">4</div><div class="crayon-num" data-line="crayon-5c44b1f33a27f141077670-5">5</div><div class="crayon-num crayon-striped-num" data-line="crayon-5c44b1f33a27f141077670-6">6</div><div class="crayon-num" data-line="crayon-5c44b1f33a27f141077670-7">7</div><div class="crayon-num crayon-striped-num" data-line="crayon-5c44b1f33a27f141077670-8">8</div><div class="crayon-num" data-line="crayon-5c44b1f33a27f141077670-9">9</div><div class="crayon-num crayon-striped-num" data-line="crayon-5c44b1f33a27f141077670-10">10</div><div class="crayon-num" data-line="crayon-5c44b1f33a27f141077670-11">11</div><div class="crayon-num crayon-striped-num" data-line="crayon-5c44b1f33a27f141077670-12">12</div><div class="crayon-num" data-line="crayon-5c44b1f33a27f141077670-13">13</div><div class="crayon-num crayon-striped-num" data-line="crayon-5c44b1f33a27f141077670-14">14</div><div class="crayon-num" data-line="crayon-5c44b1f33a27f141077670-15">15</div><div class="crayon-num crayon-striped-num" data-line="crayon-5c44b1f33a27f141077670-16">16</div><div class="crayon-num" data-line="crayon-5c44b1f33a27f141077670-17">17</div><div class="crayon-num crayon-striped-num" data-line="crayon-5c44b1f33a27f141077670-18">18</div><div class="crayon-num" data-line="crayon-5c44b1f33a27f141077670-19">19</div><div class="crayon-num crayon-striped-num" data-line="crayon-5c44b1f33a27f141077670-20">20</div><div class="crayon-num" data-line="crayon-5c44b1f33a27f141077670-21">21</div><div class="crayon-num crayon-striped-num" data-line="crayon-5c44b1f33a27f141077670-22">22</div><div class="crayon-num" data-line="crayon-5c44b1f33a27f141077670-23">23</div><div class="crayon-num crayon-striped-num" data-line="crayon-5c44b1f33a27f141077670-24">24</div><div class="crayon-num" data-line="crayon-5c44b1f33a27f141077670-25">25</div><div class="crayon-num crayon-striped-num" data-line="crayon-5c44b1f33a27f141077670-26">26</div><div class="crayon-num" data-line="crayon-5c44b1f33a27f141077670-27">27</div><div class="crayon-num crayon-striped-num" data-line="crayon-5c44b1f33a27f141077670-28">28</div><div class="crayon-num" data-line="crayon-5c44b1f33a27f141077670-29">29</div><div class="crayon-num crayon-striped-num" data-line="crayon-5c44b1f33a27f141077670-30">30</div><div class="crayon-num" data-line="crayon-5c44b1f33a27f141077670-31">31</div><div class="crayon-num crayon-striped-num" data-line="crayon-5c44b1f33a27f141077670-32">32</div><div class="crayon-num" data-line="crayon-5c44b1f33a27f141077670-33">33</div><div class="crayon-num crayon-striped-num" data-line="crayon-5c44b1f33a27f141077670-34">34</div><div class="crayon-num" data-line="crayon-5c44b1f33a27f141077670-35">35</div><div class="crayon-num crayon-striped-num" data-line="crayon-5c44b1f33a27f141077670-36">36</div><div class="crayon-num" data-line="crayon-5c44b1f33a27f141077670-37">37</div><div class="crayon-num crayon-striped-num" data-line="crayon-5c44b1f33a27f141077670-38">38</div><div class="crayon-num" data-line="crayon-5c44b1f33a27f141077670-39">39</div><div class="crayon-num crayon-striped-num" data-line="crayon-5c44b1f33a27f141077670-40">40</div><div class="crayon-num" data-line="crayon-5c44b1f33a27f141077670-41">41</div><div class="crayon-num crayon-striped-num" data-line="crayon-5c44b1f33a27f141077670-42">42</div><div class="crayon-num" data-line="crayon-5c44b1f33a27f141077670-43">43</div><div class="crayon-num crayon-striped-num" data-line="crayon-5c44b1f33a27f141077670-44">44</div><div class="crayon-num" data-line="crayon-5c44b1f33a27f141077670-45">45</div><div class="crayon-num crayon-striped-num" data-line="crayon-5c44b1f33a27f141077670-46">46</div><div class="crayon-num" data-line="crayon-5c44b1f33a27f141077670-47">47</div><div class="crayon-num crayon-striped-num" data-line="crayon-5c44b1f33a27f141077670-48">48</div><div class="crayon-num" data-line="crayon-5c44b1f33a27f141077670-49">49</div><div class="crayon-num crayon-striped-num" data-line="crayon-5c44b1f33a27f141077670-50">50</div><div class="crayon-num" data-line="crayon-5c44b1f33a27f141077670-51">51</div><div class="crayon-num crayon-striped-num" data-line="crayon-5c44b1f33a27f141077670-52">52</div></div>
+				</td>
+						<td class="crayon-code"><div class="crayon-pre" style="font-size: 12px !important; line-height: 15px !important; -moz-tab-size:4; -o-tab-size:4; -webkit-tab-size:4; tab-size:4;"><div class="crayon-line" id="crayon-5c44b1f33a27f141077670-1">&nbsp;</div><div class="crayon-line crayon-striped-line" id="crayon-5c44b1f33a27f141077670-2"><span class="crayon-t">package</span><span class="crayon-h"> </span><span class="crayon-v">com</span><span class="crayon-sy">.</span><span class="crayon-v">opcodesolutions</span><span class="crayon-sy">.</span><span class="crayon-v">demo</span><span class="crayon-sy">;</span></div><div class="crayon-line" id="crayon-5c44b1f33a27f141077670-3">&nbsp;</div><div class="crayon-line crayon-striped-line" id="crayon-5c44b1f33a27f141077670-4"><span class="crayon-r">import</span><span class="crayon-h"> </span><span class="crayon-v">java</span><span class="crayon-sy">.</span><span class="crayon-v">util</span><span class="crayon-sy">.</span><span class="crayon-v">HashMap</span><span class="crayon-sy">;</span></div><div class="crayon-line" id="crayon-5c44b1f33a27f141077670-5"><span class="crayon-r">import</span><span class="crayon-h"> </span><span class="crayon-v">java</span><span class="crayon-sy">.</span><span class="crayon-v">util</span><span class="crayon-sy">.</span><span class="crayon-v">Map</span><span class="crayon-sy">;</span></div><div class="crayon-line crayon-striped-line" id="crayon-5c44b1f33a27f141077670-6">&nbsp;</div><div class="crayon-line" id="crayon-5c44b1f33a27f141077670-7"><span class="crayon-r">import</span><span class="crayon-h"> </span><span class="crayon-v">javax</span><span class="crayon-sy">.</span><span class="crayon-v">persistence</span><span class="crayon-sy">.</span><span class="crayon-v">EntityManager</span><span class="crayon-sy">;</span></div><div class="crayon-line crayon-striped-line" id="crayon-5c44b1f33a27f141077670-8"><span class="crayon-r">import</span><span class="crayon-h"> </span><span class="crayon-v">javax</span><span class="crayon-sy">.</span><span class="crayon-v">persistence</span><span class="crayon-sy">.</span><span class="crayon-v">EntityManagerFactory</span><span class="crayon-sy">;</span></div><div class="crayon-line" id="crayon-5c44b1f33a27f141077670-9"><span class="crayon-r">import</span><span class="crayon-h"> </span><span class="crayon-v">javax</span><span class="crayon-sy">.</span><span class="crayon-v">persistence</span><span class="crayon-sy">.</span><span class="crayon-v">Persistence</span><span class="crayon-sy">;</span></div><div class="crayon-line crayon-striped-line" id="crayon-5c44b1f33a27f141077670-10"><span class="crayon-r">import</span><span class="crayon-h"> </span><span class="crayon-v">javax</span><span class="crayon-sy">.</span><span class="crayon-v">persistence</span><span class="crayon-sy">.</span><span class="crayon-v">TypedQuery</span><span class="crayon-sy">;</span></div><div class="crayon-line" id="crayon-5c44b1f33a27f141077670-11">&nbsp;</div><div class="crayon-line crayon-striped-line" id="crayon-5c44b1f33a27f141077670-12"><span class="crayon-r">import</span><span class="crayon-h"> </span><span class="crayon-v">org</span><span class="crayon-sy">.</span><span class="crayon-v">apache</span><span class="crayon-sy">.</span><span class="crayon-v">commons</span><span class="crayon-sy">.</span><span class="crayon-v">dbcp2</span><span class="crayon-sy">.</span><span class="crayon-v">BasicDataSource</span><span class="crayon-sy">;</span></div><div class="crayon-line" id="crayon-5c44b1f33a27f141077670-13"><span class="crayon-r">import</span><span class="crayon-h"> </span><span class="crayon-v">org</span><span class="crayon-sy">.</span><span class="crayon-v">hibernate</span><span class="crayon-sy">.</span><span class="crayon-v">cfg</span><span class="crayon-sy">.</span><span class="crayon-v">AvailableSettings</span><span class="crayon-sy">;</span></div><div class="crayon-line crayon-striped-line" id="crayon-5c44b1f33a27f141077670-14">&nbsp;</div><div class="crayon-line" id="crayon-5c44b1f33a27f141077670-15"><span class="crayon-r">import</span><span class="crayon-h"> </span><span class="crayon-v">com</span><span class="crayon-sy">.</span><span class="crayon-v">opcodesolutions</span><span class="crayon-sy">.</span><span class="crayon-v">generic</span><span class="crayon-sy">.</span><span class="crayon-v">jpa</span><span class="crayon-sy">.</span><span class="crayon-v">entity</span><span class="crayon-sy">.</span><span class="crayon-v">User</span><span class="crayon-sy">;</span></div><div class="crayon-line crayon-striped-line" id="crayon-5c44b1f33a27f141077670-16">&nbsp;</div><div class="crayon-line" id="crayon-5c44b1f33a27f141077670-17"><span class="crayon-m">public</span><span class="crayon-h"> </span><span class="crayon-t">class</span><span class="crayon-h"> </span><span class="crayon-e">HibernateJPAWithDBCP</span><span class="crayon-h"> </span><span class="crayon-sy">{</span></div><div class="crayon-line crayon-striped-line" id="crayon-5c44b1f33a27f141077670-18">&nbsp;</div><div class="crayon-line" id="crayon-5c44b1f33a27f141077670-19"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-m">public</span><span class="crayon-h"> </span><span class="crayon-m">static</span><span class="crayon-h"> </span><span class="crayon-t">void</span><span class="crayon-h"> </span><span class="crayon-e">main</span><span class="crayon-sy">(</span><span class="crayon-t">String</span><span class="crayon-sy">[</span><span class="crayon-sy">]</span><span class="crayon-h"> </span><span class="crayon-v">args</span><span class="crayon-sy">)</span><span class="crayon-h"> </span><span class="crayon-sy">{</span></div><div class="crayon-line crayon-striped-line" id="crayon-5c44b1f33a27f141077670-20">&nbsp;</div><div class="crayon-line" id="crayon-5c44b1f33a27f141077670-21"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-c">// Create and configure DBCP DataSource</span></div><div class="crayon-line crayon-striped-line" id="crayon-5c44b1f33a27f141077670-22"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-e">BasicDataSource </span><span class="crayon-v">dbcpDataSource</span><span class="crayon-h"> </span><span class="crayon-o">=</span><span class="crayon-h"> </span><span class="crayon-r">new</span><span class="crayon-h"> </span><span class="crayon-e">BasicDataSource</span><span class="crayon-sy">(</span><span class="crayon-sy">)</span><span class="crayon-sy">;</span></div><div class="crayon-line" id="crayon-5c44b1f33a27f141077670-23"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-v">dbcpDataSource</span><span class="crayon-sy">.</span><span class="crayon-e">setDriverClassName</span><span class="crayon-sy">(</span><span class="crayon-s">"com.mysql.jdbc.Driver"</span><span class="crayon-sy">)</span><span class="crayon-sy">;</span></div><div class="crayon-line crayon-striped-line" id="crayon-5c44b1f33a27f141077670-24"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-v">dbcpDataSource</span><span class="crayon-sy">.</span><span class="crayon-e">setUrl</span><span class="crayon-sy">(</span><span class="crayon-s">"jdbc:mysql://localhost:3306/database"</span><span class="crayon-sy">)</span><span class="crayon-sy">;</span></div><div class="crayon-line" id="crayon-5c44b1f33a27f141077670-25"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-v">dbcpDataSource</span><span class="crayon-sy">.</span><span class="crayon-e">setUsername</span><span class="crayon-sy">(</span><span class="crayon-s">"user"</span><span class="crayon-sy">)</span><span class="crayon-sy">;</span></div><div class="crayon-line crayon-striped-line" id="crayon-5c44b1f33a27f141077670-26"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-v">dbcpDataSource</span><span class="crayon-sy">.</span><span class="crayon-e">setPassword</span><span class="crayon-sy">(</span><span class="crayon-s">"************"</span><span class="crayon-sy">)</span><span class="crayon-sy">;</span></div><div class="crayon-line" id="crayon-5c44b1f33a27f141077670-27">&nbsp;</div><div class="crayon-line crayon-striped-line" id="crayon-5c44b1f33a27f141077670-28"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-c">// Enable statement caching (Optional)</span></div><div class="crayon-line" id="crayon-5c44b1f33a27f141077670-29"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-v">dbcpDataSource</span><span class="crayon-sy">.</span><span class="crayon-e">setPoolPreparedStatements</span><span class="crayon-sy">(</span><span class="crayon-t">true</span><span class="crayon-sy">)</span><span class="crayon-sy">;</span></div><div class="crayon-line crayon-striped-line" id="crayon-5c44b1f33a27f141077670-30"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-v">dbcpDataSource</span><span class="crayon-sy">.</span><span class="crayon-e">setMaxOpenPreparedStatements</span><span class="crayon-sy">(</span><span class="crayon-cn">50</span><span class="crayon-sy">)</span><span class="crayon-sy">;</span></div><div class="crayon-line" id="crayon-5c44b1f33a27f141077670-31">&nbsp;</div><div class="crayon-line crayon-striped-line" id="crayon-5c44b1f33a27f141077670-32"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-c">// JPA properties</span></div><div class="crayon-line" id="crayon-5c44b1f33a27f141077670-33"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-v">Map</span><span class="crayon-o">&lt;</span><span class="crayon-t">String</span><span class="crayon-sy">,</span><span class="crayon-h"> </span><span class="crayon-t">Object</span><span class="crayon-o">&gt;</span><span class="crayon-h"> </span><span class="crayon-v">properties</span><span class="crayon-h"> </span><span class="crayon-o">=</span><span class="crayon-h"> </span><span class="crayon-r">new</span><span class="crayon-h"> </span><span class="crayon-v">HashMap</span><span class="crayon-o">&lt;&gt;</span><span class="crayon-sy">(</span><span class="crayon-sy">)</span><span class="crayon-sy">;</span></div><div class="crayon-line crayon-striped-line" id="crayon-5c44b1f33a27f141077670-34">&nbsp;</div><div class="crayon-line" id="crayon-5c44b1f33a27f141077670-35"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-c">// This line will tell hibernate (JPA) to use DBCP</span></div><div class="crayon-line crayon-striped-line" id="crayon-5c44b1f33a27f141077670-36"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-v">properties</span><span class="crayon-sy">.</span><span class="crayon-e">put</span><span class="crayon-sy">(</span><span class="crayon-v">AvailableSettings</span><span class="crayon-sy">.</span><span class="crayon-v">DATASOURCE</span><span class="crayon-sy">,</span><span class="crayon-h"> </span><span class="crayon-v">dbcpDataSource</span><span class="crayon-sy">)</span><span class="crayon-sy">;</span></div><div class="crayon-line" id="crayon-5c44b1f33a27f141077670-37">&nbsp;</div><div class="crayon-line crayon-striped-line" id="crayon-5c44b1f33a27f141077670-38"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-c">// Create the EntityManagerFactory with JPA properties</span></div><div class="crayon-line" id="crayon-5c44b1f33a27f141077670-39"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-e">EntityManagerFactory </span><span class="crayon-v">factory</span><span class="crayon-h"> </span><span class="crayon-o">=</span></div><div class="crayon-line crayon-striped-line" id="crayon-5c44b1f33a27f141077670-40"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-v">Persistence</span><span class="crayon-sy">.</span><span class="crayon-e">createEntityManagerFactory</span><span class="crayon-sy">(</span><span class="crayon-s">"User"</span><span class="crayon-sy">,</span><span class="crayon-h"> </span><span class="crayon-v">properties</span><span class="crayon-sy">)</span><span class="crayon-sy">;</span></div><div class="crayon-line" id="crayon-5c44b1f33a27f141077670-41">&nbsp;</div><div class="crayon-line crayon-striped-line" id="crayon-5c44b1f33a27f141077670-42"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-c">// Test with simple query</span></div><div class="crayon-line" id="crayon-5c44b1f33a27f141077670-43"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-e">EntityManager </span><span class="crayon-v">entityManager</span><span class="crayon-h"> </span><span class="crayon-o">=</span><span class="crayon-h"> </span><span class="crayon-v">factory</span><span class="crayon-sy">.</span><span class="crayon-e">createEntityManager</span><span class="crayon-sy">(</span><span class="crayon-sy">)</span><span class="crayon-sy">;</span></div><div class="crayon-line crayon-striped-line" id="crayon-5c44b1f33a27f141077670-44"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-v">TypedQuery</span><span class="crayon-e ">&lt;User&gt;</span><span class="crayon-h"> </span><span class="crayon-v">query</span><span class="crayon-h"> </span><span class="crayon-o">=</span></div><div class="crayon-line" id="crayon-5c44b1f33a27f141077670-45"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-v">entityManager</span><span class="crayon-sy">.</span><span class="crayon-e">createQuery</span><span class="crayon-sy">(</span><span class="crayon-s">"select u from User u"</span><span class="crayon-sy">,</span><span class="crayon-h"> </span><span class="crayon-v">User</span><span class="crayon-sy">.</span><span class="crayon-t">class</span><span class="crayon-sy">)</span><span class="crayon-sy">;</span></div><div class="crayon-line crayon-striped-line" id="crayon-5c44b1f33a27f141077670-46"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-st">for</span><span class="crayon-h"> </span><span class="crayon-sy">(</span><span class="crayon-e">User </span><span class="crayon-v">user</span><span class="crayon-h"> </span><span class="crayon-o">:</span><span class="crayon-h"> </span><span class="crayon-v">query</span><span class="crayon-sy">.</span><span class="crayon-e">getResultList</span><span class="crayon-sy">(</span><span class="crayon-sy">)</span><span class="crayon-sy">)</span><span class="crayon-h"> </span><span class="crayon-sy">{</span></div><div class="crayon-line" id="crayon-5c44b1f33a27f141077670-47"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-v">System</span><span class="crayon-sy">.</span><span class="crayon-v">out</span><span class="crayon-sy">.</span><span class="crayon-e">println</span><span class="crayon-sy">(</span><span class="crayon-v">user</span><span class="crayon-sy">.</span><span class="crayon-e">getFullName</span><span class="crayon-sy">(</span><span class="crayon-sy">)</span><span class="crayon-sy">)</span><span class="crayon-sy">;</span></div><div class="crayon-line crayon-striped-line" id="crayon-5c44b1f33a27f141077670-48"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-sy">}</span></div><div class="crayon-line" id="crayon-5c44b1f33a27f141077670-49">&nbsp;</div><div class="crayon-line crayon-striped-line" id="crayon-5c44b1f33a27f141077670-50"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-sy">}</span></div><div class="crayon-line" id="crayon-5c44b1f33a27f141077670-51"><span class="crayon-sy">}</span></div><div class="crayon-line crayon-striped-line" id="crayon-5c44b1f33a27f141077670-52">&nbsp;</div></div></td>
+					</tr>
+				</table>
+			</div>
+		</div>
+<!-- [Format Time: 0.0050 seconds] -->
+<p>With DBCP, all my deadlock issues disappeared. Thank you <a title="The Apache Software Foundation" href="http://www.apache.org/">ASF</a>.</p>
+					</div><!-- .entry-content -->
+		
+		<footer class="entry-meta">
+			This entry was posted in <a href="../category/development/index.html" rel="category tag">Development</a> on <a href="index.html" title="4:49 pm" rel="bookmark"><time class="entry-date" datetime="2014-11-04T16:49:23+00:00">November 4, 2014</time></a><span class="by-author"> by <span class="author vcard"><a class="url fn n" href="../author/jdemers/index.html" title="View all posts by Jonathan Demers" rel="author">Jonathan Demers</a></span></span>.								</footer><!-- .entry-meta -->
+	</article><!-- #post -->
+
+				<nav class="nav-single">
+					<h3 class="assistive-text">Post navigation</h3>
+					<span class="nav-previous"><a href="../solve-java-lang-outofmemoryerror-java-heap-space/index.html" rel="prev"><span class="meta-nav">&larr;</span> How to fix java.lang.OutOfMemoryError: Java heap space</a></span>
+					<span class="nav-next"><a href="../ubuntu-apache-reverse-proxy-rewrite-html-links/index.html" rel="next">Ubuntu Apache Reverse Proxy Rewrite HTML Links <span class="meta-nav">&rarr;</span></a></span>
+				</nav><!-- .nav-single -->
+
+				
+<div id="comments" class="comments-area">
+
+	
+	
+	
+</div><!-- #comments .comments-area -->
+
+			
+		</div><!-- #content -->
+	</div><!-- #primary -->
+
+
+			<div id="secondary" class="widget-area" role="complementary">
+					<aside id="recent-posts-2" class="widget widget_recent_entries">		<h3 class="widget-title">More Articles</h3>		<ul>
+											<li>
+					<a href="../how-to-migrate-3-mysql-databases-to-amazon-rds-in-5-minutes/index.html">How to Migrate 3 MySQL Databases to Amazon RDS in 5 Minutes</a>
+									</li>
+											<li>
+					<a href="../imageio-read-causes-outofmemoryerror/index.html">ImageIO.read() causes OutOfMemoryError</a>
+									</li>
+											<li>
+					<a href="../https-wildcard-subdomain-dns-apache-tomcat-config/index.html">HTTPS Wildcard Subdomain: DNS + Apache + Tomcat Config</a>
+									</li>
+											<li>
+					<a href="../ubuntu-apache-reverse-proxy-rewrite-html-links/index.html">Ubuntu Apache Reverse Proxy Rewrite HTML Links</a>
+									</li>
+											<li>
+					<a href="index.html">Programmatically Configure Hibernate (JPA) with DBCP</a>
+									</li>
+					</ul>
+		</aside><aside id="categories-2" class="widget widget_categories"><h3 class="widget-title">Categories</h3>		<ul>
+	<li class="cat-item cat-item-2"><a href="../category/development/index.html" >Development</a>
+</li>
+	<li class="cat-item cat-item-50"><a href="../category/how-to/index.html" >How To</a>
+</li>
+	<li class="cat-item cat-item-12"><a href="../category/news/index.html" >News</a>
+</li>
+		</ul>
+</aside>		</div><!-- #secondary -->
+		</div><!-- #main .wrapper -->
+	<footer id="colophon" role="contentinfo">
+		<div class="site-info">
+									<a href="https://wordpress.org/" class="imprint" title="Semantic Personal Publishing Platform">
+				Proudly powered by WordPress			</a>
+		</div><!-- .site-info -->
+	</footer><!-- #colophon -->
+</div><!-- #page -->
+
+<script type='text/javascript' src='../wp-content/themes/twentytwelve/js/navigation.js%3Fver=20140711'></script>
+<script type='text/javascript' src='../wp-includes/js/wp-embed.min.js%3Fver=5.0.3'></script>
+</body>
+</html>
