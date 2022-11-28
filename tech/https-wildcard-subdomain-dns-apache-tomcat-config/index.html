@@ -1,404 +1,227 @@
 <!DOCTYPE html>
-<!--[if IE 7]>
-<html class="ie ie7" lang="en-US">
-<![endif]-->
-<!--[if IE 8]>
-<html class="ie ie8" lang="en-US">
-<![endif]-->
-<!--[if !(IE 7) & !(IE 8)]><!-->
-<html lang="en-US">
-<!--<![endif]-->
-<head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width" />
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.8.0 -->
 <title>HTTPS Wildcard Subdomain: DNS + Apache + Tomcat Config | OpCode Tech</title>
-<link rel="profile" href="http://gmpg.org/xfn/11" />
-<link rel="pingback" href="https://opcodesolutions.com/tech/xmlrpc.php" />
-<!--[if lt IE 9]>
-<script src="https://opcodesolutions.com/tech/wp-content/themes/twentytwelve/js/html5.js" type="text/javascript"></script>
-<![endif]-->
-<link rel='dns-prefetch' href='https://fonts.googleapis.com/' />
-<link rel='dns-prefetch' href='https://s.w.org/' />
-<link href='https://fonts.gstatic.com' crossorigin rel='preconnect' />
-		<script type="text/javascript">
-			window._wpemojiSettings = {"baseUrl":"https:\/\/s.w.org\/images\/core\/emoji\/11\/72x72\/","ext":".png","svgUrl":"https:\/\/s.w.org\/images\/core\/emoji\/11\/svg\/","svgExt":".svg","source":{"concatemoji":"https:\/\/opcodesolutions.com\/tech\/wp-includes\/js\/wp-emoji-release.min.js?ver=5.0.3"}};
-			!function(a,b,c){function d(a,b){var c=String.fromCharCode;l.clearRect(0,0,k.width,k.height),l.fillText(c.apply(this,a),0,0);var d=k.toDataURL();l.clearRect(0,0,k.width,k.height),l.fillText(c.apply(this,b),0,0);var e=k.toDataURL();return d===e}function e(a){var b;if(!l||!l.fillText)return!1;switch(l.textBaseline="top",l.font="600 32px Arial",a){case"flag":return!(b=d([55356,56826,55356,56819],[55356,56826,8203,55356,56819]))&&(b=d([55356,57332,56128,56423,56128,56418,56128,56421,56128,56430,56128,56423,56128,56447],[55356,57332,8203,56128,56423,8203,56128,56418,8203,56128,56421,8203,56128,56430,8203,56128,56423,8203,56128,56447]),!b);case"emoji":return b=d([55358,56760,9792,65039],[55358,56760,8203,9792,65039]),!b}return!1}function f(a){var c=b.createElement("script");c.src=a,c.defer=c.type="text/javascript",b.getElementsByTagName("head")[0].appendChild(c)}var g,h,i,j,k=b.createElement("canvas"),l=k.getContext&&k.getContext("2d");for(j=Array("flag","emoji"),c.supports={everything:!0,everythingExceptFlag:!0},i=0;i<j.length;i++)c.supports[j[i]]=e(j[i]),c.supports.everything=c.supports.everything&&c.supports[j[i]],"flag"!==j[i]&&(c.supports.everythingExceptFlag=c.supports.everythingExceptFlag&&c.supports[j[i]]);c.supports.everythingExceptFlag=c.supports.everythingExceptFlag&&!c.supports.flag,c.DOMReady=!1,c.readyCallback=function(){c.DOMReady=!0},c.supports.everything||(h=function(){c.readyCallback()},b.addEventListener?(b.addEventListener("DOMContentLoaded",h,!1),a.addEventListener("load",h,!1)):(a.attachEvent("onload",h),b.attachEvent("onreadystatechange",function(){"complete"===b.readyState&&c.readyCallback()})),g=c.source||{},g.concatemoji?f(g.concatemoji):g.wpemoji&&g.twemoji&&(f(g.twemoji),f(g.wpemoji)))}(window,document,window._wpemojiSettings);
-		</script>
-		<style type="text/css">
-img.wp-smiley,
-img.emoji {
-	display: inline !important;
-	border: none !important;
-	box-shadow: none !important;
-	height: 1em !important;
-	width: 1em !important;
-	margin: 0 .07em !important;
-	vertical-align: -0.1em !important;
-	background: none !important;
-	padding: 0 !important;
-}
-</style>
-<link rel='stylesheet' id='crayon-css'  href='../wp-content/plugins/crayon-syntax-highlighter/css/min/crayon.min.css%3Fver=_2.7.2_beta.css' type='text/css' media='all' />
-<link rel='stylesheet' id='crayon-theme-eclipse-css'  href='../wp-content/plugins/crayon-syntax-highlighter/themes/eclipse/eclipse.css%3Fver=_2.7.2_beta.css' type='text/css' media='all' />
-<link rel='stylesheet' id='crayon-font-monaco-css'  href='../wp-content/plugins/crayon-syntax-highlighter/fonts/monaco.css%3Fver=_2.7.2_beta.css' type='text/css' media='all' />
-<link rel='stylesheet' id='wp-block-library-css'  href='../wp-includes/css/dist/block-library/style.min.css%3Fver=5.0.3.css' type='text/css' media='all' />
-<link rel='stylesheet' id='wp-block-library-theme-css'  href='../wp-includes/css/dist/block-library/theme.min.css%3Fver=5.0.3.css' type='text/css' media='all' />
-<link rel='stylesheet' id='twentytwelve-fonts-css'  href='https://fonts.googleapis.com/css?family=Open+Sans:400italic,700italic,400,700&#038;subset=latin,latin-ext' type='text/css' media='all' />
-<link rel='stylesheet' id='twentytwelve-style-css'  href='../wp-content/themes/twentytwelve/style.css%3Fver=5.0.3.css' type='text/css' media='all' />
-<link rel='stylesheet' id='twentytwelve-block-style-css'  href='../wp-content/themes/twentytwelve/css/blocks.css%3Fver=20181230.css' type='text/css' media='all' />
-<!--[if lt IE 9]>
-<link rel='stylesheet' id='twentytwelve-ie-css'  href='https://opcodesolutions.com/tech/wp-content/themes/twentytwelve/css/ie.css?ver=20121010' type='text/css' media='all' />
-<![endif]-->
-<script type='text/javascript' src='../wp-includes/js/jquery/jquery.js%3Fver=1.12.4'></script>
-<script type='text/javascript' src='../wp-includes/js/jquery/jquery-migrate.min.js%3Fver=1.4.1'></script>
-<script type='text/javascript'>
-/* <![CDATA[ */
-var CrayonSyntaxSettings = {"version":"_2.7.2_beta","is_admin":"0","ajaxurl":"https:\/\/opcodesolutions.com\/tech\/wp-admin\/admin-ajax.php","prefix":"crayon-","setting":"crayon-setting","selected":"crayon-setting-selected","changed":"crayon-setting-changed","special":"crayon-setting-special","orig_value":"data-orig-value","debug":""};
-var CrayonSyntaxStrings = {"copy":"Press %s to Copy, %s to Paste","minimize":"Click To Expand Code"};
-/* ]]> */
-</script>
-<script type='text/javascript' src='../wp-content/plugins/crayon-syntax-highlighter/js/min/crayon.min.js%3Fver=_2.7.2_beta'></script>
-<link rel="EditURI" type="application/rsd+xml" title="RSD" href="../xmlrpc.php%3Frsd" />
-<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="../wp-includes/wlwmanifest.xml" /> 
-<link rel='prev' title='Ubuntu Apache Reverse Proxy Rewrite HTML Links' href='../ubuntu-apache-reverse-proxy-rewrite-html-links/index.html' />
-<link rel='next' title='ImageIO.read() causes OutOfMemoryError' href='../imageio-read-causes-outofmemoryerror/index.html' />
-<meta name="generator" content="WordPress 5.0.3" />
-<link rel="canonical" href="index.html" />
-	<style type="text/css" id="twentytwelve-header-css">
-			.site-header h1 a,
-		.site-header h2 {
-			color: #8b0000;
-		}
-		</style>
-	</head>
+<meta name="generator" content="Jekyll v4.3.1" />
+<meta property="og:title" content="HTTPS Wildcard Subdomain: DNS + Apache + Tomcat Config" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="I recently had to configure HTTPS on a wildcard subdomain with Apache HTTP server as reverse proxy to a Tomcat backend. I had few more requirements:" />
+<meta property="og:description" content="I recently had to configure HTTPS on a wildcard subdomain with Apache HTTP server as reverse proxy to a Tomcat backend. I had few more requirements:" />
+<link rel="canonical" href="https://opcodesolutions.com/tech/https-wildcard-subdomain-dns-apache-tomcat-config/" />
+<meta property="og:url" content="https://opcodesolutions.com/tech/https-wildcard-subdomain-dns-apache-tomcat-config/" />
+<meta property="og:site_name" content="OpCode Tech" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2014-11-19T00:00:00-05:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="HTTPS Wildcard Subdomain: DNS + Apache + Tomcat Config" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","dateModified":"2014-11-19T00:00:00-05:00","datePublished":"2014-11-19T00:00:00-05:00","description":"I recently had to configure HTTPS on a wildcard subdomain with Apache HTTP server as reverse proxy to a Tomcat backend. I had few more requirements:","headline":"HTTPS Wildcard Subdomain: DNS + Apache + Tomcat Config","mainEntityOfPage":{"@type":"WebPage","@id":"https://opcodesolutions.com/tech/https-wildcard-subdomain-dns-apache-tomcat-config/"},"url":"https://opcodesolutions.com/tech/https-wildcard-subdomain-dns-apache-tomcat-config/"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/tech/assets/main.css"><link type="application/atom+xml" rel="alternate" href="https://opcodesolutions.com/tech/feed.xml" title="OpCode Tech" /></head>
+<body><header class="site-header" role="banner">
 
-<body class="post-template-default single single-post postid-122 single-format-standard wp-embed-responsive custom-font-enabled single-author">
-<div id="page" class="hfeed site">
-	<header id="masthead" class="site-header" role="banner">
-		<hgroup>
-			<h1 class="site-title"><a href="../../tech.html" title="OpCode Tech" rel="home">OpCode Tech</a></h1>
-			<h2 class="site-description">Optimize Your Processes</h2>
-		</hgroup>
+  <div class="wrapper"><a class="site-title" rel="author" href="/tech/">OpCode Tech</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
 
-		<nav id="site-navigation" class="main-navigation" role="navigation">
-			<button class="menu-toggle">Menu</button>
-			<a class="assistive-text" href="index.html#content" title="Skip to content">Skip to content</a>
-			<div class="menu-default-container"><ul id="menu-default" class="nav-menu"><li id="menu-item-19" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-19"><a href="../../tech.html">Home</a></li>
-<li id="menu-item-18" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-18"><a href="../category/news/index.html">News</a></li>
-<li id="menu-item-153" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-153"><a href="../category/how-to/index.html">How To</a></li>
-<li id="menu-item-17" class="menu-item menu-item-type-taxonomy menu-item-object-category current-post-ancestor current-menu-parent current-post-parent menu-item-17"><a href="../category/development/index.html">Development</a></li>
-<li id="menu-item-159" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-159"><a href="../contact/index.html">Contact</a></li>
-</ul></div>		</nav><!-- #site-navigation -->
+        <div class="trigger"><a class="page-link" href="/tech/contact/">Contact</a></div>
+      </nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
 
-			</header><!-- #masthead -->
+  <header class="post-header">
+    <h1 class="post-title p-name" itemprop="name headline">HTTPS Wildcard Subdomain: DNS + Apache + Tomcat Config</h1>
+    <p class="post-meta">
+      <time class="dt-published" datetime="2014-11-19T00:00:00-05:00" itemprop="datePublished">Nov 19, 2014
+      </time></p>
+  </header>
 
-	<div id="main" class="wrapper">
+  <div class="post-content e-content" itemprop="articleBody">
+    <p>I recently had to configure HTTPS on a wildcard subdomain with Apache HTTP server as reverse proxy to a Tomcat backend. I had few more requirements:</p>
 
-	<div id="primary" class="site-content">
-		<div id="content" role="main">
-
-			
-				
-	<article id="post-122" class="post-122 post type-post status-publish format-standard hentry category-development">
-				<header class="entry-header">
-			
-						<h1 class="entry-title">HTTPS Wildcard Subdomain: DNS + Apache + Tomcat Config</h1>
-								</header><!-- .entry-header -->
-
-				<div class="entry-content">
-			<p>I recently had to configure HTTPS on a wildcard subdomain with Apache HTTP server as reverse proxy to a Tomcat backend. I had few more requirements:</p>
 <ol>
-<li>Redirect all <strong>http</strong> traffic to <strong>http<span style="text-decoration: underline;">s</span></strong> and preserve the subdomain (hostname). For instance:
-<ul>
-<li>http://<strong>sub<span style="text-decoration: underline;">1</span></strong>.example.com/ -&gt; redirect to -&gt; http<strong><span style="text-decoration: underline;">s</span></strong>://<strong>sub<span style="text-decoration: underline;">1</span></strong>.example.com/</li>
-<li>http://<strong>sub<span style="text-decoration: underline;">2</span></strong>.example.com/ -&gt; redirect to -&gt; http<span style="text-decoration: underline;"><strong>s</strong></span>://<strong>sub<span style="text-decoration: underline;">2</span></strong>.example.com/</li>
-<li>etc.</li>
-</ul>
-</li>
-<li>I want to have a <strong>PHP</strong> wiki on the subdirectory <strong>/wiki</strong> and I want to send the rest of the traffic to Tomcat.</li>
-<li><strong>Tomcat</strong> needs to know the subdomain (hostname) and will serve content accordingly.</li>
-<li>I don&#8217;t know the subdomains in advance because they are <strong>chosen by users</strong>, just like *.wordpress.com</li>
+  <li>Redirect all <strong>http</strong> traffic to <strong>https</strong> and preserve the subdomain (hostname). For instance:
+    <ul>
+      <li>http://<strong>sub1</strong>.example.com/ -&gt; redirect to -&gt; http<strong>s</strong>://<strong>sub1</strong>.example.com/</li>
+      <li>http://<strong>sub2</strong>.example.com/ -&gt; redirect to -&gt; http<strong>s</strong>://<strong>sub2</strong>.example.com/</li>
+      <li>etc.</li>
+    </ul>
+  </li>
+  <li>I want to have a <strong>PHP</strong> wiki on the subdirectory <code class="language-plaintext highlighter-rouge">/wiki</code> and I want to send the rest of the traffic to Tomcat.</li>
+  <li><strong>Tomcat</strong> needs to know the subdomain (hostname) and will serve content accordingly.</li>
+  <li>I don’t know the subdomains in advance because they are <strong>chosen by users</strong>, just like *.wordpress.com</li>
 </ol>
+
 <p>Few parts were not trivial, so I will share my setup.</p>
-<h2>DNS Wildcard Subdomain Configuration</h2>
-<p>DNS is probably the easiest part. Nowadays, most domain registrar offer good DNS support for free with your domain. If that is not the case of your registrar, you may want to consider namecheap. Their <a title="Namecheap Wildcard Subdomain" href="https://www.namecheap.com/support/knowledgebase/article.aspx/597/10/how-can-i-set-up-a-catchall-wildcard-subdomain" target="_blank">DNS also support wildcard entries</a>. Otherwise, you can use the popular <strong>Bind DNS server</strong>. Here is how to configure a wildcard entry in BIND. Change <em>55.55.55.55</em> with your IP address.</p><!-- Crayon Syntax Highlighter v_2.7.2_beta -->
 
-		<div id="crayon-5c44b1f2e3959152647806" class="crayon-syntax crayon-theme-eclipse crayon-font-monaco crayon-os-pc print-yes notranslate" data-settings=" minimize scroll-mouseover" style=" margin-top: 12px; margin-bottom: 12px; font-size: 12px !important; line-height: 15px !important;">
-		
-			<div class="crayon-toolbar" data-settings=" show" style="font-size: 12px !important;height: 18px !important; line-height: 18px !important;"><span class="crayon-title">BIND Wildcard Subdomain</span>
-			<div class="crayon-tools" style="font-size: 12px !important;height: 18px !important; line-height: 18px !important;"><div class="crayon-button crayon-nums-button" title="Toggle Line Numbers"><div class="crayon-button-icon"></div></div><div class="crayon-button crayon-plain-button" title="Toggle Plain Code"><div class="crayon-button-icon"></div></div><div class="crayon-button crayon-wrap-button" title="Toggle Line Wrap"><div class="crayon-button-icon"></div></div><div class="crayon-button crayon-expand-button" title="Expand Code"><div class="crayon-button-icon"></div></div><div class="crayon-button crayon-copy-button" title="Copy"><div class="crayon-button-icon"></div></div><div class="crayon-button crayon-popup-button" title="Open Code In New Window"><div class="crayon-button-icon"></div></div></div></div>
-			<div class="crayon-info" style="min-height: 16.8px !important; line-height: 16.8px !important;"></div>
-			<div class="crayon-plain-wrap"><textarea wrap="soft" class="crayon-plain print-no" data-settings="dblclick" readonly style="-moz-tab-size:4; -o-tab-size:4; -webkit-tab-size:4; tab-size:4; font-size: 12px !important; line-height: 15px !important;">
+<h2 id="dns-wildcard-subdomain-configuration">DNS Wildcard Subdomain Configuration</h2>
 
-*	IN	A	55.55.55.55
-</textarea></div>
-			<div class="crayon-main" style="">
-				<table class="crayon-table">
-					<tr class="crayon-row">
-				<td class="crayon-nums " data-settings="show">
-					<div class="crayon-nums-content" style="font-size: 12px !important; line-height: 15px !important;"><div class="crayon-num" data-line="crayon-5c44b1f2e3959152647806-1">1</div><div class="crayon-num crayon-striped-num" data-line="crayon-5c44b1f2e3959152647806-2">2</div><div class="crayon-num" data-line="crayon-5c44b1f2e3959152647806-3">3</div></div>
-				</td>
-						<td class="crayon-code"><div class="crayon-pre" style="font-size: 12px !important; line-height: 15px !important; -moz-tab-size:4; -o-tab-size:4; -webkit-tab-size:4; tab-size:4;"><div class="crayon-line" id="crayon-5c44b1f2e3959152647806-1">&nbsp;</div><div class="crayon-line crayon-striped-line" id="crayon-5c44b1f2e3959152647806-2"><span class="crayon-o">*</span><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-st">IN</span><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-i">A</span><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-cn">55.55.55.55</span></div><div class="crayon-line" id="crayon-5c44b1f2e3959152647806-3">&nbsp;</div></div></td>
-					</tr>
-				</table>
-			</div>
-		</div>
-<!-- [Format Time: 0.0003 seconds] -->
-<p></p>
-<h2>Apache Wildcard Subdomain Configuration</h2>
+<p>DNS is probably the easiest part. Nowadays, most domain registrar offer good DNS support for free with your domain. If that is not the case of your registrar, you may want to consider namecheap. Their <a href="https://www.namecheap.com/support/knowledgebase/article.aspx/597/10/how-can-i-set-up-a-catchall-wildcard-subdomain">DNS also support wildcard entries</a>. Otherwise, you can use the popular <strong>Bind DNS server</strong>. Here is how to configure a wildcard entry in BIND. Change 55.55.55.55 with your IP address.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>*    IN    A    55.55.55.55
+</code></pre></div></div>
+
+<h2 id="apache-wildcard-subdomain-configuration">Apache Wildcard Subdomain Configuration</h2>
+
 <p>This was trickier. The Apache HTTP server configuration has 2 main parts.</p>
-<p><strong>1. HTTP (port 80)</strong>: We use mod_rewrite to redirect all traffic for *.example.com to https (port 443) and we preserve the hostname with the %{HTTP_HOST} variable.</p>
-<p><strong>2. HTTPS (port 443)</strong>: Except for the PHP subdirectory (/wiki), we reverse proxy all traffic to Tomcat, which listen on port 9090 of localhost.</p><!-- Crayon Syntax Highlighter v_2.7.2_beta -->
 
-		<div id="crayon-5c44b1f2e3961062051914" class="crayon-syntax crayon-theme-eclipse crayon-font-monaco crayon-os-pc print-yes notranslate" data-settings=" minimize scroll-mouseover" style=" margin-top: 12px; margin-bottom: 12px; font-size: 12px !important; line-height: 15px !important;">
-		
-			<div class="crayon-toolbar" data-settings=" show" style="font-size: 12px !important;height: 18px !important; line-height: 18px !important;"><span class="crayon-title">Apache HTTPS Wildcard Subdomain</span>
-			<div class="crayon-tools" style="font-size: 12px !important;height: 18px !important; line-height: 18px !important;"><div class="crayon-button crayon-nums-button" title="Toggle Line Numbers"><div class="crayon-button-icon"></div></div><div class="crayon-button crayon-plain-button" title="Toggle Plain Code"><div class="crayon-button-icon"></div></div><div class="crayon-button crayon-wrap-button" title="Toggle Line Wrap"><div class="crayon-button-icon"></div></div><div class="crayon-button crayon-expand-button" title="Expand Code"><div class="crayon-button-icon"></div></div><div class="crayon-button crayon-copy-button" title="Copy"><div class="crayon-button-icon"></div></div><div class="crayon-button crayon-popup-button" title="Open Code In New Window"><div class="crayon-button-icon"></div></div><span class="crayon-language">Apache</span></div></div>
-			<div class="crayon-info" style="min-height: 16.8px !important; line-height: 16.8px !important;"></div>
-			<div class="crayon-plain-wrap"><textarea wrap="soft" class="crayon-plain print-no" data-settings="dblclick" readonly style="-moz-tab-size:4; -o-tab-size:4; -webkit-tab-size:4; tab-size:4; font-size: 12px !important; line-height: 15px !important;">
+<ol>
+  <li><strong>HTTP (port 80)</strong>: We use mod_rewrite to redirect all traffic for *.example.com to https (port 443) and we preserve the hostname with the %{HTTP_HOST} variable.</li>
+  <li><strong>HTTPS (port 443)</strong>: Except for the PHP subdirectory (/wiki), we reverse proxy all traffic to Tomcat, which listen on port 9090 of localhost.</li>
+</ol>
 
-# Allow non-SNI clients
-SSLStrictSNIVHostCheck off
+<div class="language-apache highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># Allow non-SNI clients</span>
+<span class="nc">SSLStrictSNIVHostCheck</span> <span class="ss">off</span>
 
-# HTTP configuration
-&lt;VirtualHost *:80&gt;
+<span class="c"># HTTP configuration</span>
+<span class="p">&lt;</span><span class="nl">VirtualHost</span><span class="sr"> *:80</span><span class="p">&gt;
+</span>
+    <span class="nc">ServerName</span> example.com
 
-	ServerName example.com
+    <span class="c"># Wildcard subdomain</span>
+    <span class="nc">ServerAlias</span> *.example.com
 
-	# Wildcard subdomain
-	ServerAlias *.example.com
+    <span class="nc">ServerAdmin</span> info@example.com
 
-	ServerAdmin info@example.com
+    <span class="c"># Permanent redirect (301) to HTTPS and preserve</span>
+    <span class="c"># hostname (but do not preserve path)</span>
+    <span class="nc">RewriteEngine</span> <span class="ss">On</span>
+    <span class="nc">RewriteRule</span> .* https://%{HTTP_HOST}/? [R=301,L]
+<span class="p">&lt;/</span><span class="nl">VirtualHost</span><span class="p">&gt;
+</span>
+<span class="c"># HTTPS configuration</span>
+<span class="p">&lt;</span><span class="nl">VirtualHost</span><span class="sr"> *:443</span><span class="p">&gt;
+</span>
+    <span class="nc">ServerName</span> example.com
 
-	# Permanent redirect (301) to HTTPS and preserve
-	# hostname (but do not preserve path)
-	RewriteEngine On
-	RewriteRule .* https://%{HTTP_HOST}/? [R=301,L]
-&lt;/VirtualHost&gt;
+    <span class="c"># Wildcard subdomain</span>
+    <span class="nc">ServerAlias</span> *.example.com
 
-# HTTPS configuration
-&lt;VirtualHost *:443&gt;
+    <span class="nc">ServerAdmin</span> info@example.com
 
-	ServerName example.com
+    <span class="c"># PHP Wiki on path /wiki</span>
+    <span class="nc">Alias</span> /wiki /opt/example.com/php/wiki
+    <span class="p">&lt;</span><span class="nl">Directory</span><span class="sr"> /opt/example.com/php/wiki</span><span class="p">&gt;
+</span>        <span class="nc">AllowOverride</span> <span class="ss">All</span>
+        <span class="nc">Require</span> <span class="ss">all</span> granted
+    <span class="p">&lt;/</span><span class="nl">Directory</span><span class="p">&gt;
+</span>
+    <span class="c"># Reverse proxy everything to Tomcat except for /wiki</span>
+    <span class="nc">ProxyRequests</span> <span class="ss">Off</span>
+    <span class="nc">ProxyPass</span> /wiki !
+    <span class="nc">ProxyPass</span> / http://localhost:9090/
+    <span class="nc">ProxyPassReverse</span> / http://localhost:9090/
 
-	# Wildcard subdomain
-	ServerAlias *.example.com
+    <span class="c"># Logs</span>
+    <span class="nc">ErrorLog</span> ${APACHE_LOG_DIR}/error.log
+    <span class="nc">CustomLog</span> ${APACHE_LOG_DIR}/access.log combined
 
-	ServerAdmin info@example.com
-	
-	# PHP Wiki on path /wiki 
-	Alias /wiki /opt/example.com/php/wiki
-	&lt;Directory /opt/example.com/php/wiki&gt;
-		AllowOverride All
-		Require all granted
-	&lt;/Directory&gt;
+    <span class="c"># Wildcard SSL/TLS Certificate files</span>
+    <span class="nc">SSLEngine</span> <span class="ss">on</span>
+    <span class="nc">SSLCertificateFile</span> /etc/ssl/certs/STAR_example_com.crt
+    <span class="nc">SSLCertificateKeyFile</span> /etc/ssl/private/example.key
+    <span class="nc">SSLCertificateChainFile</span> /etc/ssl/certs/example.ca-bundle
 
-	# Reverse proxy everything to Tomcat except for /wiki
-	ProxyRequests Off
-	ProxyPass /wiki !
-	ProxyPass / http://localhost:9090/
-	ProxyPassReverse / http://localhost:9090/
-	
-	# Logs
-	ErrorLog ${APACHE_LOG_DIR}/error.log
-	CustomLog ${APACHE_LOG_DIR}/access.log combined
+    <span class="c"># Standard script config</span>
+    <span class="p">&lt;</span><span class="nl">FilesMatch</span><span class="sr"> "\.(cgi|shtml|phtml|php)$"</span><span class="p">&gt;
+</span>        <span class="nc">SSLOptions</span> +StdEnvVars
+    <span class="p">&lt;/</span><span class="nl">FilesMatch</span><span class="p">&gt;
+</span>    <span class="p">&lt;</span><span class="nl">Directory</span><span class="sr"> /usr/lib/cgi-bin</span><span class="p">&gt;
+</span>        <span class="nc">SSLOptions</span> +StdEnvVars
+    <span class="p">&lt;/</span><span class="nl">Directory</span><span class="p">&gt;
+</span>
+    <span class="c"># Standard config for Internet Explorer</span>
+    <span class="nc">BrowserMatch</span> "MSIE [2-6]" \
+        nokeepalive ssl-unclean-shutdown \
+        downgrade-1.0 force-response-1.0
 
-	# Wildcard SSL/TLS Certificate files
-	SSLEngine on
-	SSLCertificateFile /etc/ssl/certs/STAR_example_com.crt
-	SSLCertificateKeyFile /etc/ssl/private/example.key
-	SSLCertificateChainFile /etc/ssl/certs/example.ca-bundle
+    <span class="nc">BrowserMatch</span> "MSIE [17-9]" ssl-unclean-shutdown
 
-	# Standard script config
-	&lt;FilesMatch "\.(cgi|shtml|phtml|php)$"&gt;
-		SSLOptions +StdEnvVars
-	&lt;/FilesMatch&gt;
-	&lt;Directory /usr/lib/cgi-bin&gt;
-		SSLOptions +StdEnvVars
-	&lt;/Directory&gt;
-	
-	# Standard config for Internet Explorer
-	BrowserMatch "MSIE [2-6]" \
-		nokeepalive ssl-unclean-shutdown \
-		downgrade-1.0 force-response-1.0
-	
-	BrowserMatch "MSIE [17-9]" ssl-unclean-shutdown
-	
-&lt;/VirtualHost&gt;
-</textarea></div>
-			<div class="crayon-main" style="">
-				<table class="crayon-table">
-					<tr class="crayon-row">
-				<td class="crayon-nums " data-settings="show">
-					<div class="crayon-nums-content" style="font-size: 12px !important; line-height: 15px !important;"><div class="crayon-num" data-line="crayon-5c44b1f2e3961062051914-1">1</div><div class="crayon-num crayon-striped-num" data-line="crayon-5c44b1f2e3961062051914-2">2</div><div class="crayon-num" data-line="crayon-5c44b1f2e3961062051914-3">3</div><div class="crayon-num crayon-striped-num" data-line="crayon-5c44b1f2e3961062051914-4">4</div><div class="crayon-num" data-line="crayon-5c44b1f2e3961062051914-5">5</div><div class="crayon-num crayon-striped-num" data-line="crayon-5c44b1f2e3961062051914-6">6</div><div class="crayon-num" data-line="crayon-5c44b1f2e3961062051914-7">7</div><div class="crayon-num crayon-striped-num" data-line="crayon-5c44b1f2e3961062051914-8">8</div><div class="crayon-num" data-line="crayon-5c44b1f2e3961062051914-9">9</div><div class="crayon-num crayon-striped-num" data-line="crayon-5c44b1f2e3961062051914-10">10</div><div class="crayon-num" data-line="crayon-5c44b1f2e3961062051914-11">11</div><div class="crayon-num crayon-striped-num" data-line="crayon-5c44b1f2e3961062051914-12">12</div><div class="crayon-num" data-line="crayon-5c44b1f2e3961062051914-13">13</div><div class="crayon-num crayon-striped-num" data-line="crayon-5c44b1f2e3961062051914-14">14</div><div class="crayon-num" data-line="crayon-5c44b1f2e3961062051914-15">15</div><div class="crayon-num crayon-striped-num" data-line="crayon-5c44b1f2e3961062051914-16">16</div><div class="crayon-num" data-line="crayon-5c44b1f2e3961062051914-17">17</div><div class="crayon-num crayon-striped-num" data-line="crayon-5c44b1f2e3961062051914-18">18</div><div class="crayon-num" data-line="crayon-5c44b1f2e3961062051914-19">19</div><div class="crayon-num crayon-striped-num" data-line="crayon-5c44b1f2e3961062051914-20">20</div><div class="crayon-num" data-line="crayon-5c44b1f2e3961062051914-21">21</div><div class="crayon-num crayon-striped-num" data-line="crayon-5c44b1f2e3961062051914-22">22</div><div class="crayon-num" data-line="crayon-5c44b1f2e3961062051914-23">23</div><div class="crayon-num crayon-striped-num" data-line="crayon-5c44b1f2e3961062051914-24">24</div><div class="crayon-num" data-line="crayon-5c44b1f2e3961062051914-25">25</div><div class="crayon-num crayon-striped-num" data-line="crayon-5c44b1f2e3961062051914-26">26</div><div class="crayon-num" data-line="crayon-5c44b1f2e3961062051914-27">27</div><div class="crayon-num crayon-striped-num" data-line="crayon-5c44b1f2e3961062051914-28">28</div><div class="crayon-num" data-line="crayon-5c44b1f2e3961062051914-29">29</div><div class="crayon-num crayon-striped-num" data-line="crayon-5c44b1f2e3961062051914-30">30</div><div class="crayon-num" data-line="crayon-5c44b1f2e3961062051914-31">31</div><div class="crayon-num crayon-striped-num" data-line="crayon-5c44b1f2e3961062051914-32">32</div><div class="crayon-num" data-line="crayon-5c44b1f2e3961062051914-33">33</div><div class="crayon-num crayon-striped-num" data-line="crayon-5c44b1f2e3961062051914-34">34</div><div class="crayon-num" data-line="crayon-5c44b1f2e3961062051914-35">35</div><div class="crayon-num crayon-striped-num" data-line="crayon-5c44b1f2e3961062051914-36">36</div><div class="crayon-num" data-line="crayon-5c44b1f2e3961062051914-37">37</div><div class="crayon-num crayon-striped-num" data-line="crayon-5c44b1f2e3961062051914-38">38</div><div class="crayon-num" data-line="crayon-5c44b1f2e3961062051914-39">39</div><div class="crayon-num crayon-striped-num" data-line="crayon-5c44b1f2e3961062051914-40">40</div><div class="crayon-num" data-line="crayon-5c44b1f2e3961062051914-41">41</div><div class="crayon-num crayon-striped-num" data-line="crayon-5c44b1f2e3961062051914-42">42</div><div class="crayon-num" data-line="crayon-5c44b1f2e3961062051914-43">43</div><div class="crayon-num crayon-striped-num" data-line="crayon-5c44b1f2e3961062051914-44">44</div><div class="crayon-num" data-line="crayon-5c44b1f2e3961062051914-45">45</div><div class="crayon-num crayon-striped-num" data-line="crayon-5c44b1f2e3961062051914-46">46</div><div class="crayon-num" data-line="crayon-5c44b1f2e3961062051914-47">47</div><div class="crayon-num crayon-striped-num" data-line="crayon-5c44b1f2e3961062051914-48">48</div><div class="crayon-num" data-line="crayon-5c44b1f2e3961062051914-49">49</div><div class="crayon-num crayon-striped-num" data-line="crayon-5c44b1f2e3961062051914-50">50</div><div class="crayon-num" data-line="crayon-5c44b1f2e3961062051914-51">51</div><div class="crayon-num crayon-striped-num" data-line="crayon-5c44b1f2e3961062051914-52">52</div><div class="crayon-num" data-line="crayon-5c44b1f2e3961062051914-53">53</div><div class="crayon-num crayon-striped-num" data-line="crayon-5c44b1f2e3961062051914-54">54</div><div class="crayon-num" data-line="crayon-5c44b1f2e3961062051914-55">55</div><div class="crayon-num crayon-striped-num" data-line="crayon-5c44b1f2e3961062051914-56">56</div><div class="crayon-num" data-line="crayon-5c44b1f2e3961062051914-57">57</div><div class="crayon-num crayon-striped-num" data-line="crayon-5c44b1f2e3961062051914-58">58</div><div class="crayon-num" data-line="crayon-5c44b1f2e3961062051914-59">59</div><div class="crayon-num crayon-striped-num" data-line="crayon-5c44b1f2e3961062051914-60">60</div><div class="crayon-num" data-line="crayon-5c44b1f2e3961062051914-61">61</div><div class="crayon-num crayon-striped-num" data-line="crayon-5c44b1f2e3961062051914-62">62</div><div class="crayon-num" data-line="crayon-5c44b1f2e3961062051914-63">63</div><div class="crayon-num crayon-striped-num" data-line="crayon-5c44b1f2e3961062051914-64">64</div><div class="crayon-num" data-line="crayon-5c44b1f2e3961062051914-65">65</div><div class="crayon-num crayon-striped-num" data-line="crayon-5c44b1f2e3961062051914-66">66</div><div class="crayon-num" data-line="crayon-5c44b1f2e3961062051914-67">67</div><div class="crayon-num crayon-striped-num" data-line="crayon-5c44b1f2e3961062051914-68">68</div><div class="crayon-num" data-line="crayon-5c44b1f2e3961062051914-69">69</div><div class="crayon-num crayon-striped-num" data-line="crayon-5c44b1f2e3961062051914-70">70</div></div>
-				</td>
-						<td class="crayon-code"><div class="crayon-pre" style="font-size: 12px !important; line-height: 15px !important; -moz-tab-size:4; -o-tab-size:4; -webkit-tab-size:4; tab-size:4;"><div class="crayon-line" id="crayon-5c44b1f2e3961062051914-1">&nbsp;</div><div class="crayon-line crayon-striped-line" id="crayon-5c44b1f2e3961062051914-2"><span class="crayon-c"># Allow non-SNI clients</span></div><div class="crayon-line" id="crayon-5c44b1f2e3961062051914-3"><span class="crayon-r">SSLStrictSNIVHostCheck</span><span class="crayon-h"> </span><span class="crayon-i ">off</span></div><div class="crayon-line crayon-striped-line" id="crayon-5c44b1f2e3961062051914-4">&nbsp;</div><div class="crayon-line" id="crayon-5c44b1f2e3961062051914-5"><span class="crayon-c"># HTTP configuration</span></div><div class="crayon-line crayon-striped-line" id="crayon-5c44b1f2e3961062051914-6"><span class="crayon-r ">&lt;</span><span class="crayon-r ">VirtualHost</span><span class="crayon-h"> </span><span class="crayon-e ">*:80</span><span class="crayon-r ">&gt;</span></div><div class="crayon-line" id="crayon-5c44b1f2e3961062051914-7">&nbsp;</div><div class="crayon-line crayon-striped-line" id="crayon-5c44b1f2e3961062051914-8"><span class="crayon-r">&nbsp;&nbsp;&nbsp;&nbsp;ServerName</span><span class="crayon-h"> </span><span class="crayon-i ">example</span><span class="crayon-sy">.</span><span class="crayon-i ">com</span></div><div class="crayon-line" id="crayon-5c44b1f2e3961062051914-9">&nbsp;</div><div class="crayon-line crayon-striped-line" id="crayon-5c44b1f2e3961062051914-10"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-c"># Wildcard subdomain</span></div><div class="crayon-line" id="crayon-5c44b1f2e3961062051914-11"><span class="crayon-r">&nbsp;&nbsp;&nbsp;&nbsp;ServerAlias</span><span class="crayon-h"> </span><span class="crayon-o">*</span><span class="crayon-sy">.</span><span class="crayon-i ">example</span><span class="crayon-sy">.</span><span class="crayon-i ">com</span></div><div class="crayon-line crayon-striped-line" id="crayon-5c44b1f2e3961062051914-12">&nbsp;</div><div class="crayon-line" id="crayon-5c44b1f2e3961062051914-13"><span class="crayon-r">&nbsp;&nbsp;&nbsp;&nbsp;ServerAdmin</span><span class="crayon-h"> </span><span class="crayon-i ">info</span><span class="crayon-sy">@</span><span class="crayon-i ">example</span><span class="crayon-sy">.</span><span class="crayon-i ">com</span></div><div class="crayon-line crayon-striped-line" id="crayon-5c44b1f2e3961062051914-14">&nbsp;</div><div class="crayon-line" id="crayon-5c44b1f2e3961062051914-15"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-c"># Permanent redirect (301) to HTTPS and preserve</span></div><div class="crayon-line crayon-striped-line" id="crayon-5c44b1f2e3961062051914-16"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-c"># hostname (but do not preserve path)</span></div><div class="crayon-line" id="crayon-5c44b1f2e3961062051914-17"><span class="crayon-r">&nbsp;&nbsp;&nbsp;&nbsp;RewriteEngine</span><span class="crayon-h"> </span><span class="crayon-i ">On</span></div><div class="crayon-line crayon-striped-line" id="crayon-5c44b1f2e3961062051914-18"><span class="crayon-r">&nbsp;&nbsp;&nbsp;&nbsp;RewriteRule</span><span class="crayon-h"> </span><span class="crayon-sy">.</span><span class="crayon-o">*</span><span class="crayon-h"> </span><span class="crayon-i ">https</span><span class="crayon-o">:</span><span class="crayon-o">/</span><span class="crayon-o">/</span><span class="crayon-v ">%{HTTP_HOST}</span><span class="crayon-o">/</span><span class="crayon-sy">?</span><span class="crayon-h"> </span><span class="crayon-cn ">[R=301,L]</span></div><div class="crayon-line" id="crayon-5c44b1f2e3961062051914-19"><span class="crayon-r ">&lt;</span><span class="crayon-r ">/VirtualHost</span><span class="crayon-r ">&gt;</span></div><div class="crayon-line crayon-striped-line" id="crayon-5c44b1f2e3961062051914-20">&nbsp;</div><div class="crayon-line" id="crayon-5c44b1f2e3961062051914-21"><span class="crayon-c"># HTTPS configuration</span></div><div class="crayon-line crayon-striped-line" id="crayon-5c44b1f2e3961062051914-22"><span class="crayon-r ">&lt;</span><span class="crayon-r ">VirtualHost</span><span class="crayon-h"> </span><span class="crayon-e ">*:443</span><span class="crayon-r ">&gt;</span></div><div class="crayon-line" id="crayon-5c44b1f2e3961062051914-23">&nbsp;</div><div class="crayon-line crayon-striped-line" id="crayon-5c44b1f2e3961062051914-24"><span class="crayon-r">&nbsp;&nbsp;&nbsp;&nbsp;ServerName</span><span class="crayon-h"> </span><span class="crayon-i ">example</span><span class="crayon-sy">.</span><span class="crayon-i ">com</span></div><div class="crayon-line" id="crayon-5c44b1f2e3961062051914-25">&nbsp;</div><div class="crayon-line crayon-striped-line" id="crayon-5c44b1f2e3961062051914-26"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-c"># Wildcard subdomain</span></div><div class="crayon-line" id="crayon-5c44b1f2e3961062051914-27"><span class="crayon-r">&nbsp;&nbsp;&nbsp;&nbsp;ServerAlias</span><span class="crayon-h"> </span><span class="crayon-o">*</span><span class="crayon-sy">.</span><span class="crayon-i ">example</span><span class="crayon-sy">.</span><span class="crayon-i ">com</span></div><div class="crayon-line crayon-striped-line" id="crayon-5c44b1f2e3961062051914-28">&nbsp;</div><div class="crayon-line" id="crayon-5c44b1f2e3961062051914-29"><span class="crayon-r">&nbsp;&nbsp;&nbsp;&nbsp;ServerAdmin</span><span class="crayon-h"> </span><span class="crayon-i ">info</span><span class="crayon-sy">@</span><span class="crayon-i ">example</span><span class="crayon-sy">.</span><span class="crayon-i ">com</span></div><div class="crayon-line crayon-striped-line" id="crayon-5c44b1f2e3961062051914-30"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span></div><div class="crayon-line" id="crayon-5c44b1f2e3961062051914-31"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-c"># PHP Wiki on path /wiki </span></div><div class="crayon-line crayon-striped-line" id="crayon-5c44b1f2e3961062051914-32"><span class="crayon-r">&nbsp;&nbsp;&nbsp;&nbsp;Alias</span><span class="crayon-h"> </span><span class="crayon-o">/</span><span class="crayon-i ">wiki</span><span class="crayon-h"> </span><span class="crayon-o">/</span><span class="crayon-i ">opt</span><span class="crayon-o">/</span><span class="crayon-i ">example</span><span class="crayon-sy">.</span><span class="crayon-i ">com</span><span class="crayon-o">/</span><span class="crayon-i ">php</span><span class="crayon-o">/</span><span class="crayon-i ">wiki</span></div><div class="crayon-line" id="crayon-5c44b1f2e3961062051914-33"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-r ">&lt;</span><span class="crayon-r ">Directory</span><span class="crayon-h"> </span><span class="crayon-e ">/opt/example.com/php/wiki</span><span class="crayon-r ">&gt;</span></div><div class="crayon-line crayon-striped-line" id="crayon-5c44b1f2e3961062051914-34"><span class="crayon-r">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;AllowOverride</span><span class="crayon-h"> </span><span class="crayon-i ">All</span></div><div class="crayon-line" id="crayon-5c44b1f2e3961062051914-35"><span class="crayon-r">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Require</span><span class="crayon-h"> </span><span class="crayon-i ">all</span><span class="crayon-h"> </span><span class="crayon-i ">granted</span></div><div class="crayon-line crayon-striped-line" id="crayon-5c44b1f2e3961062051914-36"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-r ">&lt;</span><span class="crayon-r ">/Directory</span><span class="crayon-r ">&gt;</span></div><div class="crayon-line" id="crayon-5c44b1f2e3961062051914-37">&nbsp;</div><div class="crayon-line crayon-striped-line" id="crayon-5c44b1f2e3961062051914-38"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-c"># Reverse proxy everything to Tomcat except for /wiki</span></div><div class="crayon-line" id="crayon-5c44b1f2e3961062051914-39"><span class="crayon-r">&nbsp;&nbsp;&nbsp;&nbsp;ProxyRequests</span><span class="crayon-h"> </span><span class="crayon-i ">Off</span></div><div class="crayon-line crayon-striped-line" id="crayon-5c44b1f2e3961062051914-40"><span class="crayon-r">&nbsp;&nbsp;&nbsp;&nbsp;ProxyPass</span><span class="crayon-h"> </span><span class="crayon-o">/</span><span class="crayon-i ">wiki</span><span class="crayon-h"> </span><span class="crayon-o">!</span></div><div class="crayon-line" id="crayon-5c44b1f2e3961062051914-41"><span class="crayon-r">&nbsp;&nbsp;&nbsp;&nbsp;ProxyPass</span><span class="crayon-h"> </span><span class="crayon-o">/</span><span class="crayon-h"> </span><span class="crayon-i ">http</span><span class="crayon-o">:</span><span class="crayon-o">/</span><span class="crayon-o">/</span><span class="crayon-i ">localhost</span><span class="crayon-o">:</span><span class="crayon-cn">9090</span><span class="crayon-o">/</span></div><div class="crayon-line crayon-striped-line" id="crayon-5c44b1f2e3961062051914-42"><span class="crayon-r">&nbsp;&nbsp;&nbsp;&nbsp;ProxyPassReverse</span><span class="crayon-h"> </span><span class="crayon-o">/</span><span class="crayon-h"> </span><span class="crayon-i ">http</span><span class="crayon-o">:</span><span class="crayon-o">/</span><span class="crayon-o">/</span><span class="crayon-i ">localhost</span><span class="crayon-o">:</span><span class="crayon-cn">9090</span><span class="crayon-o">/</span></div><div class="crayon-line" id="crayon-5c44b1f2e3961062051914-43"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span></div><div class="crayon-line crayon-striped-line" id="crayon-5c44b1f2e3961062051914-44"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-c"># Logs</span></div><div class="crayon-line" id="crayon-5c44b1f2e3961062051914-45"><span class="crayon-r">&nbsp;&nbsp;&nbsp;&nbsp;ErrorLog</span><span class="crayon-h"> </span><span class="crayon-sy">$</span><span class="crayon-sy">{</span><span class="crayon-i ">APACHE_LOG_DIR</span><span class="crayon-sy">}</span><span class="crayon-o">/</span><span class="crayon-i ">error</span><span class="crayon-sy">.</span><span class="crayon-i ">log</span></div><div class="crayon-line crayon-striped-line" id="crayon-5c44b1f2e3961062051914-46"><span class="crayon-r">&nbsp;&nbsp;&nbsp;&nbsp;CustomLog</span><span class="crayon-h"> </span><span class="crayon-sy">$</span><span class="crayon-sy">{</span><span class="crayon-i ">APACHE_LOG_DIR</span><span class="crayon-sy">}</span><span class="crayon-o">/</span><span class="crayon-i ">access</span><span class="crayon-sy">.</span><span class="crayon-i ">log</span><span class="crayon-h"> </span><span class="crayon-i ">combined</span></div><div class="crayon-line" id="crayon-5c44b1f2e3961062051914-47">&nbsp;</div><div class="crayon-line crayon-striped-line" id="crayon-5c44b1f2e3961062051914-48"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-c"># Wildcard SSL/TLS Certificate files</span></div><div class="crayon-line" id="crayon-5c44b1f2e3961062051914-49"><span class="crayon-r">&nbsp;&nbsp;&nbsp;&nbsp;SSLEngine</span><span class="crayon-h"> </span><span class="crayon-i ">on</span></div><div class="crayon-line crayon-striped-line" id="crayon-5c44b1f2e3961062051914-50"><span class="crayon-r">&nbsp;&nbsp;&nbsp;&nbsp;SSLCertificateFile</span><span class="crayon-h"> </span><span class="crayon-o">/</span><span class="crayon-i ">etc</span><span class="crayon-o">/</span><span class="crayon-i ">ssl</span><span class="crayon-o">/</span><span class="crayon-i ">certs</span><span class="crayon-o">/</span><span class="crayon-i ">STAR_example_com</span><span class="crayon-sy">.</span><span class="crayon-i ">crt</span></div><div class="crayon-line" id="crayon-5c44b1f2e3961062051914-51"><span class="crayon-r">&nbsp;&nbsp;&nbsp;&nbsp;SSLCertificateKeyFile</span><span class="crayon-h"> </span><span class="crayon-o">/</span><span class="crayon-i ">etc</span><span class="crayon-o">/</span><span class="crayon-i ">ssl</span><span class="crayon-o">/</span><span class="crayon-i ">private</span><span class="crayon-o">/</span><span class="crayon-i ">example</span><span class="crayon-sy">.</span><span class="crayon-i ">key</span></div><div class="crayon-line crayon-striped-line" id="crayon-5c44b1f2e3961062051914-52"><span class="crayon-r">&nbsp;&nbsp;&nbsp;&nbsp;SSLCertificateChainFile</span><span class="crayon-h"> </span><span class="crayon-o">/</span><span class="crayon-i ">etc</span><span class="crayon-o">/</span><span class="crayon-i ">ssl</span><span class="crayon-o">/</span><span class="crayon-i ">certs</span><span class="crayon-o">/</span><span class="crayon-i ">example</span><span class="crayon-sy">.</span><span class="crayon-i ">ca-bundle</span></div><div class="crayon-line" id="crayon-5c44b1f2e3961062051914-53">&nbsp;</div><div class="crayon-line crayon-striped-line" id="crayon-5c44b1f2e3961062051914-54"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-c"># Standard script config</span></div><div class="crayon-line" id="crayon-5c44b1f2e3961062051914-55"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-r ">&lt;</span><span class="crayon-r ">FilesMatch</span><span class="crayon-h"> </span><span class="crayon-s">"\.(cgi|shtml|phtml|php)$"</span><span class="crayon-r ">&gt;</span></div><div class="crayon-line crayon-striped-line" id="crayon-5c44b1f2e3961062051914-56"><span class="crayon-r">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;SSLOptions</span><span class="crayon-h"> </span><span class="crayon-o">+</span><span class="crayon-i ">StdEnvVars</span></div><div class="crayon-line" id="crayon-5c44b1f2e3961062051914-57"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-r ">&lt;</span><span class="crayon-r ">/FilesMatch</span><span class="crayon-r ">&gt;</span></div><div class="crayon-line crayon-striped-line" id="crayon-5c44b1f2e3961062051914-58"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-r ">&lt;</span><span class="crayon-r ">Directory</span><span class="crayon-h"> </span><span class="crayon-e ">/usr/lib/cgi-bin</span><span class="crayon-r ">&gt;</span></div><div class="crayon-line" id="crayon-5c44b1f2e3961062051914-59"><span class="crayon-r">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;SSLOptions</span><span class="crayon-h"> </span><span class="crayon-o">+</span><span class="crayon-i ">StdEnvVars</span></div><div class="crayon-line crayon-striped-line" id="crayon-5c44b1f2e3961062051914-60"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-r ">&lt;</span><span class="crayon-r ">/Directory</span><span class="crayon-r ">&gt;</span></div><div class="crayon-line" id="crayon-5c44b1f2e3961062051914-61"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span></div><div class="crayon-line crayon-striped-line" id="crayon-5c44b1f2e3961062051914-62"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-c"># Standard config for Internet Explorer</span></div><div class="crayon-line" id="crayon-5c44b1f2e3961062051914-63"><span class="crayon-r">&nbsp;&nbsp;&nbsp;&nbsp;BrowserMatch</span><span class="crayon-h"> </span><span class="crayon-s">"MSIE [2-6]"</span><span class="crayon-h"> </span><span class="crayon-sy">\</span></div><div class="crayon-line crayon-striped-line" id="crayon-5c44b1f2e3961062051914-64"><span class="crayon-r">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;nokeepalive</span><span class="crayon-h"> </span><span class="crayon-i ">ssl-unclean-shutdown</span><span class="crayon-h"> </span><span class="crayon-sy">\</span></div><div class="crayon-line" id="crayon-5c44b1f2e3961062051914-65"><span class="crayon-r">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;downgrade</span><span class="crayon-v ">-1</span><span class="crayon-sy">.</span><span class="crayon-cn">0</span><span class="crayon-h"> </span><span class="crayon-i ">force-response-1</span><span class="crayon-sy">.</span><span class="crayon-cn">0</span></div><div class="crayon-line crayon-striped-line" id="crayon-5c44b1f2e3961062051914-66"><span class="crayon-r">&nbsp;&nbsp;&nbsp;&nbsp;</span></div><div class="crayon-line" id="crayon-5c44b1f2e3961062051914-67"><span class="crayon-r">&nbsp;&nbsp;&nbsp;&nbsp;BrowserMatch</span><span class="crayon-h"> </span><span class="crayon-s">"MSIE [17-9]"</span><span class="crayon-h"> </span><span class="crayon-i ">ssl-unclean-shutdown</span></div><div class="crayon-line crayon-striped-line" id="crayon-5c44b1f2e3961062051914-68"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span></div><div class="crayon-line" id="crayon-5c44b1f2e3961062051914-69"><span class="crayon-r ">&lt;</span><span class="crayon-r ">/VirtualHost</span><span class="crayon-r ">&gt;</span></div><div class="crayon-line crayon-striped-line" id="crayon-5c44b1f2e3961062051914-70">&nbsp;</div></div></td>
-					</tr>
-				</table>
-			</div>
-		</div>
-<!-- [Format Time: 0.0094 seconds] -->
-<p></p>
-<h2>Tomcat Wildcard Subdomain Configuration</h2>
-<p>Below you&#8217;ll find the configuration of Tomcat (in server.xml), which is quite standard. Actually, we do not need to define any &#8220;<em>wildcard</em>&#8220;, we just define a <strong>defaultHost</strong> in the <strong>Engine</strong> element. Then we deploy a <strong>ROOT.war</strong> in the webapps directory (<em>/opt/example.com/tomcat7/webapps</em>) to serve all content at the root context path.</p><!-- Crayon Syntax Highlighter v_2.7.2_beta -->
+<span class="p">&lt;/</span><span class="nl">VirtualHost</span><span class="p">&gt;
+</span></code></pre></div></div>
 
-		<div id="crayon-5c44b1f2e3965759377144" class="crayon-syntax crayon-theme-eclipse crayon-font-monaco crayon-os-pc print-yes notranslate" data-settings=" minimize scroll-mouseover" style=" margin-top: 12px; margin-bottom: 12px; font-size: 12px !important; line-height: 15px !important;">
-		
-			<div class="crayon-toolbar" data-settings=" show" style="font-size: 12px !important;height: 18px !important; line-height: 18px !important;"><span class="crayon-title">Tomcat Wildcard Subdomain</span>
-			<div class="crayon-tools" style="font-size: 12px !important;height: 18px !important; line-height: 18px !important;"><div class="crayon-button crayon-nums-button" title="Toggle Line Numbers"><div class="crayon-button-icon"></div></div><div class="crayon-button crayon-plain-button" title="Toggle Plain Code"><div class="crayon-button-icon"></div></div><div class="crayon-button crayon-wrap-button" title="Toggle Line Wrap"><div class="crayon-button-icon"></div></div><div class="crayon-button crayon-expand-button" title="Expand Code"><div class="crayon-button-icon"></div></div><div class="crayon-button crayon-copy-button" title="Copy"><div class="crayon-button-icon"></div></div><div class="crayon-button crayon-popup-button" title="Open Code In New Window"><div class="crayon-button-icon"></div></div><span class="crayon-language">XHTML</span></div></div>
-			<div class="crayon-info" style="min-height: 16.8px !important; line-height: 16.8px !important;"></div>
-			<div class="crayon-plain-wrap"><textarea wrap="soft" class="crayon-plain print-no" data-settings="dblclick" readonly style="-moz-tab-size:4; -o-tab-size:4; -webkit-tab-size:4; tab-size:4; font-size: 12px !important; line-height: 15px !important;">
+<h2 id="tomcat-wildcard-subdomain-configuration">Tomcat Wildcard Subdomain Configuration</h2>
 
-&lt;Service name="example"&gt;
+<p>Below you’ll find the configuration of Tomcat (in server.xml), which is quite standard. Actually, we do not need to define any <em>“wildcard”</em>, we just define a <code class="language-plaintext highlighter-rouge">defaultHost</code> in the <code class="language-plaintext highlighter-rouge">Engine</code> element. Then we deploy a <code class="language-plaintext highlighter-rouge">ROOT.war</code> in the webapps directory (<code class="language-plaintext highlighter-rouge">/opt/example.com/tomcat7/webapps</code>) to serve all content at the root context path.</p>
 
-	&lt;Connector port="9090" protocol="HTTP/1.1" connectionTimeout="20000"
-			URIEncoding="UTF-8" /&gt;
+<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;Service</span> <span class="na">name=</span><span class="s">"example"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;Connector</span> <span class="na">port=</span><span class="s">"9090"</span> <span class="na">protocol=</span><span class="s">"HTTP/1.1"</span> <span class="na">connectionTimeout=</span><span class="s">"20000"</span>
+            <span class="na">URIEncoding=</span><span class="s">"UTF-8"</span> <span class="nt">/&gt;</span>
+    <span class="nt">&lt;Engine</span> <span class="na">name=</span><span class="s">"example"</span> <span class="na">defaultHost=</span><span class="s">"localhost"</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;Host</span> <span class="na">name=</span><span class="s">"localhost"</span> <span class="na">appBase=</span><span class="s">"/opt/example.com/tomcat7/webapps"</span>
+                <span class="na">unpackWARs=</span><span class="s">"true"</span> <span class="na">autoDeploy=</span><span class="s">"true"</span><span class="nt">&gt;</span>
+            <span class="nt">&lt;Valve</span> <span class="na">className=</span><span class="s">"org.apache.catalina.valves.AccessLogValve"</span>
+                    <span class="na">directory=</span><span class="s">"logs"</span> <span class="na">prefix=</span><span class="s">"example.com_access_log."</span>
+                    <span class="na">suffix=</span><span class="s">".txt"</span> <span class="na">pattern=</span><span class="s">"%h %l %u %t &amp;quot;%r&amp;quot; %s %b"</span> <span class="nt">/&gt;</span>
+        <span class="nt">&lt;/Host&gt;</span>
+    <span class="nt">&lt;/Engine&gt;</span>
+<span class="nt">&lt;/Service&gt;</span>
+</code></pre></div></div>
 
-	&lt;Engine name="example" defaultHost="localhost"&gt;
+<h2 id="how-does-tomcat-know-the-subdomain">How does Tomcat Know the Subdomain?</h2>
 
-		&lt;Host name="localhost" appBase="/opt/example.com/tomcat7/webapps"
-				unpackWARs="true" autoDeploy="true"&gt;
+<p>With this configuration, all content will be sent to Tomcat with “localhost” as the hostname. Fortunately, the <a href="https://httpd.apache.org/docs/current/mod/mod_proxy.html#x-headers">Apache reverse proxy will send extra request headers</a> to Tomcat, namely:</p>
 
-			&lt;Valve className="org.apache.catalina.valves.AccessLogValve"
-					directory="logs" prefix="example.com_access_log."
-					suffix=".txt" pattern="%h %l %u %t &amp;quot;%r&amp;quot; %s %b" /&gt;
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">X-Forwarded-For</code>: The IP address of the client.</li>
+  <li><strong><code class="language-plaintext highlighter-rouge">X-Forwarded-Host</code>: The original host requested by the client in the Host HTTP request header.</strong></li>
+  <li><code class="language-plaintext highlighter-rouge">X-Forwarded-Server</code>: The hostname of the proxy server.</li>
+</ul>
 
-		&lt;/Host&gt;
+<p>So in Tomcat (or any other servlet container), just use the Java code below to get the value of that header <code class="language-plaintext highlighter-rouge">X-Forwarded-Host</code> and you’ll know the subdomain.</p>
 
-	&lt;/Engine&gt;
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nc">String</span> <span class="n">subdomain</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="na">getHeader</span><span class="o">(</span><span class="s">"X-Forwarded-Host"</span><span class="o">);</span>
+</code></pre></div></div>
 
-&lt;/Service&gt;
-</textarea></div>
-			<div class="crayon-main" style="">
-				<table class="crayon-table">
-					<tr class="crayon-row">
-				<td class="crayon-nums " data-settings="show">
-					<div class="crayon-nums-content" style="font-size: 12px !important; line-height: 15px !important;"><div class="crayon-num" data-line="crayon-5c44b1f2e3965759377144-1">1</div><div class="crayon-num crayon-striped-num" data-line="crayon-5c44b1f2e3965759377144-2">2</div><div class="crayon-num" data-line="crayon-5c44b1f2e3965759377144-3">3</div><div class="crayon-num crayon-striped-num" data-line="crayon-5c44b1f2e3965759377144-4">4</div><div class="crayon-num" data-line="crayon-5c44b1f2e3965759377144-5">5</div><div class="crayon-num crayon-striped-num" data-line="crayon-5c44b1f2e3965759377144-6">6</div><div class="crayon-num" data-line="crayon-5c44b1f2e3965759377144-7">7</div><div class="crayon-num crayon-striped-num" data-line="crayon-5c44b1f2e3965759377144-8">8</div><div class="crayon-num" data-line="crayon-5c44b1f2e3965759377144-9">9</div><div class="crayon-num crayon-striped-num" data-line="crayon-5c44b1f2e3965759377144-10">10</div><div class="crayon-num" data-line="crayon-5c44b1f2e3965759377144-11">11</div><div class="crayon-num crayon-striped-num" data-line="crayon-5c44b1f2e3965759377144-12">12</div><div class="crayon-num" data-line="crayon-5c44b1f2e3965759377144-13">13</div><div class="crayon-num crayon-striped-num" data-line="crayon-5c44b1f2e3965759377144-14">14</div><div class="crayon-num" data-line="crayon-5c44b1f2e3965759377144-15">15</div><div class="crayon-num crayon-striped-num" data-line="crayon-5c44b1f2e3965759377144-16">16</div><div class="crayon-num" data-line="crayon-5c44b1f2e3965759377144-17">17</div><div class="crayon-num crayon-striped-num" data-line="crayon-5c44b1f2e3965759377144-18">18</div><div class="crayon-num" data-line="crayon-5c44b1f2e3965759377144-19">19</div><div class="crayon-num crayon-striped-num" data-line="crayon-5c44b1f2e3965759377144-20">20</div><div class="crayon-num" data-line="crayon-5c44b1f2e3965759377144-21">21</div></div>
-				</td>
-						<td class="crayon-code"><div class="crayon-pre" style="font-size: 12px !important; line-height: 15px !important; -moz-tab-size:4; -o-tab-size:4; -webkit-tab-size:4; tab-size:4;"><div class="crayon-line" id="crayon-5c44b1f2e3965759377144-1">&nbsp;</div><div class="crayon-line crayon-striped-line" id="crayon-5c44b1f2e3965759377144-2"><span class="crayon-r ">&lt;Service </span><span class="crayon-e ">name</span><span class="crayon-o">=</span><span class="crayon-s ">"example"</span><span class="crayon-r ">&gt;</span></div><div class="crayon-line" id="crayon-5c44b1f2e3965759377144-3">&nbsp;</div><div class="crayon-line crayon-striped-line" id="crayon-5c44b1f2e3965759377144-4"><span class="crayon-i ">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-r ">&lt;Connector </span><span class="crayon-e ">port</span><span class="crayon-o">=</span><span class="crayon-s ">"9090"</span><span class="crayon-h"> </span><span class="crayon-e ">protocol</span><span class="crayon-o">=</span><span class="crayon-s ">"HTTP/1.1"</span><span class="crayon-h"> </span><span class="crayon-e ">connectionTimeout</span><span class="crayon-o">=</span><span class="crayon-s ">"20000"</span></div><div class="crayon-line" id="crayon-5c44b1f2e3965759377144-5"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-e ">URIEncoding</span><span class="crayon-o">=</span><span class="crayon-s ">"UTF-8"</span><span class="crayon-r "> /&gt;</span></div><div class="crayon-line crayon-striped-line" id="crayon-5c44b1f2e3965759377144-6">&nbsp;</div><div class="crayon-line" id="crayon-5c44b1f2e3965759377144-7"><span class="crayon-i ">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-r ">&lt;Engine </span><span class="crayon-e ">name</span><span class="crayon-o">=</span><span class="crayon-s ">"example"</span><span class="crayon-h"> </span><span class="crayon-e ">defaultHost</span><span class="crayon-o">=</span><span class="crayon-s ">"localhost"</span><span class="crayon-r ">&gt;</span></div><div class="crayon-line crayon-striped-line" id="crayon-5c44b1f2e3965759377144-8">&nbsp;</div><div class="crayon-line" id="crayon-5c44b1f2e3965759377144-9"><span class="crayon-i ">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-r ">&lt;Host </span><span class="crayon-e ">name</span><span class="crayon-o">=</span><span class="crayon-s ">"localhost"</span><span class="crayon-h"> </span><span class="crayon-e ">appBase</span><span class="crayon-o">=</span><span class="crayon-s ">"/opt/example.com/tomcat7/webapps"</span></div><div class="crayon-line crayon-striped-line" id="crayon-5c44b1f2e3965759377144-10"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-e ">unpackWARs</span><span class="crayon-o">=</span><span class="crayon-s ">"true"</span><span class="crayon-h"> </span><span class="crayon-e ">autoDeploy</span><span class="crayon-o">=</span><span class="crayon-s ">"true"</span><span class="crayon-r ">&gt;</span></div><div class="crayon-line" id="crayon-5c44b1f2e3965759377144-11">&nbsp;</div><div class="crayon-line crayon-striped-line" id="crayon-5c44b1f2e3965759377144-12"><span class="crayon-i ">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-r ">&lt;Valve </span><span class="crayon-e ">className</span><span class="crayon-o">=</span><span class="crayon-s ">"org.apache.catalina.valves.AccessLogValve"</span></div><div class="crayon-line" id="crayon-5c44b1f2e3965759377144-13"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-e ">directory</span><span class="crayon-o">=</span><span class="crayon-s ">"logs"</span><span class="crayon-h"> </span><span class="crayon-e ">prefix</span><span class="crayon-o">=</span><span class="crayon-s ">"example.com_access_log."</span></div><div class="crayon-line crayon-striped-line" id="crayon-5c44b1f2e3965759377144-14"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-e ">suffix</span><span class="crayon-o">=</span><span class="crayon-s ">".txt"</span><span class="crayon-h"> </span><span class="crayon-e ">pattern</span><span class="crayon-o">=</span><span class="crayon-s ">"%h %l %u %t &amp;quot;%r&amp;quot; %s %b"</span><span class="crayon-r "> /&gt;</span></div><div class="crayon-line" id="crayon-5c44b1f2e3965759377144-15">&nbsp;</div><div class="crayon-line crayon-striped-line" id="crayon-5c44b1f2e3965759377144-16"><span class="crayon-i ">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-r ">&lt;/Host&gt;</span></div><div class="crayon-line" id="crayon-5c44b1f2e3965759377144-17">&nbsp;</div><div class="crayon-line crayon-striped-line" id="crayon-5c44b1f2e3965759377144-18"><span class="crayon-i ">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-r ">&lt;/Engine&gt;</span></div><div class="crayon-line" id="crayon-5c44b1f2e3965759377144-19">&nbsp;</div><div class="crayon-line crayon-striped-line" id="crayon-5c44b1f2e3965759377144-20"><span class="crayon-r ">&lt;/Service&gt;</span></div><div class="crayon-line" id="crayon-5c44b1f2e3965759377144-21">&nbsp;</div></div></td>
-					</tr>
-				</table>
-			</div>
-		</div>
-<!-- [Format Time: 0.0011 seconds] -->
-<p></p>
-<h2>How does Tomcat Know the Subdomain?</h2>
-<p>With this configuration, all content will be sent to Tomcat with &#8220;<em>localhost</em>&#8221; as the hostname. Fortunately, the <a title="Reverse Proxy Request Headers" href="http://httpd.apache.org/docs/2.4/mod/mod_proxy.html#x-headers" target="_blank">Apache reverse proxy will send extra request headers</a> to Tomcat, namely:</p>
-<blockquote><p>X-Forwarded-For: The IP address of the client.</p>
-<p><strong>X-Forwarded-Host: The original host requested by the client in the Host HTTP request header.</strong></p>
-<p>X-Forwarded-Server: The hostname of the proxy server.</p></blockquote>
-<p>So in Tomcat (or any other servlet container), just use the Java code below to get the value of that header &#8220;<strong>X-Forwarded-Host</strong>&#8221; and you&#8217;ll know the subdomain.</p><!-- Crayon Syntax Highlighter v_2.7.2_beta -->
+<p>Alternatively, you may also use the <a href="https://httpd.apache.org/docs/current/mod/mod_proxy.html#proxypreservehost">ProxyPreserveHost</a> On directive in Apache configuration and you should be able to get the hostname (subdomain) normally in Tomcat. <em>NOTE: I haven’t tested that setup.</em></p>
 
-		<div id="crayon-5c44b1f2e3969875692704" class="crayon-syntax crayon-theme-eclipse crayon-font-monaco crayon-os-pc print-yes notranslate" data-settings=" minimize scroll-mouseover" style=" margin-top: 12px; margin-bottom: 12px; font-size: 12px !important; line-height: 15px !important;">
-		
-			<div class="crayon-toolbar" data-settings=" show" style="font-size: 12px !important;height: 18px !important; line-height: 18px !important;"><span class="crayon-title">Tomcat code to get subdomain</span>
-			<div class="crayon-tools" style="font-size: 12px !important;height: 18px !important; line-height: 18px !important;"><div class="crayon-button crayon-nums-button" title="Toggle Line Numbers"><div class="crayon-button-icon"></div></div><div class="crayon-button crayon-plain-button" title="Toggle Plain Code"><div class="crayon-button-icon"></div></div><div class="crayon-button crayon-wrap-button" title="Toggle Line Wrap"><div class="crayon-button-icon"></div></div><div class="crayon-button crayon-expand-button" title="Expand Code"><div class="crayon-button-icon"></div></div><div class="crayon-button crayon-copy-button" title="Copy"><div class="crayon-button-icon"></div></div><div class="crayon-button crayon-popup-button" title="Open Code In New Window"><div class="crayon-button-icon"></div></div><span class="crayon-language">Java</span></div></div>
-			<div class="crayon-info" style="min-height: 16.8px !important; line-height: 16.8px !important;"></div>
-			<div class="crayon-plain-wrap"><textarea wrap="soft" class="crayon-plain print-no" data-settings="dblclick" readonly style="-moz-tab-size:4; -o-tab-size:4; -webkit-tab-size:4; tab-size:4; font-size: 12px !important; line-height: 15px !important;">
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nc">String</span> <span class="n">subdomain</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="na">getServerName</span><span class="o">();</span>
+</code></pre></div></div>
 
-String subdomain = request.getHeader("X-Forwarded-Host");
-</textarea></div>
-			<div class="crayon-main" style="">
-				<table class="crayon-table">
-					<tr class="crayon-row">
-				<td class="crayon-nums " data-settings="show">
-					<div class="crayon-nums-content" style="font-size: 12px !important; line-height: 15px !important;"><div class="crayon-num" data-line="crayon-5c44b1f2e3969875692704-1">1</div><div class="crayon-num crayon-striped-num" data-line="crayon-5c44b1f2e3969875692704-2">2</div><div class="crayon-num" data-line="crayon-5c44b1f2e3969875692704-3">3</div></div>
-				</td>
-						<td class="crayon-code"><div class="crayon-pre" style="font-size: 12px !important; line-height: 15px !important; -moz-tab-size:4; -o-tab-size:4; -webkit-tab-size:4; tab-size:4;"><div class="crayon-line" id="crayon-5c44b1f2e3969875692704-1">&nbsp;</div><div class="crayon-line crayon-striped-line" id="crayon-5c44b1f2e3969875692704-2"><span class="crayon-t">String</span><span class="crayon-h"> </span><span class="crayon-v">subdomain</span><span class="crayon-h"> </span><span class="crayon-o">=</span><span class="crayon-h"> </span><span class="crayon-v">request</span><span class="crayon-sy">.</span><span class="crayon-e">getHeader</span><span class="crayon-sy">(</span><span class="crayon-s">"X-Forwarded-Host"</span><span class="crayon-sy">)</span><span class="crayon-sy">;</span></div><div class="crayon-line" id="crayon-5c44b1f2e3969875692704-3">&nbsp;</div></div></td>
-					</tr>
-				</table>
-			</div>
-		</div>
-<!-- [Format Time: 0.0003 seconds] -->
-<p>&nbsp;</p>
-<p>Alternatively, you may also use the <a title="ProxyPreserveHost Directive" href="http://httpd.apache.org/docs/2.4/mod/mod_proxy.html#proxypreservehost" target="_blank">ProxyPreserveHost On</a> directive in Apache configuration and you should be able to get the hostname (subdomain) normally in Tomcat. <em>NOTE: I haven&#8217;t tested that setup.</em></p><!-- Crayon Syntax Highlighter v_2.7.2_beta -->
+<h2 id="bonus-wildcard-ssl-certificate">Bonus: Wildcard SSL Certificate</h2>
 
-		<div id="crayon-5c44b1f2e396c953197798" class="crayon-syntax crayon-theme-eclipse crayon-font-monaco crayon-os-pc print-yes notranslate" data-settings=" minimize scroll-mouseover" style=" margin-top: 12px; margin-bottom: 12px; font-size: 12px !important; line-height: 15px !important;">
-		
-			<div class="crayon-toolbar" data-settings=" show" style="font-size: 12px !important;height: 18px !important; line-height: 18px !important;"><span class="crayon-title">Tomcat code to get requested hostname</span>
-			<div class="crayon-tools" style="font-size: 12px !important;height: 18px !important; line-height: 18px !important;"><div class="crayon-button crayon-nums-button" title="Toggle Line Numbers"><div class="crayon-button-icon"></div></div><div class="crayon-button crayon-plain-button" title="Toggle Plain Code"><div class="crayon-button-icon"></div></div><div class="crayon-button crayon-wrap-button" title="Toggle Line Wrap"><div class="crayon-button-icon"></div></div><div class="crayon-button crayon-expand-button" title="Expand Code"><div class="crayon-button-icon"></div></div><div class="crayon-button crayon-copy-button" title="Copy"><div class="crayon-button-icon"></div></div><div class="crayon-button crayon-popup-button" title="Open Code In New Window"><div class="crayon-button-icon"></div></div><span class="crayon-language">Java</span></div></div>
-			<div class="crayon-info" style="min-height: 16.8px !important; line-height: 16.8px !important;"></div>
-			<div class="crayon-plain-wrap"><textarea wrap="soft" class="crayon-plain print-no" data-settings="dblclick" readonly style="-moz-tab-size:4; -o-tab-size:4; -webkit-tab-size:4; tab-size:4; font-size: 12px !important; line-height: 15px !important;">
+<p>Of course you’ll need a wildcard SSL certificate. Those are usually very expensive, but <a href="https://www.namecheap.com/security/ssl-certificates/comodo/positivessl-wildcard.aspx">Namecheap resells Comodo wildcard certificate at very good price</a>. No, I do not have any interest in namecheap, they just happen to be very good at what they do 🙂</p>
 
-String subdomain = request.getServerName();
-</textarea></div>
-			<div class="crayon-main" style="">
-				<table class="crayon-table">
-					<tr class="crayon-row">
-				<td class="crayon-nums " data-settings="show">
-					<div class="crayon-nums-content" style="font-size: 12px !important; line-height: 15px !important;"><div class="crayon-num" data-line="crayon-5c44b1f2e396c953197798-1">1</div><div class="crayon-num crayon-striped-num" data-line="crayon-5c44b1f2e396c953197798-2">2</div><div class="crayon-num" data-line="crayon-5c44b1f2e396c953197798-3">3</div></div>
-				</td>
-						<td class="crayon-code"><div class="crayon-pre" style="font-size: 12px !important; line-height: 15px !important; -moz-tab-size:4; -o-tab-size:4; -webkit-tab-size:4; tab-size:4;"><div class="crayon-line" id="crayon-5c44b1f2e396c953197798-1">&nbsp;</div><div class="crayon-line crayon-striped-line" id="crayon-5c44b1f2e396c953197798-2"><span class="crayon-t">String</span><span class="crayon-h"> </span><span class="crayon-v">subdomain</span><span class="crayon-h"> </span><span class="crayon-o">=</span><span class="crayon-h"> </span><span class="crayon-v">request</span><span class="crayon-sy">.</span><span class="crayon-e">getServerName</span><span class="crayon-sy">(</span><span class="crayon-sy">)</span><span class="crayon-sy">;</span></div><div class="crayon-line" id="crayon-5c44b1f2e396c953197798-3">&nbsp;</div></div></td>
-					</tr>
-				</table>
-			</div>
-		</div>
-<!-- [Format Time: 0.0003 seconds] -->
-<p></p>
-<h2>Bonus: Wildcard SSL Certificate</h2>
-<p>Of course you&#8217;ll need a wildcard SSL certificate. Those are usually very expensive, but <a title="Namecheap Wildcard Certificates" href="https://www.namecheap.com/security/ssl-certificates/comodo/positivessl-wildcard.aspx" target="_blank">Namecheap resells Comodo wildcard certificate at very good price</a>. No, I do not have any interest in namecheap, they just happen to be very good at what they do 🙂</p>
-					</div><!-- .entry-content -->
-		
-		<footer class="entry-meta">
-			This entry was posted in <a href="../category/development/index.html" rel="category tag">Development</a> on <a href="index.html" title="1:45 pm" rel="bookmark"><time class="entry-date" datetime="2014-11-19T13:45:31+00:00">November 19, 2014</time></a><span class="by-author"> by <span class="author vcard"><a class="url fn n" href="https://www.linkedin.com/in/jonathan-demers-ing" title="Jonathan Demers">Jonathan Demers</a></span></span>.								</footer><!-- .entry-meta -->
-	</article><!-- #post -->
+<p><em>Author: <a href="https://www.linkedin.com/in/jonathan-demers-ing" title="Jonathan Demers">Jonathan Demers</a></em></p>
 
-				<nav class="nav-single">
-					<h3 class="assistive-text">Post navigation</h3>
-					<span class="nav-previous"><a href="../ubuntu-apache-reverse-proxy-rewrite-html-links/index.html" rel="prev"><span class="meta-nav">&larr;</span> Ubuntu Apache Reverse Proxy Rewrite HTML Links</a></span>
-					<span class="nav-next"><a href="../imageio-read-causes-outofmemoryerror/index.html" rel="next">ImageIO.read() causes OutOfMemoryError <span class="meta-nav">&rarr;</span></a></span>
-				</nav><!-- .nav-single -->
+  </div><a class="u-url" href="/tech/https-wildcard-subdomain-dns-apache-tomcat-config/" hidden></a>
+</article>
 
-				
-<div id="comments" class="comments-area">
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/tech/"></data>
 
-	
-	
-	
-</div><!-- #comments .comments-area -->
+  <div class="wrapper">
 
-			
-		</div><!-- #content -->
-	</div><!-- #primary -->
+    <h2 class="footer-heading">OpCode Tech</h2>
 
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li class="p-name">OpCode Tech</li><li><a class="u-email" href="mailto:jdemers@opcodesolutions.com">jdemers@opcodesolutions.com</a></li></ul>
+      </div>
 
-			<div id="secondary" class="widget-area" role="complementary">
-					<aside id="recent-posts-2" class="widget widget_recent_entries">		<h3 class="widget-title">More Articles</h3>		<ul>
-											<li>
-					<a href="../how-to-migrate-3-mysql-databases-to-amazon-rds-in-5-minutes/index.html">How to Migrate 3 MySQL Databases to Amazon RDS in 5 Minutes</a>
-									</li>
-											<li>
-					<a href="../imageio-read-causes-outofmemoryerror/index.html">ImageIO.read() causes OutOfMemoryError</a>
-									</li>
-											<li>
-					<a href="index.html">HTTPS Wildcard Subdomain: DNS + Apache + Tomcat Config</a>
-									</li>
-											<li>
-					<a href="../ubuntu-apache-reverse-proxy-rewrite-html-links/index.html">Ubuntu Apache Reverse Proxy Rewrite HTML Links</a>
-									</li>
-											<li>
-					<a href="../programmatically-configure-hibernate-jpa-with-dbcp/index.html">Programmatically Configure Hibernate (JPA) with DBCP</a>
-									</li>
-					</ul>
-		</aside><aside id="categories-2" class="widget widget_categories"><h3 class="widget-title">Categories</h3>		<ul>
-	<li class="cat-item cat-item-2"><a href="../category/development/index.html" >Development</a>
-</li>
-	<li class="cat-item cat-item-50"><a href="../category/how-to/index.html" >How To</a>
-</li>
-	<li class="cat-item cat-item-12"><a href="../category/news/index.html" >News</a>
-</li>
-		</ul>
-</aside>		</div><!-- #secondary -->
-		</div><!-- #main .wrapper -->
-	<footer id="colophon" role="contentinfo">
-		<div class="site-info">
-									<a href="https://wordpress.org/" class="imprint" title="Semantic Personal Publishing Platform">
-				Proudly powered by WordPress			</a>
-		</div><!-- .site-info -->
-	</footer><!-- #colophon -->
-</div><!-- #page -->
+      <div class="footer-col footer-col-2"><ul class="social-media-list"><li><a href="https://github.com/JonDemers"><svg class="svg-icon"><use xlink:href="/tech/assets/minima-social-icons.svg#github"></use></svg> <span class="username">JonDemers</span></a></li></ul>
+</div>
 
-<script type='text/javascript' src='../wp-content/themes/twentytwelve/js/navigation.js%3Fver=20140711'></script>
-<script type='text/javascript' src='../wp-includes/js/wp-embed.min.js%3Fver=5.0.3'></script>
+      <div class="footer-col footer-col-3">
+        <p>Optimize Your Processes</p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
 </body>
+
 </html>

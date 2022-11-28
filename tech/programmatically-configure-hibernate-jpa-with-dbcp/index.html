@@ -1,247 +1,140 @@
 <!DOCTYPE html>
-<!--[if IE 7]>
-<html class="ie ie7" lang="en-US">
-<![endif]-->
-<!--[if IE 8]>
-<html class="ie ie8" lang="en-US">
-<![endif]-->
-<!--[if !(IE 7) & !(IE 8)]><!-->
-<html lang="en-US">
-<!--<![endif]-->
-<head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width" />
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.8.0 -->
 <title>Programmatically Configure Hibernate (JPA) with DBCP | OpCode Tech</title>
-<link rel="profile" href="http://gmpg.org/xfn/11" />
-<link rel="pingback" href="https://opcodesolutions.com/tech/xmlrpc.php" />
-<!--[if lt IE 9]>
-<script src="https://opcodesolutions.com/tech/wp-content/themes/twentytwelve/js/html5.js" type="text/javascript"></script>
-<![endif]-->
-<link rel='dns-prefetch' href='https://fonts.googleapis.com/' />
-<link rel='dns-prefetch' href='https://s.w.org/' />
-<link href='https://fonts.gstatic.com' crossorigin rel='preconnect' />
-		<script type="text/javascript">
-			window._wpemojiSettings = {"baseUrl":"https:\/\/s.w.org\/images\/core\/emoji\/11\/72x72\/","ext":".png","svgUrl":"https:\/\/s.w.org\/images\/core\/emoji\/11\/svg\/","svgExt":".svg","source":{"concatemoji":"https:\/\/opcodesolutions.com\/tech\/wp-includes\/js\/wp-emoji-release.min.js?ver=5.0.3"}};
-			!function(a,b,c){function d(a,b){var c=String.fromCharCode;l.clearRect(0,0,k.width,k.height),l.fillText(c.apply(this,a),0,0);var d=k.toDataURL();l.clearRect(0,0,k.width,k.height),l.fillText(c.apply(this,b),0,0);var e=k.toDataURL();return d===e}function e(a){var b;if(!l||!l.fillText)return!1;switch(l.textBaseline="top",l.font="600 32px Arial",a){case"flag":return!(b=d([55356,56826,55356,56819],[55356,56826,8203,55356,56819]))&&(b=d([55356,57332,56128,56423,56128,56418,56128,56421,56128,56430,56128,56423,56128,56447],[55356,57332,8203,56128,56423,8203,56128,56418,8203,56128,56421,8203,56128,56430,8203,56128,56423,8203,56128,56447]),!b);case"emoji":return b=d([55358,56760,9792,65039],[55358,56760,8203,9792,65039]),!b}return!1}function f(a){var c=b.createElement("script");c.src=a,c.defer=c.type="text/javascript",b.getElementsByTagName("head")[0].appendChild(c)}var g,h,i,j,k=b.createElement("canvas"),l=k.getContext&&k.getContext("2d");for(j=Array("flag","emoji"),c.supports={everything:!0,everythingExceptFlag:!0},i=0;i<j.length;i++)c.supports[j[i]]=e(j[i]),c.supports.everything=c.supports.everything&&c.supports[j[i]],"flag"!==j[i]&&(c.supports.everythingExceptFlag=c.supports.everythingExceptFlag&&c.supports[j[i]]);c.supports.everythingExceptFlag=c.supports.everythingExceptFlag&&!c.supports.flag,c.DOMReady=!1,c.readyCallback=function(){c.DOMReady=!0},c.supports.everything||(h=function(){c.readyCallback()},b.addEventListener?(b.addEventListener("DOMContentLoaded",h,!1),a.addEventListener("load",h,!1)):(a.attachEvent("onload",h),b.attachEvent("onreadystatechange",function(){"complete"===b.readyState&&c.readyCallback()})),g=c.source||{},g.concatemoji?f(g.concatemoji):g.wpemoji&&g.twemoji&&(f(g.twemoji),f(g.wpemoji)))}(window,document,window._wpemojiSettings);
-		</script>
-		<style type="text/css">
-img.wp-smiley,
-img.emoji {
-	display: inline !important;
-	border: none !important;
-	box-shadow: none !important;
-	height: 1em !important;
-	width: 1em !important;
-	margin: 0 .07em !important;
-	vertical-align: -0.1em !important;
-	background: none !important;
-	padding: 0 !important;
-}
-</style>
-<link rel='stylesheet' id='crayon-css'  href='../wp-content/plugins/crayon-syntax-highlighter/css/min/crayon.min.css%3Fver=_2.7.2_beta.css' type='text/css' media='all' />
-<link rel='stylesheet' id='crayon-theme-eclipse-css'  href='../wp-content/plugins/crayon-syntax-highlighter/themes/eclipse/eclipse.css%3Fver=_2.7.2_beta.css' type='text/css' media='all' />
-<link rel='stylesheet' id='crayon-font-monaco-css'  href='../wp-content/plugins/crayon-syntax-highlighter/fonts/monaco.css%3Fver=_2.7.2_beta.css' type='text/css' media='all' />
-<link rel='stylesheet' id='wp-block-library-css'  href='../wp-includes/css/dist/block-library/style.min.css%3Fver=5.0.3.css' type='text/css' media='all' />
-<link rel='stylesheet' id='wp-block-library-theme-css'  href='../wp-includes/css/dist/block-library/theme.min.css%3Fver=5.0.3.css' type='text/css' media='all' />
-<link rel='stylesheet' id='twentytwelve-fonts-css'  href='https://fonts.googleapis.com/css?family=Open+Sans:400italic,700italic,400,700&#038;subset=latin,latin-ext' type='text/css' media='all' />
-<link rel='stylesheet' id='twentytwelve-style-css'  href='../wp-content/themes/twentytwelve/style.css%3Fver=5.0.3.css' type='text/css' media='all' />
-<link rel='stylesheet' id='twentytwelve-block-style-css'  href='../wp-content/themes/twentytwelve/css/blocks.css%3Fver=20181230.css' type='text/css' media='all' />
-<!--[if lt IE 9]>
-<link rel='stylesheet' id='twentytwelve-ie-css'  href='https://opcodesolutions.com/tech/wp-content/themes/twentytwelve/css/ie.css?ver=20121010' type='text/css' media='all' />
-<![endif]-->
-<script type='text/javascript' src='../wp-includes/js/jquery/jquery.js%3Fver=1.12.4'></script>
-<script type='text/javascript' src='../wp-includes/js/jquery/jquery-migrate.min.js%3Fver=1.4.1'></script>
-<script type='text/javascript'>
-/* <![CDATA[ */
-var CrayonSyntaxSettings = {"version":"_2.7.2_beta","is_admin":"0","ajaxurl":"https:\/\/opcodesolutions.com\/tech\/wp-admin\/admin-ajax.php","prefix":"crayon-","setting":"crayon-setting","selected":"crayon-setting-selected","changed":"crayon-setting-changed","special":"crayon-setting-special","orig_value":"data-orig-value","debug":""};
-var CrayonSyntaxStrings = {"copy":"Press %s to Copy, %s to Paste","minimize":"Click To Expand Code"};
-/* ]]> */
-</script>
-<script type='text/javascript' src='../wp-content/plugins/crayon-syntax-highlighter/js/min/crayon.min.js%3Fver=_2.7.2_beta'></script>
-<link rel="EditURI" type="application/rsd+xml" title="RSD" href="../xmlrpc.php%3Frsd" />
-<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="../wp-includes/wlwmanifest.xml" /> 
-<link rel='prev' title='How to fix java.lang.OutOfMemoryError: Java heap space' href='../solve-java-lang-outofmemoryerror-java-heap-space/index.html' />
-<link rel='next' title='Ubuntu Apache Reverse Proxy Rewrite HTML Links' href='../ubuntu-apache-reverse-proxy-rewrite-html-links/index.html' />
-<meta name="generator" content="WordPress 5.0.3" />
-<link rel="canonical" href="index.html" />
-	<style type="text/css" id="twentytwelve-header-css">
-			.site-header h1 a,
-		.site-header h2 {
-			color: #8b0000;
-		}
-		</style>
-	</head>
+<meta name="generator" content="Jekyll v4.3.1" />
+<meta property="og:title" content="Programmatically Configure Hibernate (JPA) with DBCP" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="I recently had deadlock issues with c3p0 and statement caching. Long story short, after investigating c3p0 code, I decided to switch to DBCP (maybe I’ll write a post with the long story)." />
+<meta property="og:description" content="I recently had deadlock issues with c3p0 and statement caching. Long story short, after investigating c3p0 code, I decided to switch to DBCP (maybe I’ll write a post with the long story)." />
+<link rel="canonical" href="https://opcodesolutions.com/tech/programmatically-configure-hibernate-jpa-with-dbcp/" />
+<meta property="og:url" content="https://opcodesolutions.com/tech/programmatically-configure-hibernate-jpa-with-dbcp/" />
+<meta property="og:site_name" content="OpCode Tech" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2014-11-04T00:00:00-05:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Programmatically Configure Hibernate (JPA) with DBCP" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","dateModified":"2014-11-04T00:00:00-05:00","datePublished":"2014-11-04T00:00:00-05:00","description":"I recently had deadlock issues with c3p0 and statement caching. Long story short, after investigating c3p0 code, I decided to switch to DBCP (maybe I’ll write a post with the long story).","headline":"Programmatically Configure Hibernate (JPA) with DBCP","mainEntityOfPage":{"@type":"WebPage","@id":"https://opcodesolutions.com/tech/programmatically-configure-hibernate-jpa-with-dbcp/"},"url":"https://opcodesolutions.com/tech/programmatically-configure-hibernate-jpa-with-dbcp/"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/tech/assets/main.css"><link type="application/atom+xml" rel="alternate" href="https://opcodesolutions.com/tech/feed.xml" title="OpCode Tech" /></head>
+<body><header class="site-header" role="banner">
 
-<body class="post-template-default single single-post postid-59 single-format-standard wp-embed-responsive custom-font-enabled single-author">
-<div id="page" class="hfeed site">
-	<header id="masthead" class="site-header" role="banner">
-		<hgroup>
-			<h1 class="site-title"><a href="../../tech.html" title="OpCode Tech" rel="home">OpCode Tech</a></h1>
-			<h2 class="site-description">Optimize Your Processes</h2>
-		</hgroup>
+  <div class="wrapper"><a class="site-title" rel="author" href="/tech/">OpCode Tech</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
 
-		<nav id="site-navigation" class="main-navigation" role="navigation">
-			<button class="menu-toggle">Menu</button>
-			<a class="assistive-text" href="index.html#content" title="Skip to content">Skip to content</a>
-			<div class="menu-default-container"><ul id="menu-default" class="nav-menu"><li id="menu-item-19" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-19"><a href="../../tech.html">Home</a></li>
-<li id="menu-item-18" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-18"><a href="../category/news/index.html">News</a></li>
-<li id="menu-item-153" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-153"><a href="../category/how-to/index.html">How To</a></li>
-<li id="menu-item-17" class="menu-item menu-item-type-taxonomy menu-item-object-category current-post-ancestor current-menu-parent current-post-parent menu-item-17"><a href="../category/development/index.html">Development</a></li>
-<li id="menu-item-159" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-159"><a href="../contact/index.html">Contact</a></li>
-</ul></div>		</nav><!-- #site-navigation -->
+        <div class="trigger"><a class="page-link" href="/tech/contact/">Contact</a></div>
+      </nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
 
-			</header><!-- #masthead -->
+  <header class="post-header">
+    <h1 class="post-title p-name" itemprop="name headline">Programmatically Configure Hibernate (JPA) with DBCP</h1>
+    <p class="post-meta">
+      <time class="dt-published" datetime="2014-11-04T00:00:00-05:00" itemprop="datePublished">Nov 4, 2014
+      </time></p>
+  </header>
 
-	<div id="main" class="wrapper">
+  <div class="post-content e-content" itemprop="articleBody">
+    <p>I recently had deadlock issues with c3p0 and statement caching. Long story short, after investigating c3p0 code, I decided to switch to <a href="https://commons.apache.org/proper/commons-dbcp/">DBCP</a> (maybe I’ll write a post with the long story).</p>
 
-	<div id="primary" class="site-content">
-		<div id="content" role="main">
+<p>I am not a big fan of Spring (here again, maybe I’ll write a post about that). If you are like me, here is how to programmatically configure <a href="https://hibernate.org/">Hibernate</a> (JPA) to use DBCP, without Spring and without JNDI.</p>
 
-			
-				
-	<article id="post-59" class="post-59 post type-post status-publish format-standard hentry category-development">
-				<header class="entry-header">
-			
-						<h1 class="entry-title">Programmatically Configure Hibernate (JPA) with DBCP</h1>
-								</header><!-- .entry-header -->
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">package</span> <span class="nn">com.opcodesolutions.demo</span><span class="o">;</span>
 
-				<div class="entry-content">
-			<p>I recently had deadlock issues with c3p0 and statement caching. Long story short, after investigating c3p0 code, I decided to switch to <a title="Apache Commons DBCP" href="http://commons.apache.org/proper/commons-dbcp/">DBCP</a> (maybe I&#8217;ll write a post with the long story).</p>
-<p>I am not a big fan of Spring (here again, maybe I&#8217;ll write a post about that). If you are like me, here is how to programmatically configure <a title="Hibernate" href="http://hibernate.org/">Hibernate</a> (JPA) to use DBCP, without Spring and without JNDI.</p><!-- Crayon Syntax Highlighter v_2.7.2_beta -->
+<span class="kn">import</span> <span class="nn">java.util.HashMap</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.util.Map</span><span class="o">;</span>
 
-		<div id="crayon-5c44b1f33a27f141077670" class="crayon-syntax crayon-theme-eclipse crayon-font-monaco crayon-os-pc print-yes notranslate" data-settings=" minimize scroll-mouseover" style=" margin-top: 12px; margin-bottom: 12px; font-size: 12px !important; line-height: 15px !important;">
-		
-			<div class="crayon-toolbar" data-settings=" show" style="font-size: 12px !important;height: 18px !important; line-height: 18px !important;"><span class="crayon-title">Configure Hibernate (JPA) with DBCP</span>
-			<div class="crayon-tools" style="font-size: 12px !important;height: 18px !important; line-height: 18px !important;"><div class="crayon-button crayon-nums-button" title="Toggle Line Numbers"><div class="crayon-button-icon"></div></div><div class="crayon-button crayon-plain-button" title="Toggle Plain Code"><div class="crayon-button-icon"></div></div><div class="crayon-button crayon-wrap-button" title="Toggle Line Wrap"><div class="crayon-button-icon"></div></div><div class="crayon-button crayon-expand-button" title="Expand Code"><div class="crayon-button-icon"></div></div><div class="crayon-button crayon-copy-button" title="Copy"><div class="crayon-button-icon"></div></div><div class="crayon-button crayon-popup-button" title="Open Code In New Window"><div class="crayon-button-icon"></div></div><span class="crayon-language">Java</span></div></div>
-			<div class="crayon-info" style="min-height: 16.8px !important; line-height: 16.8px !important;"></div>
-			<div class="crayon-plain-wrap"><textarea wrap="soft" class="crayon-plain print-no" data-settings="dblclick" readonly style="-moz-tab-size:4; -o-tab-size:4; -webkit-tab-size:4; tab-size:4; font-size: 12px !important; line-height: 15px !important;">
+<span class="kn">import</span> <span class="nn">javax.persistence.EntityManager</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">javax.persistence.EntityManagerFactory</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">javax.persistence.Persistence</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">javax.persistence.TypedQuery</span><span class="o">;</span>
 
-package com.opcodesolutions.demo;
+<span class="kn">import</span> <span class="nn">org.apache.commons.dbcp2.BasicDataSource</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.hibernate.cfg.AvailableSettings</span><span class="o">;</span>
 
-import java.util.HashMap;
-import java.util.Map;
+<span class="kn">import</span> <span class="nn">com.opcodesolutions.generic.jpa.entity.User</span><span class="o">;</span>
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
-import javax.persistence.TypedQuery;
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">HibernateJPAWithDBCP</span> <span class="o">{</span>
 
-import org.apache.commons.dbcp2.BasicDataSource;
-import org.hibernate.cfg.AvailableSettings;
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="nc">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
 
-import com.opcodesolutions.generic.jpa.entity.User;
+        <span class="c1">// Create and configure DBCP DataSource</span>
+        <span class="nc">BasicDataSource</span> <span class="n">dbcpDataSource</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">BasicDataSource</span><span class="o">();</span>
+        <span class="n">dbcpDataSource</span><span class="o">.</span><span class="na">setDriverClassName</span><span class="o">(</span><span class="s">"com.mysql.jdbc.Driver"</span><span class="o">);</span>
+        <span class="n">dbcpDataSource</span><span class="o">.</span><span class="na">setUrl</span><span class="o">(</span><span class="s">"jdbc:mysql://localhost:3306/database"</span><span class="o">);</span>
+        <span class="n">dbcpDataSource</span><span class="o">.</span><span class="na">setUsername</span><span class="o">(</span><span class="s">"user"</span><span class="o">);</span>
+        <span class="n">dbcpDataSource</span><span class="o">.</span><span class="na">setPassword</span><span class="o">(</span><span class="s">"************"</span><span class="o">);</span>
 
-public class HibernateJPAWithDBCP {
+        <span class="c1">// Enable statement caching (Optional)</span>
+        <span class="n">dbcpDataSource</span><span class="o">.</span><span class="na">setPoolPreparedStatements</span><span class="o">(</span><span class="kc">true</span><span class="o">);</span>
+        <span class="n">dbcpDataSource</span><span class="o">.</span><span class="na">setMaxOpenPreparedStatements</span><span class="o">(</span><span class="mi">50</span><span class="o">);</span>
 
-	public static void main(String[] args) {
+        <span class="c1">// JPA properties</span>
+        <span class="nc">Map</span><span class="o">&lt;</span><span class="nc">String</span><span class="o">,</span> <span class="nc">Object</span><span class="o">&gt;</span> <span class="n">properties</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">HashMap</span><span class="o">&lt;&gt;();</span>
 
-		// Create and configure DBCP DataSource
-		BasicDataSource dbcpDataSource = new BasicDataSource();
-		dbcpDataSource.setDriverClassName("com.mysql.jdbc.Driver");
-		dbcpDataSource.setUrl("jdbc:mysql://localhost:3306/database");
-		dbcpDataSource.setUsername("user");
-		dbcpDataSource.setPassword("************");
+        <span class="c1">// This line will tell hibernate (JPA) to use DBCP</span>
+        <span class="n">properties</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="nc">AvailableSettings</span><span class="o">.</span><span class="na">DATASOURCE</span><span class="o">,</span> <span class="n">dbcpDataSource</span><span class="o">);</span>
 
-		// Enable statement caching (Optional)
-		dbcpDataSource.setPoolPreparedStatements(true);
-		dbcpDataSource.setMaxOpenPreparedStatements(50);
+        <span class="c1">// Create the EntityManagerFactory with JPA properties</span>
+        <span class="nc">EntityManagerFactory</span> <span class="n">factory</span> <span class="o">=</span>
+            <span class="nc">Persistence</span><span class="o">.</span><span class="na">createEntityManagerFactory</span><span class="o">(</span><span class="s">"User"</span><span class="o">,</span> <span class="n">properties</span><span class="o">);</span>
 
-		// JPA properties
-		Map&lt;String, Object&gt; properties = new HashMap&lt;&gt;();
+        <span class="c1">// Test with simple query</span>
+        <span class="nc">EntityManager</span> <span class="n">entityManager</span> <span class="o">=</span> <span class="n">factory</span><span class="o">.</span><span class="na">createEntityManager</span><span class="o">();</span>
+        <span class="nc">TypedQuery</span><span class="o">&lt;</span><span class="nc">User</span><span class="o">&gt;</span> <span class="n">query</span> <span class="o">=</span>
+            <span class="n">entityManager</span><span class="o">.</span><span class="na">createQuery</span><span class="o">(</span><span class="s">"select u from User u"</span><span class="o">,</span> <span class="nc">User</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
+        <span class="k">for</span> <span class="o">(</span><span class="nc">User</span> <span class="n">user</span> <span class="o">:</span> <span class="n">query</span><span class="o">.</span><span class="na">getResultList</span><span class="o">())</span> <span class="o">{</span>
+            <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">user</span><span class="o">.</span><span class="na">getFullName</span><span class="o">());</span>
+        <span class="o">}</span>
 
-		// This line will tell hibernate (JPA) to use DBCP
-		properties.put(AvailableSettings.DATASOURCE, dbcpDataSource);
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
 
-		// Create the EntityManagerFactory with JPA properties
-		EntityManagerFactory factory =
-			Persistence.createEntityManagerFactory("User", properties);
+<p>With DBCP, all my deadlock issues disappeared. Thank you <a href="https://www.apache.org/">ASF</a>.</p>
 
-		// Test with simple query
-		EntityManager entityManager = factory.createEntityManager();
-		TypedQuery&lt;User&gt; query =
-			entityManager.createQuery("select u from User u", User.class);
-		for (User user : query.getResultList()) {
-			System.out.println(user.getFullName());
-		}
+<p><em>Author: <a href="https://www.linkedin.com/in/jonathan-demers-ing" title="Jonathan Demers">Jonathan Demers</a></em></p>
 
-	}
-}
-</textarea></div>
-			<div class="crayon-main" style="">
-				<table class="crayon-table">
-					<tr class="crayon-row">
-				<td class="crayon-nums " data-settings="show">
-					<div class="crayon-nums-content" style="font-size: 12px !important; line-height: 15px !important;"><div class="crayon-num" data-line="crayon-5c44b1f33a27f141077670-1">1</div><div class="crayon-num crayon-striped-num" data-line="crayon-5c44b1f33a27f141077670-2">2</div><div class="crayon-num" data-line="crayon-5c44b1f33a27f141077670-3">3</div><div class="crayon-num crayon-striped-num" data-line="crayon-5c44b1f33a27f141077670-4">4</div><div class="crayon-num" data-line="crayon-5c44b1f33a27f141077670-5">5</div><div class="crayon-num crayon-striped-num" data-line="crayon-5c44b1f33a27f141077670-6">6</div><div class="crayon-num" data-line="crayon-5c44b1f33a27f141077670-7">7</div><div class="crayon-num crayon-striped-num" data-line="crayon-5c44b1f33a27f141077670-8">8</div><div class="crayon-num" data-line="crayon-5c44b1f33a27f141077670-9">9</div><div class="crayon-num crayon-striped-num" data-line="crayon-5c44b1f33a27f141077670-10">10</div><div class="crayon-num" data-line="crayon-5c44b1f33a27f141077670-11">11</div><div class="crayon-num crayon-striped-num" data-line="crayon-5c44b1f33a27f141077670-12">12</div><div class="crayon-num" data-line="crayon-5c44b1f33a27f141077670-13">13</div><div class="crayon-num crayon-striped-num" data-line="crayon-5c44b1f33a27f141077670-14">14</div><div class="crayon-num" data-line="crayon-5c44b1f33a27f141077670-15">15</div><div class="crayon-num crayon-striped-num" data-line="crayon-5c44b1f33a27f141077670-16">16</div><div class="crayon-num" data-line="crayon-5c44b1f33a27f141077670-17">17</div><div class="crayon-num crayon-striped-num" data-line="crayon-5c44b1f33a27f141077670-18">18</div><div class="crayon-num" data-line="crayon-5c44b1f33a27f141077670-19">19</div><div class="crayon-num crayon-striped-num" data-line="crayon-5c44b1f33a27f141077670-20">20</div><div class="crayon-num" data-line="crayon-5c44b1f33a27f141077670-21">21</div><div class="crayon-num crayon-striped-num" data-line="crayon-5c44b1f33a27f141077670-22">22</div><div class="crayon-num" data-line="crayon-5c44b1f33a27f141077670-23">23</div><div class="crayon-num crayon-striped-num" data-line="crayon-5c44b1f33a27f141077670-24">24</div><div class="crayon-num" data-line="crayon-5c44b1f33a27f141077670-25">25</div><div class="crayon-num crayon-striped-num" data-line="crayon-5c44b1f33a27f141077670-26">26</div><div class="crayon-num" data-line="crayon-5c44b1f33a27f141077670-27">27</div><div class="crayon-num crayon-striped-num" data-line="crayon-5c44b1f33a27f141077670-28">28</div><div class="crayon-num" data-line="crayon-5c44b1f33a27f141077670-29">29</div><div class="crayon-num crayon-striped-num" data-line="crayon-5c44b1f33a27f141077670-30">30</div><div class="crayon-num" data-line="crayon-5c44b1f33a27f141077670-31">31</div><div class="crayon-num crayon-striped-num" data-line="crayon-5c44b1f33a27f141077670-32">32</div><div class="crayon-num" data-line="crayon-5c44b1f33a27f141077670-33">33</div><div class="crayon-num crayon-striped-num" data-line="crayon-5c44b1f33a27f141077670-34">34</div><div class="crayon-num" data-line="crayon-5c44b1f33a27f141077670-35">35</div><div class="crayon-num crayon-striped-num" data-line="crayon-5c44b1f33a27f141077670-36">36</div><div class="crayon-num" data-line="crayon-5c44b1f33a27f141077670-37">37</div><div class="crayon-num crayon-striped-num" data-line="crayon-5c44b1f33a27f141077670-38">38</div><div class="crayon-num" data-line="crayon-5c44b1f33a27f141077670-39">39</div><div class="crayon-num crayon-striped-num" data-line="crayon-5c44b1f33a27f141077670-40">40</div><div class="crayon-num" data-line="crayon-5c44b1f33a27f141077670-41">41</div><div class="crayon-num crayon-striped-num" data-line="crayon-5c44b1f33a27f141077670-42">42</div><div class="crayon-num" data-line="crayon-5c44b1f33a27f141077670-43">43</div><div class="crayon-num crayon-striped-num" data-line="crayon-5c44b1f33a27f141077670-44">44</div><div class="crayon-num" data-line="crayon-5c44b1f33a27f141077670-45">45</div><div class="crayon-num crayon-striped-num" data-line="crayon-5c44b1f33a27f141077670-46">46</div><div class="crayon-num" data-line="crayon-5c44b1f33a27f141077670-47">47</div><div class="crayon-num crayon-striped-num" data-line="crayon-5c44b1f33a27f141077670-48">48</div><div class="crayon-num" data-line="crayon-5c44b1f33a27f141077670-49">49</div><div class="crayon-num crayon-striped-num" data-line="crayon-5c44b1f33a27f141077670-50">50</div><div class="crayon-num" data-line="crayon-5c44b1f33a27f141077670-51">51</div><div class="crayon-num crayon-striped-num" data-line="crayon-5c44b1f33a27f141077670-52">52</div></div>
-				</td>
-						<td class="crayon-code"><div class="crayon-pre" style="font-size: 12px !important; line-height: 15px !important; -moz-tab-size:4; -o-tab-size:4; -webkit-tab-size:4; tab-size:4;"><div class="crayon-line" id="crayon-5c44b1f33a27f141077670-1">&nbsp;</div><div class="crayon-line crayon-striped-line" id="crayon-5c44b1f33a27f141077670-2"><span class="crayon-t">package</span><span class="crayon-h"> </span><span class="crayon-v">com</span><span class="crayon-sy">.</span><span class="crayon-v">opcodesolutions</span><span class="crayon-sy">.</span><span class="crayon-v">demo</span><span class="crayon-sy">;</span></div><div class="crayon-line" id="crayon-5c44b1f33a27f141077670-3">&nbsp;</div><div class="crayon-line crayon-striped-line" id="crayon-5c44b1f33a27f141077670-4"><span class="crayon-r">import</span><span class="crayon-h"> </span><span class="crayon-v">java</span><span class="crayon-sy">.</span><span class="crayon-v">util</span><span class="crayon-sy">.</span><span class="crayon-v">HashMap</span><span class="crayon-sy">;</span></div><div class="crayon-line" id="crayon-5c44b1f33a27f141077670-5"><span class="crayon-r">import</span><span class="crayon-h"> </span><span class="crayon-v">java</span><span class="crayon-sy">.</span><span class="crayon-v">util</span><span class="crayon-sy">.</span><span class="crayon-v">Map</span><span class="crayon-sy">;</span></div><div class="crayon-line crayon-striped-line" id="crayon-5c44b1f33a27f141077670-6">&nbsp;</div><div class="crayon-line" id="crayon-5c44b1f33a27f141077670-7"><span class="crayon-r">import</span><span class="crayon-h"> </span><span class="crayon-v">javax</span><span class="crayon-sy">.</span><span class="crayon-v">persistence</span><span class="crayon-sy">.</span><span class="crayon-v">EntityManager</span><span class="crayon-sy">;</span></div><div class="crayon-line crayon-striped-line" id="crayon-5c44b1f33a27f141077670-8"><span class="crayon-r">import</span><span class="crayon-h"> </span><span class="crayon-v">javax</span><span class="crayon-sy">.</span><span class="crayon-v">persistence</span><span class="crayon-sy">.</span><span class="crayon-v">EntityManagerFactory</span><span class="crayon-sy">;</span></div><div class="crayon-line" id="crayon-5c44b1f33a27f141077670-9"><span class="crayon-r">import</span><span class="crayon-h"> </span><span class="crayon-v">javax</span><span class="crayon-sy">.</span><span class="crayon-v">persistence</span><span class="crayon-sy">.</span><span class="crayon-v">Persistence</span><span class="crayon-sy">;</span></div><div class="crayon-line crayon-striped-line" id="crayon-5c44b1f33a27f141077670-10"><span class="crayon-r">import</span><span class="crayon-h"> </span><span class="crayon-v">javax</span><span class="crayon-sy">.</span><span class="crayon-v">persistence</span><span class="crayon-sy">.</span><span class="crayon-v">TypedQuery</span><span class="crayon-sy">;</span></div><div class="crayon-line" id="crayon-5c44b1f33a27f141077670-11">&nbsp;</div><div class="crayon-line crayon-striped-line" id="crayon-5c44b1f33a27f141077670-12"><span class="crayon-r">import</span><span class="crayon-h"> </span><span class="crayon-v">org</span><span class="crayon-sy">.</span><span class="crayon-v">apache</span><span class="crayon-sy">.</span><span class="crayon-v">commons</span><span class="crayon-sy">.</span><span class="crayon-v">dbcp2</span><span class="crayon-sy">.</span><span class="crayon-v">BasicDataSource</span><span class="crayon-sy">;</span></div><div class="crayon-line" id="crayon-5c44b1f33a27f141077670-13"><span class="crayon-r">import</span><span class="crayon-h"> </span><span class="crayon-v">org</span><span class="crayon-sy">.</span><span class="crayon-v">hibernate</span><span class="crayon-sy">.</span><span class="crayon-v">cfg</span><span class="crayon-sy">.</span><span class="crayon-v">AvailableSettings</span><span class="crayon-sy">;</span></div><div class="crayon-line crayon-striped-line" id="crayon-5c44b1f33a27f141077670-14">&nbsp;</div><div class="crayon-line" id="crayon-5c44b1f33a27f141077670-15"><span class="crayon-r">import</span><span class="crayon-h"> </span><span class="crayon-v">com</span><span class="crayon-sy">.</span><span class="crayon-v">opcodesolutions</span><span class="crayon-sy">.</span><span class="crayon-v">generic</span><span class="crayon-sy">.</span><span class="crayon-v">jpa</span><span class="crayon-sy">.</span><span class="crayon-v">entity</span><span class="crayon-sy">.</span><span class="crayon-v">User</span><span class="crayon-sy">;</span></div><div class="crayon-line crayon-striped-line" id="crayon-5c44b1f33a27f141077670-16">&nbsp;</div><div class="crayon-line" id="crayon-5c44b1f33a27f141077670-17"><span class="crayon-m">public</span><span class="crayon-h"> </span><span class="crayon-t">class</span><span class="crayon-h"> </span><span class="crayon-e">HibernateJPAWithDBCP</span><span class="crayon-h"> </span><span class="crayon-sy">{</span></div><div class="crayon-line crayon-striped-line" id="crayon-5c44b1f33a27f141077670-18">&nbsp;</div><div class="crayon-line" id="crayon-5c44b1f33a27f141077670-19"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-m">public</span><span class="crayon-h"> </span><span class="crayon-m">static</span><span class="crayon-h"> </span><span class="crayon-t">void</span><span class="crayon-h"> </span><span class="crayon-e">main</span><span class="crayon-sy">(</span><span class="crayon-t">String</span><span class="crayon-sy">[</span><span class="crayon-sy">]</span><span class="crayon-h"> </span><span class="crayon-v">args</span><span class="crayon-sy">)</span><span class="crayon-h"> </span><span class="crayon-sy">{</span></div><div class="crayon-line crayon-striped-line" id="crayon-5c44b1f33a27f141077670-20">&nbsp;</div><div class="crayon-line" id="crayon-5c44b1f33a27f141077670-21"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-c">// Create and configure DBCP DataSource</span></div><div class="crayon-line crayon-striped-line" id="crayon-5c44b1f33a27f141077670-22"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-e">BasicDataSource </span><span class="crayon-v">dbcpDataSource</span><span class="crayon-h"> </span><span class="crayon-o">=</span><span class="crayon-h"> </span><span class="crayon-r">new</span><span class="crayon-h"> </span><span class="crayon-e">BasicDataSource</span><span class="crayon-sy">(</span><span class="crayon-sy">)</span><span class="crayon-sy">;</span></div><div class="crayon-line" id="crayon-5c44b1f33a27f141077670-23"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-v">dbcpDataSource</span><span class="crayon-sy">.</span><span class="crayon-e">setDriverClassName</span><span class="crayon-sy">(</span><span class="crayon-s">"com.mysql.jdbc.Driver"</span><span class="crayon-sy">)</span><span class="crayon-sy">;</span></div><div class="crayon-line crayon-striped-line" id="crayon-5c44b1f33a27f141077670-24"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-v">dbcpDataSource</span><span class="crayon-sy">.</span><span class="crayon-e">setUrl</span><span class="crayon-sy">(</span><span class="crayon-s">"jdbc:mysql://localhost:3306/database"</span><span class="crayon-sy">)</span><span class="crayon-sy">;</span></div><div class="crayon-line" id="crayon-5c44b1f33a27f141077670-25"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-v">dbcpDataSource</span><span class="crayon-sy">.</span><span class="crayon-e">setUsername</span><span class="crayon-sy">(</span><span class="crayon-s">"user"</span><span class="crayon-sy">)</span><span class="crayon-sy">;</span></div><div class="crayon-line crayon-striped-line" id="crayon-5c44b1f33a27f141077670-26"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-v">dbcpDataSource</span><span class="crayon-sy">.</span><span class="crayon-e">setPassword</span><span class="crayon-sy">(</span><span class="crayon-s">"************"</span><span class="crayon-sy">)</span><span class="crayon-sy">;</span></div><div class="crayon-line" id="crayon-5c44b1f33a27f141077670-27">&nbsp;</div><div class="crayon-line crayon-striped-line" id="crayon-5c44b1f33a27f141077670-28"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-c">// Enable statement caching (Optional)</span></div><div class="crayon-line" id="crayon-5c44b1f33a27f141077670-29"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-v">dbcpDataSource</span><span class="crayon-sy">.</span><span class="crayon-e">setPoolPreparedStatements</span><span class="crayon-sy">(</span><span class="crayon-t">true</span><span class="crayon-sy">)</span><span class="crayon-sy">;</span></div><div class="crayon-line crayon-striped-line" id="crayon-5c44b1f33a27f141077670-30"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-v">dbcpDataSource</span><span class="crayon-sy">.</span><span class="crayon-e">setMaxOpenPreparedStatements</span><span class="crayon-sy">(</span><span class="crayon-cn">50</span><span class="crayon-sy">)</span><span class="crayon-sy">;</span></div><div class="crayon-line" id="crayon-5c44b1f33a27f141077670-31">&nbsp;</div><div class="crayon-line crayon-striped-line" id="crayon-5c44b1f33a27f141077670-32"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-c">// JPA properties</span></div><div class="crayon-line" id="crayon-5c44b1f33a27f141077670-33"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-v">Map</span><span class="crayon-o">&lt;</span><span class="crayon-t">String</span><span class="crayon-sy">,</span><span class="crayon-h"> </span><span class="crayon-t">Object</span><span class="crayon-o">&gt;</span><span class="crayon-h"> </span><span class="crayon-v">properties</span><span class="crayon-h"> </span><span class="crayon-o">=</span><span class="crayon-h"> </span><span class="crayon-r">new</span><span class="crayon-h"> </span><span class="crayon-v">HashMap</span><span class="crayon-o">&lt;&gt;</span><span class="crayon-sy">(</span><span class="crayon-sy">)</span><span class="crayon-sy">;</span></div><div class="crayon-line crayon-striped-line" id="crayon-5c44b1f33a27f141077670-34">&nbsp;</div><div class="crayon-line" id="crayon-5c44b1f33a27f141077670-35"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-c">// This line will tell hibernate (JPA) to use DBCP</span></div><div class="crayon-line crayon-striped-line" id="crayon-5c44b1f33a27f141077670-36"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-v">properties</span><span class="crayon-sy">.</span><span class="crayon-e">put</span><span class="crayon-sy">(</span><span class="crayon-v">AvailableSettings</span><span class="crayon-sy">.</span><span class="crayon-v">DATASOURCE</span><span class="crayon-sy">,</span><span class="crayon-h"> </span><span class="crayon-v">dbcpDataSource</span><span class="crayon-sy">)</span><span class="crayon-sy">;</span></div><div class="crayon-line" id="crayon-5c44b1f33a27f141077670-37">&nbsp;</div><div class="crayon-line crayon-striped-line" id="crayon-5c44b1f33a27f141077670-38"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-c">// Create the EntityManagerFactory with JPA properties</span></div><div class="crayon-line" id="crayon-5c44b1f33a27f141077670-39"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-e">EntityManagerFactory </span><span class="crayon-v">factory</span><span class="crayon-h"> </span><span class="crayon-o">=</span></div><div class="crayon-line crayon-striped-line" id="crayon-5c44b1f33a27f141077670-40"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-v">Persistence</span><span class="crayon-sy">.</span><span class="crayon-e">createEntityManagerFactory</span><span class="crayon-sy">(</span><span class="crayon-s">"User"</span><span class="crayon-sy">,</span><span class="crayon-h"> </span><span class="crayon-v">properties</span><span class="crayon-sy">)</span><span class="crayon-sy">;</span></div><div class="crayon-line" id="crayon-5c44b1f33a27f141077670-41">&nbsp;</div><div class="crayon-line crayon-striped-line" id="crayon-5c44b1f33a27f141077670-42"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-c">// Test with simple query</span></div><div class="crayon-line" id="crayon-5c44b1f33a27f141077670-43"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-e">EntityManager </span><span class="crayon-v">entityManager</span><span class="crayon-h"> </span><span class="crayon-o">=</span><span class="crayon-h"> </span><span class="crayon-v">factory</span><span class="crayon-sy">.</span><span class="crayon-e">createEntityManager</span><span class="crayon-sy">(</span><span class="crayon-sy">)</span><span class="crayon-sy">;</span></div><div class="crayon-line crayon-striped-line" id="crayon-5c44b1f33a27f141077670-44"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-v">TypedQuery</span><span class="crayon-e ">&lt;User&gt;</span><span class="crayon-h"> </span><span class="crayon-v">query</span><span class="crayon-h"> </span><span class="crayon-o">=</span></div><div class="crayon-line" id="crayon-5c44b1f33a27f141077670-45"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-v">entityManager</span><span class="crayon-sy">.</span><span class="crayon-e">createQuery</span><span class="crayon-sy">(</span><span class="crayon-s">"select u from User u"</span><span class="crayon-sy">,</span><span class="crayon-h"> </span><span class="crayon-v">User</span><span class="crayon-sy">.</span><span class="crayon-t">class</span><span class="crayon-sy">)</span><span class="crayon-sy">;</span></div><div class="crayon-line crayon-striped-line" id="crayon-5c44b1f33a27f141077670-46"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-st">for</span><span class="crayon-h"> </span><span class="crayon-sy">(</span><span class="crayon-e">User </span><span class="crayon-v">user</span><span class="crayon-h"> </span><span class="crayon-o">:</span><span class="crayon-h"> </span><span class="crayon-v">query</span><span class="crayon-sy">.</span><span class="crayon-e">getResultList</span><span class="crayon-sy">(</span><span class="crayon-sy">)</span><span class="crayon-sy">)</span><span class="crayon-h"> </span><span class="crayon-sy">{</span></div><div class="crayon-line" id="crayon-5c44b1f33a27f141077670-47"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-v">System</span><span class="crayon-sy">.</span><span class="crayon-v">out</span><span class="crayon-sy">.</span><span class="crayon-e">println</span><span class="crayon-sy">(</span><span class="crayon-v">user</span><span class="crayon-sy">.</span><span class="crayon-e">getFullName</span><span class="crayon-sy">(</span><span class="crayon-sy">)</span><span class="crayon-sy">)</span><span class="crayon-sy">;</span></div><div class="crayon-line crayon-striped-line" id="crayon-5c44b1f33a27f141077670-48"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-sy">}</span></div><div class="crayon-line" id="crayon-5c44b1f33a27f141077670-49">&nbsp;</div><div class="crayon-line crayon-striped-line" id="crayon-5c44b1f33a27f141077670-50"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-sy">}</span></div><div class="crayon-line" id="crayon-5c44b1f33a27f141077670-51"><span class="crayon-sy">}</span></div><div class="crayon-line crayon-striped-line" id="crayon-5c44b1f33a27f141077670-52">&nbsp;</div></div></td>
-					</tr>
-				</table>
-			</div>
-		</div>
-<!-- [Format Time: 0.0050 seconds] -->
-<p>With DBCP, all my deadlock issues disappeared. Thank you <a title="The Apache Software Foundation" href="http://www.apache.org/">ASF</a>.</p>
-					</div><!-- .entry-content -->
-		
-		<footer class="entry-meta">
-			This entry was posted in <a href="../category/development/index.html" rel="category tag">Development</a> on <a href="index.html" title="4:49 pm" rel="bookmark"><time class="entry-date" datetime="2014-11-04T16:49:23+00:00">November 4, 2014</time></a><span class="by-author"> by <span class="author vcard"><a class="url fn n" href="https://www.linkedin.com/in/jonathan-demers-ing" title="Jonathan Demers">Jonathan Demers</a></span></span>.								</footer><!-- .entry-meta -->
-	</article><!-- #post -->
+  </div><a class="u-url" href="/tech/programmatically-configure-hibernate-jpa-with-dbcp/" hidden></a>
+</article>
 
-				<nav class="nav-single">
-					<h3 class="assistive-text">Post navigation</h3>
-					<span class="nav-previous"><a href="../solve-java-lang-outofmemoryerror-java-heap-space/index.html" rel="prev"><span class="meta-nav">&larr;</span> How to fix java.lang.OutOfMemoryError: Java heap space</a></span>
-					<span class="nav-next"><a href="../ubuntu-apache-reverse-proxy-rewrite-html-links/index.html" rel="next">Ubuntu Apache Reverse Proxy Rewrite HTML Links <span class="meta-nav">&rarr;</span></a></span>
-				</nav><!-- .nav-single -->
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/tech/"></data>
 
-				
-<div id="comments" class="comments-area">
+  <div class="wrapper">
 
-	
-	
-	
-</div><!-- #comments .comments-area -->
+    <h2 class="footer-heading">OpCode Tech</h2>
 
-			
-		</div><!-- #content -->
-	</div><!-- #primary -->
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li class="p-name">OpCode Tech</li><li><a class="u-email" href="mailto:jdemers@opcodesolutions.com">jdemers@opcodesolutions.com</a></li></ul>
+      </div>
 
+      <div class="footer-col footer-col-2"><ul class="social-media-list"><li><a href="https://github.com/JonDemers"><svg class="svg-icon"><use xlink:href="/tech/assets/minima-social-icons.svg#github"></use></svg> <span class="username">JonDemers</span></a></li></ul>
+</div>
 
-			<div id="secondary" class="widget-area" role="complementary">
-					<aside id="recent-posts-2" class="widget widget_recent_entries">		<h3 class="widget-title">More Articles</h3>		<ul>
-											<li>
-					<a href="../how-to-migrate-3-mysql-databases-to-amazon-rds-in-5-minutes/index.html">How to Migrate 3 MySQL Databases to Amazon RDS in 5 Minutes</a>
-									</li>
-											<li>
-					<a href="../imageio-read-causes-outofmemoryerror/index.html">ImageIO.read() causes OutOfMemoryError</a>
-									</li>
-											<li>
-					<a href="../https-wildcard-subdomain-dns-apache-tomcat-config/index.html">HTTPS Wildcard Subdomain: DNS + Apache + Tomcat Config</a>
-									</li>
-											<li>
-					<a href="../ubuntu-apache-reverse-proxy-rewrite-html-links/index.html">Ubuntu Apache Reverse Proxy Rewrite HTML Links</a>
-									</li>
-											<li>
-					<a href="index.html">Programmatically Configure Hibernate (JPA) with DBCP</a>
-									</li>
-					</ul>
-		</aside><aside id="categories-2" class="widget widget_categories"><h3 class="widget-title">Categories</h3>		<ul>
-	<li class="cat-item cat-item-2"><a href="../category/development/index.html" >Development</a>
-</li>
-	<li class="cat-item cat-item-50"><a href="../category/how-to/index.html" >How To</a>
-</li>
-	<li class="cat-item cat-item-12"><a href="../category/news/index.html" >News</a>
-</li>
-		</ul>
-</aside>		</div><!-- #secondary -->
-		</div><!-- #main .wrapper -->
-	<footer id="colophon" role="contentinfo">
-		<div class="site-info">
-									<a href="https://wordpress.org/" class="imprint" title="Semantic Personal Publishing Platform">
-				Proudly powered by WordPress			</a>
-		</div><!-- .site-info -->
-	</footer><!-- #colophon -->
-</div><!-- #page -->
+      <div class="footer-col footer-col-3">
+        <p>Optimize Your Processes</p>
+      </div>
+    </div>
 
-<script type='text/javascript' src='../wp-content/themes/twentytwelve/js/navigation.js%3Fver=20140711'></script>
-<script type='text/javascript' src='../wp-includes/js/wp-embed.min.js%3Fver=5.0.3'></script>
+  </div>
+
+</footer>
 </body>
+
 </html>

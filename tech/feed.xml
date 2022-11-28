@@ -1,0 +1,523 @@
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.1">Jekyll</generator><link href="https://opcodesolutions.com/tech/feed.xml" rel="self" type="application/atom+xml" /><link href="https://opcodesolutions.com/tech/" rel="alternate" type="text/html" /><updated>2022-11-28T16:31:07-05:00</updated><id>https://opcodesolutions.com/tech/feed.xml</id><title type="html">OpCode Tech</title><subtitle>Optimize Your Processes</subtitle><entry><title type="html">How to Migrate 3 MySQL Databases to Amazon RDS in 5 Minutes</title><link href="https://opcodesolutions.com/tech/how-to-migrate-3-mysql-databases-to-amazon-rds-in-5-minutes/" rel="alternate" type="text/html" title="How to Migrate 3 MySQL Databases to Amazon RDS in 5 Minutes" /><published>2014-12-23T00:00:00-05:00</published><updated>2014-12-23T00:00:00-05:00</updated><id>https://opcodesolutions.com/tech/how-to-migrate-3-mysql-databases-to-amazon-rds-in-5-minutes</id><content type="html" xml:base="https://opcodesolutions.com/tech/how-to-migrate-3-mysql-databases-to-amazon-rds-in-5-minutes/"><![CDATA[<p>I had a LAMT (Linux-Apache-MySQL-Tomcat) on <a href="https://aws.amazon.com/ec2/">Amazon EC2</a> and I wanted to move all remaining MySQL databases (3) to an existing <a href="https://aws.amazon.com/rds/">Amazon RDS</a> instance. This would allow me to shutdown the MySQL instance on EC2, freeing RAM for Tomcat and leveraging RDS automated backups for those 3 databases in case of a disaster. The databases to migrate only contain low volume TEST data, but I already have that RDS instance, so why not use it?</p>
+
+<p>I also have a SLA with my clients that allows me to perform <em>“Standard daily maintenance”</em>. Basically, the <em>“Standard daily maintenance”</em> must be performed outside business hours and must last <strong>at most 15 minutes</strong>.</p>
+
+<p>The key to the success of this migration was to <strong>prepare</strong>, <strong>prepare</strong> and <strong>prepare</strong> before the actual migration. So here is what I did before the migration:</p>
+
+<ul>
+  <li>Create 3 empty databases and users on the RDS instance</li>
+  <li>Prepare new configuration files with the new JDBC url pointing to the RDS instance</li>
+  <li>Prepare all the commands that must be executed</li>
+  <li>Review and test the commands as needed</li>
+</ul>
+
+<p>Now that I am prepared I just need to wait for the <em>“Standard daily maintenance”</em> time. Then, I just copy and paste the commands in a terminal. I prefer to copy/paste the commands one by one, so if any command fails (for any reason), it can be fixed right away before running the next commands. Here is a summary of the commands:</p>
+
+<ol>
+  <li>Shutdown Tomcat</li>
+  <li><a href="https://www.thegeekstuff.com/2008/09/backup-and-restore-mysql-database-using-mysqldump/">MySQL dump/restore</a> from EC2 to RDS (3 databases)</li>
+  <li>Copy the configuration files with JDBC url pointing to RDS (3 files)</li>
+  <li><a href="https://askubuntu.com/questions/40072/how-to-stop-apache2-mysql-from-starting-automatically-as-computer-starts">Prevent MySQL from starting during boot</a>: echo manual &gt; /etc/init/mysql.override</li>
+  <li>sudo reboot (I want to verify that MySQL on EC2 won’t start after a reboot)</li>
+</ol>
+
+<p>Everything went fine. After reboot, the MySQL instance on EC2 was not started, as expected. The Tomcat webapps were fine as well and there is more free RAM for Tomcat.</p>
+
+<p>For those webapps, I have <a href="https://www.pingdom.com/">uptime monitoring at one minute interval with Pingdom</a>. I receive emails when a webapp go down and up again. Here is the “UP” email from Pingdom, showing <strong>5 minutes of downtime</strong> for that migration:</p>
+
+<p><em>OpCode is UP again at 12/22/2014 08:25:36PM, after <strong>5m of downtime</strong>.</em></p>
+
+<p><em>Author: <a href="https://www.linkedin.com/in/jonathan-demers-ing" title="Jonathan Demers">Jonathan Demers</a></em></p>]]></content><author><name></name></author><summary type="html"><![CDATA[I had a LAMT (Linux-Apache-MySQL-Tomcat) on Amazon EC2 and I wanted to move all remaining MySQL databases (3) to an existing Amazon RDS instance. This would allow me to shutdown the MySQL instance on EC2, freeing RAM for Tomcat and leveraging RDS automated backups for those 3 databases in case of a disaster. The databases to migrate only contain low volume TEST data, but I already have that RDS instance, so why not use it?]]></summary></entry><entry><title type="html">ImageIO.read() causes OutOfMemoryError</title><link href="https://opcodesolutions.com/tech/imageio-read-causes-outofmemoryerror/" rel="alternate" type="text/html" title="ImageIO.read() causes OutOfMemoryError" /><published>2014-11-24T00:00:00-05:00</published><updated>2014-11-24T00:00:00-05:00</updated><id>https://opcodesolutions.com/tech/imageio-read-causes-outofmemoryerror</id><content type="html" xml:base="https://opcodesolutions.com/tech/imageio-read-causes-outofmemoryerror/"><![CDATA[<h2 id="the-problem">The problem</h2>
+
+<p>Few days ago, a reader contacted me with a problem he had in a piece of code. The code was creating thumbnails from images and was throwing an <code class="language-plaintext highlighter-rouge">OutOfMemoryError</code> after few dozens of images. Here is the simplified code, line 26 <code class="language-plaintext highlighter-rouge">ImageIO.read(file)</code>, throws <code class="language-plaintext highlighter-rouge">OutOfMemoryError</code>:</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">package</span> <span class="nn">com.opcodesolutions.demo</span><span class="o">;</span>
+
+<span class="kn">import</span> <span class="nn">java.awt.Image</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.awt.image.BufferedImage</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.io.File</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.io.IOException</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.util.ArrayList</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.util.List</span><span class="o">;</span>
+
+<span class="kn">import</span> <span class="nn">javax.imageio.ImageIO</span><span class="o">;</span>
+
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">Thumbnails</span> <span class="o">{</span>
+
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="nc">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="kd">throws</span> <span class="nc">IOException</span> <span class="o">{</span>
+
+        <span class="nc">List</span><span class="o">&lt;</span><span class="nc">Image</span><span class="o">&gt;</span> <span class="n">thumbnails</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">ArrayList</span><span class="o">&lt;&gt;();</span>
+
+        <span class="k">for</span> <span class="o">(</span><span class="nc">File</span> <span class="n">file</span> <span class="o">:</span> <span class="k">new</span> <span class="nc">File</span><span class="o">(</span><span class="s">"/path/to/images/"</span><span class="o">).</span><span class="na">listFiles</span><span class="o">())</span> <span class="o">{</span>
+
+            <span class="k">if</span> <span class="o">(!</span><span class="n">file</span><span class="o">.</span><span class="na">getName</span><span class="o">().</span><span class="na">endsWith</span><span class="o">(</span><span class="s">".jpg"</span><span class="o">))</span> <span class="o">{</span>
+                <span class="c1">// File is NOT a JPEG</span>
+                <span class="k">continue</span><span class="o">;</span>
+            <span class="o">}</span>
+
+            <span class="nc">BufferedImage</span> <span class="n">fullSizeImage</span> <span class="o">=</span> <span class="nc">ImageIO</span><span class="o">.</span><span class="na">read</span><span class="o">(</span><span class="n">file</span><span class="o">);</span> <span class="c1">// OutOfMemoryError</span>
+            <span class="k">if</span> <span class="o">(</span><span class="n">fullSizeImage</span> <span class="o">==</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
+                <span class="c1">// Could not parse JPEG, just ignore</span>
+                <span class="k">continue</span><span class="o">;</span>
+            <span class="o">}</span>
+
+            <span class="c1">// Create thumbnail</span>
+            <span class="nc">Image</span> <span class="n">thumbnail</span> <span class="o">=</span> <span class="n">fullSizeImage</span>
+                <span class="o">.</span><span class="na">getScaledInstance</span><span class="o">(</span><span class="mi">150</span><span class="o">,</span> <span class="mi">150</span><span class="o">,</span> <span class="nc">Image</span><span class="o">.</span><span class="na">SCALE_DEFAULT</span><span class="o">);</span>
+            <span class="n">thumbnails</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">thumbnail</span><span class="o">);</span>
+        <span class="o">}</span>
+
+        <span class="c1">// Do more stuff with thumbnails</span>
+
+    <span class="o">}</span>
+
+<span class="o">}</span>
+</code></pre></div></div>
+
+<p>And here is the stacktrace with the <code class="language-plaintext highlighter-rouge">OutOfMemoryError</code>:</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nc">Exception</span> <span class="n">in</span> <span class="n">thread</span> <span class="s">"main"</span> <span class="n">java</span><span class="o">.</span><span class="na">lang</span><span class="o">.</span><span class="na">OutOfMemoryError</span><span class="o">:</span> <span class="nc">Java</span> <span class="n">heap</span> <span class="n">space</span>
+    <span class="n">at</span> <span class="n">java</span><span class="o">.</span><span class="na">awt</span><span class="o">.</span><span class="na">image</span><span class="o">.</span><span class="na">DataBufferByte</span><span class="o">.&lt;</span><span class="n">init</span><span class="o">&gt;(</span><span class="nc">DataBufferByte</span><span class="o">.</span><span class="na">java</span><span class="o">:</span><span class="mi">92</span><span class="o">)</span>
+    <span class="n">at</span> <span class="n">java</span><span class="o">.</span><span class="na">awt</span><span class="o">.</span><span class="na">image</span><span class="o">.</span><span class="na">ComponentSampleModel</span><span class="o">.</span><span class="na">createDataBuffer</span><span class="o">(</span><span class="nc">ComponentSampleModel</span><span class="o">.</span><span class="na">java</span><span class="o">:</span><span class="mi">415</span><span class="o">)</span>
+    <span class="n">at</span> <span class="n">java</span><span class="o">.</span><span class="na">awt</span><span class="o">.</span><span class="na">image</span><span class="o">.</span><span class="na">Raster</span><span class="o">.</span><span class="na">createWritableRaster</span><span class="o">(</span><span class="nc">Raster</span><span class="o">.</span><span class="na">java</span><span class="o">:</span><span class="mi">941</span><span class="o">)</span>
+    <span class="n">at</span> <span class="n">javax</span><span class="o">.</span><span class="na">imageio</span><span class="o">.</span><span class="na">ImageTypeSpecifier</span><span class="o">.</span><span class="na">createBufferedImage</span><span class="o">(</span><span class="nc">ImageTypeSpecifier</span><span class="o">.</span><span class="na">java</span><span class="o">:</span><span class="mi">1073</span><span class="o">)</span>
+    <span class="n">at</span> <span class="n">javax</span><span class="o">.</span><span class="na">imageio</span><span class="o">.</span><span class="na">ImageReader</span><span class="o">.</span><span class="na">getDestination</span><span class="o">(</span><span class="nc">ImageReader</span><span class="o">.</span><span class="na">java</span><span class="o">:</span><span class="mi">2896</span><span class="o">)</span>
+    <span class="n">at</span> <span class="n">com</span><span class="o">.</span><span class="na">sun</span><span class="o">.</span><span class="na">imageio</span><span class="o">.</span><span class="na">plugins</span><span class="o">.</span><span class="na">jpeg</span><span class="o">.</span><span class="na">JPEGImageReader</span><span class="o">.</span><span class="na">readInternal</span><span class="o">(</span><span class="nc">JPEGImageReader</span><span class="o">.</span><span class="na">java</span><span class="o">:</span><span class="mi">1066</span><span class="o">)</span>
+    <span class="n">at</span> <span class="n">com</span><span class="o">.</span><span class="na">sun</span><span class="o">.</span><span class="na">imageio</span><span class="o">.</span><span class="na">plugins</span><span class="o">.</span><span class="na">jpeg</span><span class="o">.</span><span class="na">JPEGImageReader</span><span class="o">.</span><span class="na">read</span><span class="o">(</span><span class="nc">JPEGImageReader</span><span class="o">.</span><span class="na">java</span><span class="o">:</span><span class="mi">1034</span><span class="o">)</span>
+    <span class="n">at</span> <span class="n">javax</span><span class="o">.</span><span class="na">imageio</span><span class="o">.</span><span class="na">ImageIO</span><span class="o">.</span><span class="na">read</span><span class="o">(</span><span class="nc">ImageIO</span><span class="o">.</span><span class="na">java</span><span class="o">:</span><span class="mi">1448</span><span class="o">)</span>
+    <span class="n">at</span> <span class="n">javax</span><span class="o">.</span><span class="na">imageio</span><span class="o">.</span><span class="na">ImageIO</span><span class="o">.</span><span class="na">read</span><span class="o">(</span><span class="nc">ImageIO</span><span class="o">.</span><span class="na">java</span><span class="o">:</span><span class="mi">1308</span><span class="o">)</span>
+    <span class="n">at</span> <span class="n">com</span><span class="o">.</span><span class="na">opcodesolutions</span><span class="o">.</span><span class="na">demo</span><span class="o">.</span><span class="na">Thumbnails</span><span class="o">.</span><span class="na">main</span><span class="o">(</span><span class="nc">Thumbnails</span><span class="o">.</span><span class="na">java</span><span class="o">:</span><span class="mi">26</span><span class="o">)</span>
+</code></pre></div></div>
+
+<h2 id="the-cause-of-the-outofmemoryerror">The cause of the OutOfMemoryError</h2>
+
+<p>The cause of that problem is not obvious. The stacktrace (and the title of this article) is somewhat misleading. Here is what happens: The call to <code class="language-plaintext highlighter-rouge">fullSizeImage.getScaledInstance()</code> (lines 33-34) produces a smaller image thumbnail, but that thumbnail object keeps a reference to the <code class="language-plaintext highlighter-rouge">fullSizeImage</code>. Since JPEG files are highly compressed, reading and parsing them takes a significant amount of memory and that memory can never be freed.</p>
+
+<h2 id="the-solution-do-not-use-imagegetscaledinstance">The solution: Do not use Image.getScaledInstance()</h2>
+
+<p>The solution was to replace the call to <code class="language-plaintext highlighter-rouge">fullSizeImage.getScaledInstance()</code> with the lines 34-38 highlighted below. That solution allowed the code to read thousands of images, because the <code class="language-plaintext highlighter-rouge">fullSizeImage</code> was no longer kept in memory.</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">package</span> <span class="nn">com.opcodesolutions.demo</span><span class="o">;</span>
+
+<span class="kn">import</span> <span class="nn">java.awt.Graphics2D</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.awt.Image</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.awt.image.BufferedImage</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.io.File</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.io.IOException</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.util.ArrayList</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.util.List</span><span class="o">;</span>
+
+<span class="kn">import</span> <span class="nn">javax.imageio.ImageIO</span><span class="o">;</span>
+
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">Thumbnails</span> <span class="o">{</span>
+
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="nc">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="kd">throws</span> <span class="nc">IOException</span> <span class="o">{</span>
+
+        <span class="nc">List</span><span class="o">&lt;</span><span class="nc">Image</span><span class="o">&gt;</span> <span class="n">thumbnails</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">ArrayList</span><span class="o">&lt;&gt;();</span>
+
+        <span class="k">for</span> <span class="o">(</span><span class="nc">File</span> <span class="n">file</span> <span class="o">:</span> <span class="k">new</span> <span class="nc">File</span><span class="o">(</span><span class="s">"/path/to/images/"</span><span class="o">).</span><span class="na">listFiles</span><span class="o">())</span> <span class="o">{</span>
+
+            <span class="k">if</span> <span class="o">(!</span><span class="n">file</span><span class="o">.</span><span class="na">getName</span><span class="o">().</span><span class="na">endsWith</span><span class="o">(</span><span class="s">".jpg"</span><span class="o">))</span> <span class="o">{</span>
+                <span class="c1">// File is NOT a JPEG</span>
+                <span class="k">continue</span><span class="o">;</span>
+            <span class="o">}</span>
+
+            <span class="nc">BufferedImage</span> <span class="n">fullSizeImage</span> <span class="o">=</span> <span class="nc">ImageIO</span><span class="o">.</span><span class="na">read</span><span class="o">(</span><span class="n">file</span><span class="o">);</span>
+            <span class="k">if</span> <span class="o">(</span><span class="n">fullSizeImage</span> <span class="o">==</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
+                <span class="c1">// Could not parse JPEG, just ignore</span>
+                <span class="k">continue</span><span class="o">;</span>
+            <span class="o">}</span>
+
+            <span class="c1">// Create thumbnail</span>
+            <span class="nc">BufferedImage</span> <span class="n">thumbnail</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">BufferedImage</span><span class="o">(</span><span class="mi">150</span><span class="o">,</span> <span class="mi">150</span><span class="o">,</span>
+                <span class="nc">BufferedImage</span><span class="o">.</span><span class="na">TYPE_INT_ARGB</span><span class="o">);</span>
+            <span class="nc">Graphics2D</span> <span class="n">g</span> <span class="o">=</span> <span class="n">thumbnail</span><span class="o">.</span><span class="na">createGraphics</span><span class="o">();</span>
+            <span class="n">g</span><span class="o">.</span><span class="na">drawImage</span><span class="o">(</span><span class="n">fullSizeImage</span><span class="o">,</span> <span class="mi">0</span><span class="o">,</span> <span class="mi">0</span><span class="o">,</span> <span class="mi">150</span><span class="o">,</span> <span class="mi">150</span><span class="o">,</span> <span class="kc">null</span><span class="o">);</span>
+            <span class="n">g</span><span class="o">.</span><span class="na">dispose</span><span class="o">();</span>
+            <span class="n">thumbnails</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">thumbnail</span><span class="o">);</span>
+        <span class="o">}</span>
+
+        <span class="c1">// Do more stuff with thumbnails</span>
+
+    <span class="o">}</span>
+
+<span class="o">}</span>
+</code></pre></div></div>
+
+<h2 id="references">References</h2>
+
+<p>From Oracle’s website: <a href="https://www.oracle.com/java/technologies/java2d.html#Q_How_do_I_create_a_resized_copy">How do I create a resized copy of an image?</a></p>
+
+<p>For this particular problem, I did not need to produce a heap dump, because the code was small enough. With a few tests and a few searches on Google, I could figure-out what was happening. However, if you have no idea where the <code class="language-plaintext highlighter-rouge">OutOfMemoryError</code> comes from, you may want to read this article: <a href="/tech/solve-java-lang-outofmemoryerror-java-heap-space/">How to fix java.lang.OutOfMemoryError: Java heap space</a>.</p>
+
+<p><em>Author: <a href="https://www.linkedin.com/in/jonathan-demers-ing" title="Jonathan Demers">Jonathan Demers</a></em></p>]]></content><author><name></name></author><summary type="html"><![CDATA[The problem]]></summary></entry><entry><title type="html">HTTPS Wildcard Subdomain: DNS + Apache + Tomcat Config</title><link href="https://opcodesolutions.com/tech/https-wildcard-subdomain-dns-apache-tomcat-config/" rel="alternate" type="text/html" title="HTTPS Wildcard Subdomain: DNS + Apache + Tomcat Config" /><published>2014-11-19T00:00:00-05:00</published><updated>2014-11-19T00:00:00-05:00</updated><id>https://opcodesolutions.com/tech/https-wildcard-subdomain-dns-apache-tomcat-config</id><content type="html" xml:base="https://opcodesolutions.com/tech/https-wildcard-subdomain-dns-apache-tomcat-config/"><![CDATA[<p>I recently had to configure HTTPS on a wildcard subdomain with Apache HTTP server as reverse proxy to a Tomcat backend. I had few more requirements:</p>
+
+<ol>
+  <li>Redirect all <strong>http</strong> traffic to <strong>https</strong> and preserve the subdomain (hostname). For instance:
+    <ul>
+      <li>http://<strong>sub1</strong>.example.com/ -&gt; redirect to -&gt; http<strong>s</strong>://<strong>sub1</strong>.example.com/</li>
+      <li>http://<strong>sub2</strong>.example.com/ -&gt; redirect to -&gt; http<strong>s</strong>://<strong>sub2</strong>.example.com/</li>
+      <li>etc.</li>
+    </ul>
+  </li>
+  <li>I want to have a <strong>PHP</strong> wiki on the subdirectory <code class="language-plaintext highlighter-rouge">/wiki</code> and I want to send the rest of the traffic to Tomcat.</li>
+  <li><strong>Tomcat</strong> needs to know the subdomain (hostname) and will serve content accordingly.</li>
+  <li>I don’t know the subdomains in advance because they are <strong>chosen by users</strong>, just like *.wordpress.com</li>
+</ol>
+
+<p>Few parts were not trivial, so I will share my setup.</p>
+
+<h2 id="dns-wildcard-subdomain-configuration">DNS Wildcard Subdomain Configuration</h2>
+
+<p>DNS is probably the easiest part. Nowadays, most domain registrar offer good DNS support for free with your domain. If that is not the case of your registrar, you may want to consider namecheap. Their <a href="https://www.namecheap.com/support/knowledgebase/article.aspx/597/10/how-can-i-set-up-a-catchall-wildcard-subdomain">DNS also support wildcard entries</a>. Otherwise, you can use the popular <strong>Bind DNS server</strong>. Here is how to configure a wildcard entry in BIND. Change 55.55.55.55 with your IP address.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>*    IN    A    55.55.55.55
+</code></pre></div></div>
+
+<h2 id="apache-wildcard-subdomain-configuration">Apache Wildcard Subdomain Configuration</h2>
+
+<p>This was trickier. The Apache HTTP server configuration has 2 main parts.</p>
+
+<ol>
+  <li><strong>HTTP (port 80)</strong>: We use mod_rewrite to redirect all traffic for *.example.com to https (port 443) and we preserve the hostname with the %{HTTP_HOST} variable.</li>
+  <li><strong>HTTPS (port 443)</strong>: Except for the PHP subdirectory (/wiki), we reverse proxy all traffic to Tomcat, which listen on port 9090 of localhost.</li>
+</ol>
+
+<div class="language-apache highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># Allow non-SNI clients</span>
+<span class="nc">SSLStrictSNIVHostCheck</span> <span class="ss">off</span>
+
+<span class="c"># HTTP configuration</span>
+<span class="p">&lt;</span><span class="nl">VirtualHost</span><span class="sr"> *:80</span><span class="p">&gt;
+</span>
+    <span class="nc">ServerName</span> example.com
+
+    <span class="c"># Wildcard subdomain</span>
+    <span class="nc">ServerAlias</span> *.example.com
+
+    <span class="nc">ServerAdmin</span> info@example.com
+
+    <span class="c"># Permanent redirect (301) to HTTPS and preserve</span>
+    <span class="c"># hostname (but do not preserve path)</span>
+    <span class="nc">RewriteEngine</span> <span class="ss">On</span>
+    <span class="nc">RewriteRule</span> .* https://%{HTTP_HOST}/? [R=301,L]
+<span class="p">&lt;/</span><span class="nl">VirtualHost</span><span class="p">&gt;
+</span>
+<span class="c"># HTTPS configuration</span>
+<span class="p">&lt;</span><span class="nl">VirtualHost</span><span class="sr"> *:443</span><span class="p">&gt;
+</span>
+    <span class="nc">ServerName</span> example.com
+
+    <span class="c"># Wildcard subdomain</span>
+    <span class="nc">ServerAlias</span> *.example.com
+
+    <span class="nc">ServerAdmin</span> info@example.com
+
+    <span class="c"># PHP Wiki on path /wiki</span>
+    <span class="nc">Alias</span> /wiki /opt/example.com/php/wiki
+    <span class="p">&lt;</span><span class="nl">Directory</span><span class="sr"> /opt/example.com/php/wiki</span><span class="p">&gt;
+</span>        <span class="nc">AllowOverride</span> <span class="ss">All</span>
+        <span class="nc">Require</span> <span class="ss">all</span> granted
+    <span class="p">&lt;/</span><span class="nl">Directory</span><span class="p">&gt;
+</span>
+    <span class="c"># Reverse proxy everything to Tomcat except for /wiki</span>
+    <span class="nc">ProxyRequests</span> <span class="ss">Off</span>
+    <span class="nc">ProxyPass</span> /wiki !
+    <span class="nc">ProxyPass</span> / http://localhost:9090/
+    <span class="nc">ProxyPassReverse</span> / http://localhost:9090/
+
+    <span class="c"># Logs</span>
+    <span class="nc">ErrorLog</span> ${APACHE_LOG_DIR}/error.log
+    <span class="nc">CustomLog</span> ${APACHE_LOG_DIR}/access.log combined
+
+    <span class="c"># Wildcard SSL/TLS Certificate files</span>
+    <span class="nc">SSLEngine</span> <span class="ss">on</span>
+    <span class="nc">SSLCertificateFile</span> /etc/ssl/certs/STAR_example_com.crt
+    <span class="nc">SSLCertificateKeyFile</span> /etc/ssl/private/example.key
+    <span class="nc">SSLCertificateChainFile</span> /etc/ssl/certs/example.ca-bundle
+
+    <span class="c"># Standard script config</span>
+    <span class="p">&lt;</span><span class="nl">FilesMatch</span><span class="sr"> "\.(cgi|shtml|phtml|php)$"</span><span class="p">&gt;
+</span>        <span class="nc">SSLOptions</span> +StdEnvVars
+    <span class="p">&lt;/</span><span class="nl">FilesMatch</span><span class="p">&gt;
+</span>    <span class="p">&lt;</span><span class="nl">Directory</span><span class="sr"> /usr/lib/cgi-bin</span><span class="p">&gt;
+</span>        <span class="nc">SSLOptions</span> +StdEnvVars
+    <span class="p">&lt;/</span><span class="nl">Directory</span><span class="p">&gt;
+</span>
+    <span class="c"># Standard config for Internet Explorer</span>
+    <span class="nc">BrowserMatch</span> "MSIE [2-6]" \
+        nokeepalive ssl-unclean-shutdown \
+        downgrade-1.0 force-response-1.0
+
+    <span class="nc">BrowserMatch</span> "MSIE [17-9]" ssl-unclean-shutdown
+
+<span class="p">&lt;/</span><span class="nl">VirtualHost</span><span class="p">&gt;
+</span></code></pre></div></div>
+
+<h2 id="tomcat-wildcard-subdomain-configuration">Tomcat Wildcard Subdomain Configuration</h2>
+
+<p>Below you’ll find the configuration of Tomcat (in server.xml), which is quite standard. Actually, we do not need to define any <em>“wildcard”</em>, we just define a <code class="language-plaintext highlighter-rouge">defaultHost</code> in the <code class="language-plaintext highlighter-rouge">Engine</code> element. Then we deploy a <code class="language-plaintext highlighter-rouge">ROOT.war</code> in the webapps directory (<code class="language-plaintext highlighter-rouge">/opt/example.com/tomcat7/webapps</code>) to serve all content at the root context path.</p>
+
+<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;Service</span> <span class="na">name=</span><span class="s">"example"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;Connector</span> <span class="na">port=</span><span class="s">"9090"</span> <span class="na">protocol=</span><span class="s">"HTTP/1.1"</span> <span class="na">connectionTimeout=</span><span class="s">"20000"</span>
+            <span class="na">URIEncoding=</span><span class="s">"UTF-8"</span> <span class="nt">/&gt;</span>
+    <span class="nt">&lt;Engine</span> <span class="na">name=</span><span class="s">"example"</span> <span class="na">defaultHost=</span><span class="s">"localhost"</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;Host</span> <span class="na">name=</span><span class="s">"localhost"</span> <span class="na">appBase=</span><span class="s">"/opt/example.com/tomcat7/webapps"</span>
+                <span class="na">unpackWARs=</span><span class="s">"true"</span> <span class="na">autoDeploy=</span><span class="s">"true"</span><span class="nt">&gt;</span>
+            <span class="nt">&lt;Valve</span> <span class="na">className=</span><span class="s">"org.apache.catalina.valves.AccessLogValve"</span>
+                    <span class="na">directory=</span><span class="s">"logs"</span> <span class="na">prefix=</span><span class="s">"example.com_access_log."</span>
+                    <span class="na">suffix=</span><span class="s">".txt"</span> <span class="na">pattern=</span><span class="s">"%h %l %u %t &amp;quot;%r&amp;quot; %s %b"</span> <span class="nt">/&gt;</span>
+        <span class="nt">&lt;/Host&gt;</span>
+    <span class="nt">&lt;/Engine&gt;</span>
+<span class="nt">&lt;/Service&gt;</span>
+</code></pre></div></div>
+
+<h2 id="how-does-tomcat-know-the-subdomain">How does Tomcat Know the Subdomain?</h2>
+
+<p>With this configuration, all content will be sent to Tomcat with “localhost” as the hostname. Fortunately, the <a href="https://httpd.apache.org/docs/current/mod/mod_proxy.html#x-headers">Apache reverse proxy will send extra request headers</a> to Tomcat, namely:</p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">X-Forwarded-For</code>: The IP address of the client.</li>
+  <li><strong><code class="language-plaintext highlighter-rouge">X-Forwarded-Host</code>: The original host requested by the client in the Host HTTP request header.</strong></li>
+  <li><code class="language-plaintext highlighter-rouge">X-Forwarded-Server</code>: The hostname of the proxy server.</li>
+</ul>
+
+<p>So in Tomcat (or any other servlet container), just use the Java code below to get the value of that header <code class="language-plaintext highlighter-rouge">X-Forwarded-Host</code> and you’ll know the subdomain.</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nc">String</span> <span class="n">subdomain</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="na">getHeader</span><span class="o">(</span><span class="s">"X-Forwarded-Host"</span><span class="o">);</span>
+</code></pre></div></div>
+
+<p>Alternatively, you may also use the <a href="https://httpd.apache.org/docs/current/mod/mod_proxy.html#proxypreservehost">ProxyPreserveHost</a> On directive in Apache configuration and you should be able to get the hostname (subdomain) normally in Tomcat. <em>NOTE: I haven’t tested that setup.</em></p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nc">String</span> <span class="n">subdomain</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="na">getServerName</span><span class="o">();</span>
+</code></pre></div></div>
+
+<h2 id="bonus-wildcard-ssl-certificate">Bonus: Wildcard SSL Certificate</h2>
+
+<p>Of course you’ll need a wildcard SSL certificate. Those are usually very expensive, but <a href="https://www.namecheap.com/security/ssl-certificates/comodo/positivessl-wildcard.aspx">Namecheap resells Comodo wildcard certificate at very good price</a>. No, I do not have any interest in namecheap, they just happen to be very good at what they do 🙂</p>
+
+<p><em>Author: <a href="https://www.linkedin.com/in/jonathan-demers-ing" title="Jonathan Demers">Jonathan Demers</a></em></p>]]></content><author><name></name></author><summary type="html"><![CDATA[I recently had to configure HTTPS on a wildcard subdomain with Apache HTTP server as reverse proxy to a Tomcat backend. I had few more requirements:]]></summary></entry><entry><title type="html">Ubuntu Apache Reverse Proxy Rewrite HTML Links</title><link href="https://opcodesolutions.com/tech/ubuntu-apache-reverse-proxy-rewrite-html-links/" rel="alternate" type="text/html" title="Ubuntu Apache Reverse Proxy Rewrite HTML Links" /><published>2014-11-07T00:00:00-05:00</published><updated>2014-11-07T00:00:00-05:00</updated><id>https://opcodesolutions.com/tech/ubuntu-apache-reverse-proxy-rewrite-html-links</id><content type="html" xml:base="https://opcodesolutions.com/tech/ubuntu-apache-reverse-proxy-rewrite-html-links/"><![CDATA[<p>I just wasted few hours on this, so I will share a few tips. If you want to setup a reverse proxy and <strong>rewrite links in html</strong> pages, you can use Apache module <a href="https://httpd.apache.org/docs/current/mod/mod_proxy_html.html">mod_proxy_html</a>.</p>
+
+<h2 id="step-1-install-and-enable-apache-mod_proxy">Step 1. Install and enable Apache mod_proxy</h2>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span><span class="nb">sudo </span>apt-get <span class="nb">install </span>libapache2-mod-proxy-html libxml2-dev
+<span class="nv">$ </span><span class="nb">sudo </span>a2enmod proxy
+<span class="nv">$ </span><span class="nb">sudo </span>a2enmod proxy_http
+<span class="nv">$ </span><span class="nb">sudo </span>a2enmod proxy_html
+<span class="nv">$ </span><span class="nb">sudo </span>a2enmod xml2enc
+</code></pre></div></div>
+
+<h2 id="step-2-apache-configuration">Step 2. Apache configuration</h2>
+
+<p>In <strong>Ubuntu 14.04 LTS</strong>, it does not work “out of the box”, because some standard config is missing when enabling mod_proxy_html. More specifically, the <a href="https://httpd.apache.org/docs/current/mod/mod_proxy_html.html#proxyhtmllinks">ProxyHTMLLinks</a> directives are missing in Ubuntu 14.04. I say “missing”, because those directives are included by default in earlier releases and in other distros (in a file called proxy_html.conf). Also, pay particular attention to the directives <a href="https://httpd.apache.org/docs/current/mod/mod_proxy_html.html#proxyhtmlenable">ProxyHTMLEnable</a>, <a href="https://httpd.apache.org/docs/current/mod/mod_proxy_html.html#proxyhtmlextended">ProxyHTMLExtended</a> and <a href="https://httpd.apache.org/docs/current/mod/core.html#setoutputfilter">SetOutputFilter</a>.</p>
+
+<p>So, let’s say you want to have your apache server at <code class="language-plaintext highlighter-rouge">http://host1.example.com/path1</code> to serve (proxy) the content of the server at <code class="language-plaintext highlighter-rouge">http://host2.example.com/path2</code> and <strong>rewrite HTML links</strong>. Here is the config that works for me on Ubuntu 14.04 LTS.</p>
+
+<div class="language-apache highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">&lt;</span><span class="nl">VirtualHost</span><span class="sr"> *:80</span><span class="p">&gt;
+</span>    <span class="nc">ServerName</span> host1.example.com
+    <span class="nc">ProxyRequests</span> <span class="ss">Off</span>
+    <span class="p">&lt;</span><span class="nl">Location</span><span class="sr"> /path1</span><span class="p">&gt;
+</span>        <span class="nc">ProxyHTMLLinks</span> a href
+        <span class="nc">ProxyHTMLLinks</span> area href
+        <span class="nc">ProxyHTMLLinks</span> link href
+        <span class="nc">ProxyHTMLLinks</span> img src longdesc usemap
+        <span class="nc">ProxyHTMLLinks</span> object classid codebase data usemap
+        <span class="nc">ProxyHTMLLinks</span> q cite
+        <span class="nc">ProxyHTMLLinks</span> blockquote cite
+        <span class="nc">ProxyHTMLLinks</span> ins cite
+        <span class="nc">ProxyHTMLLinks</span> del cite
+        <span class="nc">ProxyHTMLLinks</span> <span class="ss">form</span> <span class="ss">action</span>
+        <span class="nc">ProxyHTMLLinks</span> <span class="ss">input</span> src usemap
+        <span class="nc">ProxyHTMLLinks</span> head profile
+        <span class="nc">ProxyHTMLLinks</span> <span class="ss">base</span> href
+        <span class="nc">ProxyHTMLLinks</span> <span class="ss">script</span> src for
+
+        <span class="nc">ProxyHTMLEvents</span> onclick ondblclick onmousedown onmouseup \
+            onmouseover onmousemove onmouseout onkeypress \
+            onkeydown onkeyup onfocus onblur onload \
+            onunload onsubmit onreset onselect onchange
+
+        <span class="nc">ProxyPass</span> http://host2.example.com/path2
+        <span class="nc">ProxyPassReverse</span> http://host2.example.com/path2
+        <span class="nc">ProxyHTMLEnable</span> <span class="ss">On</span>
+        <span class="nc">ProxyHTMLExtended</span> <span class="ss">On</span>
+        <span class="nc">SetOutputFilter</span> INFLATE;proxy-html;DEFLATE;
+        <span class="nc">ProxyHTMLURLMap</span> http://host2.example.com/path2 /path1
+    <span class="p">&lt;/</span><span class="nl">Location</span><span class="p">&gt;
+&lt;/</span><span class="nl">VirtualHost</span><span class="p">&gt;
+</span></code></pre></div></div>
+
+<p><em>Author: <a href="https://www.linkedin.com/in/jonathan-demers-ing" title="Jonathan Demers">Jonathan Demers</a></em></p>]]></content><author><name></name></author><summary type="html"><![CDATA[I just wasted few hours on this, so I will share a few tips. If you want to setup a reverse proxy and rewrite links in html pages, you can use Apache module mod_proxy_html.]]></summary></entry><entry><title type="html">Programmatically Configure Hibernate (JPA) with DBCP</title><link href="https://opcodesolutions.com/tech/programmatically-configure-hibernate-jpa-with-dbcp/" rel="alternate" type="text/html" title="Programmatically Configure Hibernate (JPA) with DBCP" /><published>2014-11-04T00:00:00-05:00</published><updated>2014-11-04T00:00:00-05:00</updated><id>https://opcodesolutions.com/tech/programmatically-configure-hibernate-jpa-with-dbcp</id><content type="html" xml:base="https://opcodesolutions.com/tech/programmatically-configure-hibernate-jpa-with-dbcp/"><![CDATA[<p>I recently had deadlock issues with c3p0 and statement caching. Long story short, after investigating c3p0 code, I decided to switch to <a href="https://commons.apache.org/proper/commons-dbcp/">DBCP</a> (maybe I’ll write a post with the long story).</p>
+
+<p>I am not a big fan of Spring (here again, maybe I’ll write a post about that). If you are like me, here is how to programmatically configure <a href="https://hibernate.org/">Hibernate</a> (JPA) to use DBCP, without Spring and without JNDI.</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">package</span> <span class="nn">com.opcodesolutions.demo</span><span class="o">;</span>
+
+<span class="kn">import</span> <span class="nn">java.util.HashMap</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.util.Map</span><span class="o">;</span>
+
+<span class="kn">import</span> <span class="nn">javax.persistence.EntityManager</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">javax.persistence.EntityManagerFactory</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">javax.persistence.Persistence</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">javax.persistence.TypedQuery</span><span class="o">;</span>
+
+<span class="kn">import</span> <span class="nn">org.apache.commons.dbcp2.BasicDataSource</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.hibernate.cfg.AvailableSettings</span><span class="o">;</span>
+
+<span class="kn">import</span> <span class="nn">com.opcodesolutions.generic.jpa.entity.User</span><span class="o">;</span>
+
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">HibernateJPAWithDBCP</span> <span class="o">{</span>
+
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="nc">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+
+        <span class="c1">// Create and configure DBCP DataSource</span>
+        <span class="nc">BasicDataSource</span> <span class="n">dbcpDataSource</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">BasicDataSource</span><span class="o">();</span>
+        <span class="n">dbcpDataSource</span><span class="o">.</span><span class="na">setDriverClassName</span><span class="o">(</span><span class="s">"com.mysql.jdbc.Driver"</span><span class="o">);</span>
+        <span class="n">dbcpDataSource</span><span class="o">.</span><span class="na">setUrl</span><span class="o">(</span><span class="s">"jdbc:mysql://localhost:3306/database"</span><span class="o">);</span>
+        <span class="n">dbcpDataSource</span><span class="o">.</span><span class="na">setUsername</span><span class="o">(</span><span class="s">"user"</span><span class="o">);</span>
+        <span class="n">dbcpDataSource</span><span class="o">.</span><span class="na">setPassword</span><span class="o">(</span><span class="s">"************"</span><span class="o">);</span>
+
+        <span class="c1">// Enable statement caching (Optional)</span>
+        <span class="n">dbcpDataSource</span><span class="o">.</span><span class="na">setPoolPreparedStatements</span><span class="o">(</span><span class="kc">true</span><span class="o">);</span>
+        <span class="n">dbcpDataSource</span><span class="o">.</span><span class="na">setMaxOpenPreparedStatements</span><span class="o">(</span><span class="mi">50</span><span class="o">);</span>
+
+        <span class="c1">// JPA properties</span>
+        <span class="nc">Map</span><span class="o">&lt;</span><span class="nc">String</span><span class="o">,</span> <span class="nc">Object</span><span class="o">&gt;</span> <span class="n">properties</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">HashMap</span><span class="o">&lt;&gt;();</span>
+
+        <span class="c1">// This line will tell hibernate (JPA) to use DBCP</span>
+        <span class="n">properties</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="nc">AvailableSettings</span><span class="o">.</span><span class="na">DATASOURCE</span><span class="o">,</span> <span class="n">dbcpDataSource</span><span class="o">);</span>
+
+        <span class="c1">// Create the EntityManagerFactory with JPA properties</span>
+        <span class="nc">EntityManagerFactory</span> <span class="n">factory</span> <span class="o">=</span>
+            <span class="nc">Persistence</span><span class="o">.</span><span class="na">createEntityManagerFactory</span><span class="o">(</span><span class="s">"User"</span><span class="o">,</span> <span class="n">properties</span><span class="o">);</span>
+
+        <span class="c1">// Test with simple query</span>
+        <span class="nc">EntityManager</span> <span class="n">entityManager</span> <span class="o">=</span> <span class="n">factory</span><span class="o">.</span><span class="na">createEntityManager</span><span class="o">();</span>
+        <span class="nc">TypedQuery</span><span class="o">&lt;</span><span class="nc">User</span><span class="o">&gt;</span> <span class="n">query</span> <span class="o">=</span>
+            <span class="n">entityManager</span><span class="o">.</span><span class="na">createQuery</span><span class="o">(</span><span class="s">"select u from User u"</span><span class="o">,</span> <span class="nc">User</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
+        <span class="k">for</span> <span class="o">(</span><span class="nc">User</span> <span class="n">user</span> <span class="o">:</span> <span class="n">query</span><span class="o">.</span><span class="na">getResultList</span><span class="o">())</span> <span class="o">{</span>
+            <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">user</span><span class="o">.</span><span class="na">getFullName</span><span class="o">());</span>
+        <span class="o">}</span>
+
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<p>With DBCP, all my deadlock issues disappeared. Thank you <a href="https://www.apache.org/">ASF</a>.</p>
+
+<p><em>Author: <a href="https://www.linkedin.com/in/jonathan-demers-ing" title="Jonathan Demers">Jonathan Demers</a></em></p>]]></content><author><name></name></author><summary type="html"><![CDATA[I recently had deadlock issues with c3p0 and statement caching. Long story short, after investigating c3p0 code, I decided to switch to DBCP (maybe I’ll write a post with the long story).]]></summary></entry><entry><title type="html">How to fix java.lang.OutOfMemoryError: Java heap space</title><link href="https://opcodesolutions.com/tech/solve-java-lang-outofmemoryerror-java-heap-space/" rel="alternate" type="text/html" title="How to fix java.lang.OutOfMemoryError: Java heap space" /><published>2014-11-04T00:00:00-05:00</published><updated>2014-11-04T00:00:00-05:00</updated><id>https://opcodesolutions.com/tech/solve-java-lang-outofmemoryerror-java-heap-space</id><content type="html" xml:base="https://opcodesolutions.com/tech/solve-java-lang-outofmemoryerror-java-heap-space/"><![CDATA[<p>If you get an <code class="language-plaintext highlighter-rouge">OutOfMemoryError</code> with the message <strong>“Java heap space”</strong> (not to be confused with message “<a href="/tech/java-lang-outofmemoryerror-permgen-space/">PermGen space</a>”), it simply means the JVM ran out of memory. When it occurs, you basically have 2 options:</p>
+
+<h2 id="solution-1-allow-the-jvm-to-use-more-memory">Solution 1. Allow the JVM to use more memory</h2>
+
+<p>With the <code class="language-plaintext highlighter-rouge">-Xmx</code> JVM argument, you can set the heap size. For instance, you can allow the JVM to use 4 GB (4096 MB) of memory with the following command:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>java <span class="nt">-Xmx4096m</span> ...
+</code></pre></div></div>
+
+<h2 id="solution-2-improve-or-fix-the-application-to-reduce-memory-usage">Solution 2. Improve or fix the application to reduce memory usage</h2>
+
+<p>In many cases, like in the case of a memory leak, that second option is the only good solution. A memory leak happens when the application creates more and more objects and never releases them. The garbage collector cannot collect those objects and the application will eventually run out of memory. At this point, the JVM will throw an OOM (<code class="language-plaintext highlighter-rouge">OutOfMemoryError</code>).</p>
+
+<p>A memory leak can be very latent. For instance, the application might behave flawlessly during development and QA. However, it suddenly throws a OOM after several days in production at customer site. To solve that issue, you first need to find the root cause of it. The root cause can be very hard to find in development if the problem cannot be reproduced. Follow those steps to find the root cause of the OOM:</p>
+
+<h3 id="step-1-generate-a-heap-dump-on-outofmemoryerror">Step 1. Generate a heap dump on OutOfMemoryError</h3>
+
+<p>Start the application with the VM argument <code class="language-plaintext highlighter-rouge">-XX:+HeapDumpOnOutOfMemoryError</code>. This will tell the JVM to produce a heap dump when a OOM occurs:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>java <span class="nt">-XX</span>:+HeapDumpOnOutOfMemoryError ...
+</code></pre></div></div>
+
+<h3 id="step-2-reproduce-the-problem">Step 2. Reproduce the problem</h3>
+
+<p>Well, if you cannot reproduce the problem in dev, you may have to use the production environment. When you reproduce the problem and the application throws an OOM, it will generate a heap dump file.</p>
+
+<h3 id="step-3-investigate-the-issue-using-the-heap-dump-file">Step 3. Investigate the issue using the heap dump file</h3>
+
+<p>Use <a href="https://visualvm.github.io/">VisualVM</a> to read the heap dump file and diagnose the issue. VisualVM is a program located in <code class="language-plaintext highlighter-rouge">JDK_HOME/bin/jvisualvm</code>. The heap dump file has all information about the memory usage of the application. It allows you to navigate the heap and see which objects use the most memory and what references prevent the garbage collector from reclaiming the memory. Here is a screenshot of <a href="https://visualvm.github.io/">VisualVM</a> with a heap dump loaded:</p>
+
+<p><img src="/tech/assets/images/2014-11-04-solve-java-lang-outofmemoryerror-java-heap-space-visualvm.png" alt="Heap Dump in VisualVM" title="Heap Dump in VisualVM" /></p>
+
+<p>This will give you very strong hints and you will (hopefully) be able to find the root cause of the problem. The problem could be a cache that grows indefinitely, a list that keeps collecting business-specific data in memory, a huge request that tries to load almost all data from database in memory, etc.</p>
+
+<p>Once you know the root cause of the problem, you can elaborate solutions to fix it. In case of a cache that grows indefinitely, a good solution could be to set a reasonable limit to that cache. In case of a query that tries to load almost all data from database in memory, you may have to change the way you manipulate data; you could even have to change the behavior of some functionalities of the application.</p>
+
+<h2 id="manually-triggering-heap-dump">Manually triggering heap dump</h2>
+
+<p>If you do not want to wait for an OOM or if you just want to see what is in memory now, you can manually generate heap dump. Here 2 options to manually trigger a heap dump.</p>
+
+<h3 id="option-1-use-visualvm">Option 1. Use <a href="https://visualvm.github.io/">VisualVM</a></h3>
+
+<p>Open VisualVM (<code class="language-plaintext highlighter-rouge">JDK_HOME/bin/jvisualvm</code>), right-click on the process on the left pane and select Heap Dump. That’s it.</p>
+
+<h3 id="option-2-use-command-line-tools">Option 2. Use command line tools</h3>
+
+<p>If you do not have a graphical environment and can’t use vnc (<a href="https://visualvm.github.io/">VisualVM</a> needs a graphical environment), use <a href="https://docs.oracle.com/en/java/javase/17/docs/specs/man/jps.html">jps</a> and <a href="https://docs.oracle.com/en/java/javase/17/docs/specs/man/jmap.html">jmap</a> to generate the heap dump file. Those programs are also located in <code class="language-plaintext highlighter-rouge">JDK_HOME/bin/</code>.</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>jps
+6162 Jps
+4729 org.eclipse.equinox.launcher_1.3.0.v20130327-1440.jar
+6057 Bootstrap
+
+<span class="nv">$ </span>jmap <span class="nt">-dump</span>:live,format<span class="o">=</span>b,file<span class="o">=</span>heap.bin 6057
+Dumping heap to /home/user/heap.bin ...
+Heap dump file created
+</code></pre></div></div>
+
+<p>Finally copy the heap dump file (heap.bin) to your workstation and use <a href="https://visualvm.github.io/">VisualVM</a> to read the heap dump: <em>File -&gt; Load…</em></p>
+
+<p>Alternatively, you can also use <a href="https://docs.oracle.com/javase/7/docs/technotes/tools/share/jhat.html">jhat</a> to read heap dump files.</p>
+
+<h2 id="solution-3-bonus-call-me">Solution 3 (bonus). Call me</h2>
+
+<p>You can also contact my <a href="https://opcodesolutions.com/">application development company</a> and I can personally help you with those kind of issues 🙂</p>
+
+<p><em>Author: <a href="https://www.linkedin.com/in/jonathan-demers-ing" title="Jonathan Demers">Jonathan Demers</a></em></p>]]></content><author><name></name></author><summary type="html"><![CDATA[If you get an OutOfMemoryError with the message “Java heap space” (not to be confused with message “PermGen space”), it simply means the JVM ran out of memory. When it occurs, you basically have 2 options:]]></summary></entry><entry><title type="html">How to fix java.lang.OutOfMemoryError: PermGen space</title><link href="https://opcodesolutions.com/tech/java-lang-outofmemoryerror-permgen-space/" rel="alternate" type="text/html" title="How to fix java.lang.OutOfMemoryError: PermGen space" /><published>2014-05-30T00:00:00-04:00</published><updated>2014-05-30T00:00:00-04:00</updated><id>https://opcodesolutions.com/tech/java-lang-outofmemoryerror-permgen-space</id><content type="html" xml:base="https://opcodesolutions.com/tech/java-lang-outofmemoryerror-permgen-space/"><![CDATA[<p>When you get an <code class="language-plaintext highlighter-rouge">OutOfMemoryError</code> with the message <strong>“PermGen space”</strong> (not to be confused with message “<a href="/tech/solve-java-lang-outofmemoryerror-java-heap-space/">Java heap space</a>”), this means the memory used for <strong>class definition</strong> is exhausted. Fortunately, most of the time, this is easy to fix.</p>
+
+<h2 id="solution-1-your-best-bet-increase-the-size-of-permgen-space">Solution 1. (your best bet). Increase the size of PermGen space</h2>
+
+<p>If you have a Java process that uses a lot of classes (lots of jars) or if you have many applications deployed to your application container (Tomcat), you can allocate more memory to that “PermGen space” using the <code class="language-plaintext highlighter-rouge">-XX:MaxPermSize</code> VM argument. For instance, to allocate 1024 MB of RAM to PermGen space, use:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>java <span class="nt">-XX</span>:MaxPermSize<span class="o">=</span>1024M ...
+</code></pre></div></div>
+
+<h2 id="solution-2-restart-your-application-container">Solution 2. Restart your application container</h2>
+
+<p>You can get this error if you redeploy an application (webapp) several time without restarting your application container (like Tomcat). Most application containers support hot-redeployment, but class-loading is complex and sometimes old class definitions remain in memory. In that case, your best option is to get used to <u>always restart your application container (Tomcat) after you deploy an application to it</u>. This is easy and it fixes many problems.</p>
+
+<h2 id="solution-3-fix-your-class-loader-leak">Solution 3. Fix your class-loader leak</h2>
+
+<p>If none of the above works, you are in trouble 🙁 Seriously, unless you hacked the class-loading of the JVM or application container, you should not have that problem. Or maybe it is a bug in a library you are using or in your application container. You can try to upgrade to latest versions. If you hacked the class-loaders yourself, you may want to reconsider it. Why did you do that? Unless you are developing a JVM or an application container, you should not have to do that.</p>
+
+<p><em>Author: <a href="https://www.linkedin.com/in/jonathan-demers-ing" title="Jonathan Demers">Jonathan Demers</a></em></p>]]></content><author><name></name></author><summary type="html"><![CDATA[When you get an OutOfMemoryError with the message “PermGen space” (not to be confused with message “Java heap space”), this means the memory used for class definition is exhausted. Fortunately, most of the time, this is easy to fix.]]></summary></entry><entry><title type="html">New website for my software development company</title><link href="https://opcodesolutions.com/tech/new-website-for-my-software-development-company/" rel="alternate" type="text/html" title="New website for my software development company" /><published>2014-05-29T00:00:00-04:00</published><updated>2014-05-29T00:00:00-04:00</updated><id>https://opcodesolutions.com/tech/new-website-for-my-software-development-company</id><content type="html" xml:base="https://opcodesolutions.com/tech/new-website-for-my-software-development-company/"><![CDATA[<p>My <a href="https://opcodesolutions.com/">application development company</a> just got a new website. It shows more relevant information and has a lean design powered by <a href="https://getbootstrap.com/">Bootstrap</a>. It is now hosted on <a href="https://aws.amazon.com/ec2/">Amazon EC2</a>. If you need a software for your business, call us. We will discuss your project and we’ll give you a free quote, see our <a href="https://opcodesolutions.com/en/pricing/">pricing</a> and <a href="https://opcodesolutions.com/en/hosting/">application hosting packages</a>. All the applications we develop <a href="https://opcodesolutions.com/en/demo/index.html">run on desktop, tablet and smartphone out of the box</a>.</p>
+
+<p>Alright, enough bragging, back to work now!</p>
+
+<p><em>Author: <a href="https://www.linkedin.com/in/jonathan-demers-ing" title="Jonathan Demers">Jonathan Demers</a></em></p>]]></content><author><name></name></author><summary type="html"><![CDATA[My application development company just got a new website. It shows more relevant information and has a lean design powered by Bootstrap. It is now hosted on Amazon EC2. If you need a software for your business, call us. We will discuss your project and we’ll give you a free quote, see our pricing and application hosting packages. All the applications we develop run on desktop, tablet and smartphone out of the box.]]></summary></entry><entry><title type="html">VisualVM slow with heap dump files</title><link href="https://opcodesolutions.com/tech/visualvm-slow-with-heap-dump-files/" rel="alternate" type="text/html" title="VisualVM slow with heap dump files" /><published>2010-06-12T00:00:00-04:00</published><updated>2010-06-12T00:00:00-04:00</updated><id>https://opcodesolutions.com/tech/visualvm-slow-with-heap-dump-files</id><content type="html" xml:base="https://opcodesolutions.com/tech/visualvm-slow-with-heap-dump-files/"><![CDATA[<p>One great feature of <a href="https://visualvm.dev.java.net/">VisualVM</a> is that it can read heap dump files. Heap dumps are useful to diagnose memory leaks. See this post for more details about <a href="/tech/solve-java-lang-outofmemoryerror-java-heap-space/">memory leaks and how to solve them</a>.</p>
+
+<h2 id="why-visualvm-is-slow-with-heap-dump">Why VisualVM is slow with heap dump</h2>
+
+<p>Another great feature of VisualVM is that you can read a huge heap dump file and VisualVm will consume a minimal amount of memory to do so. For instance, you will be able to read a 8 Gigabytes heap dump file with VisualVM running on a development workstation having only 2 Gigabytes of RAM. In order to achieve that, VisualVM will parse the heap dump file and will create a work file on disk in the default system temp folder (/tmp by default on Linux). In theory that’s great, but in practice, VisualVM becomes painfully slow because it constantly have to do disk I/O’s to process the information.</p>
+
+<p>This behavior is even more frustrating if you happen to have a server with 12 Gigabytes of RAM available for you. A simple solution for that is to create a ramdisk and tell VisualVM to use that ramdisk as the tmp folder.</p>
+
+<h2 id="the-solution-use-a-ramdisk">The solution: use a RAMDisk</h2>
+
+<p>First, create the RAMDisk (tmpfs). Here I am on a linux development server and I create a tmp folder in my home. Then I create (mount) the ramdisk in the tmp folder I just created:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span><span class="nb">mkdir</span> /tmp/ramdisk
+<span class="nv">$ </span><span class="nb">sudo </span>mount <span class="nt">-t</span> tmpfs none /tmp/ramdisk
+</code></pre></div></div>
+
+<p>Then I launch VisualVM and I modify the java.io.tmpdir VM arg that tells VisualVM where the system tmp folder is.</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>jvisualvm <span class="nt">-J-Djava</span>.io.tmpdir<span class="o">=</span>/tmp/ramdisk
+</code></pre></div></div>
+
+<p>Now VisualVM is much much faster and I can investigate and find the root cause of that memory leak much faster.</p>
+
+<p><em>Author: <a href="https://www.linkedin.com/in/jonathan-demers-ing" title="Jonathan Demers">Jonathan Demers</a></em></p>]]></content><author><name></name></author><summary type="html"><![CDATA[One great feature of VisualVM is that it can read heap dump files. Heap dumps are useful to diagnose memory leaks. See this post for more details about memory leaks and how to solve them.]]></summary></entry><entry><title type="html">Oracle to Acquire Sun</title><link href="https://opcodesolutions.com/tech/oracle-to-acquire-sun/" rel="alternate" type="text/html" title="Oracle to Acquire Sun" /><published>2009-04-20T00:00:00-04:00</published><updated>2009-04-20T00:00:00-04:00</updated><id>https://opcodesolutions.com/tech/oracle-to-acquire-sun</id><content type="html" xml:base="https://opcodesolutions.com/tech/oracle-to-acquire-sun/"><![CDATA[<p>After IBM, now is the turn to Oracle. <a href="https://www.reuters.com/article/newsOne/idUSN2038153320090420">Oracle buys Sun</a> and pays $7.4 billion for that acquisition ($9.50 per share), $5.6 billion if we take into account Sun’s cash. Is that a good thing or a bad thing for the Java community? Probably a good thing as it will allow Sun’s project to benefit from Oracle’s technologies. But only future will tell.</p>
+
+<p>With Java, GlassFish, MySQL, OpenOffice, Solaris and its cloud computing services, that certainly widens Oracle’s possibilities. Hopefully Oracle will continue supporting adequately those famous open source projects. I am not concerned about Java, but maybe more about MySQL. While MySQL could certainly benefit from Oracle’s expertise in database field, Oracle could also put MySQL behind in order to promote its more profitable flagship product: Oracle’s RDBMS. The same is true for GlassFish and WebLogic. In any case, it is a very quick way for Oracle to have an open source offering for their products.</p>
+
+<p>If we only consider Java, I have to admit that I rather see Oracle acquiring Sun than IBM doing it. The reason is simple, IBM already offers a Java runtime and they are competitors in that field. An acquisition by IBM would reduce the competition in that areas, which is always a bad thing for customers. In my opinion, Sun’s JVM largely beats IBM’s one, but it would still be a bad thing to see one of them die to the benefit of the other.</p>
+
+<p><em>Author: <a href="https://www.linkedin.com/in/jonathan-demers-ing" title="Jonathan Demers">Jonathan Demers</a></em></p>]]></content><author><name></name></author><summary type="html"><![CDATA[After IBM, now is the turn to Oracle. Oracle buys Sun and pays $7.4 billion for that acquisition ($9.50 per share), $5.6 billion if we take into account Sun’s cash. Is that a good thing or a bad thing for the Java community? Probably a good thing as it will allow Sun’s project to benefit from Oracle’s technologies. But only future will tell.]]></summary></entry></feed>

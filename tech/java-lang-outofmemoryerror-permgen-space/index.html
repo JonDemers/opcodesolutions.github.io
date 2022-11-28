@@ -1,203 +1,99 @@
 <!DOCTYPE html>
-<!--[if IE 7]>
-<html class="ie ie7" lang="en-US">
-<![endif]-->
-<!--[if IE 8]>
-<html class="ie ie8" lang="en-US">
-<![endif]-->
-<!--[if !(IE 7) & !(IE 8)]><!-->
-<html lang="en-US">
-<!--<![endif]-->
-<head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width" />
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.8.0 -->
 <title>How to fix java.lang.OutOfMemoryError: PermGen space | OpCode Tech</title>
-<link rel="profile" href="http://gmpg.org/xfn/11" />
-<link rel="pingback" href="https://opcodesolutions.com/tech/xmlrpc.php" />
-<!--[if lt IE 9]>
-<script src="https://opcodesolutions.com/tech/wp-content/themes/twentytwelve/js/html5.js" type="text/javascript"></script>
-<![endif]-->
-<link rel='dns-prefetch' href='https://fonts.googleapis.com/' />
-<link rel='dns-prefetch' href='https://s.w.org/' />
-<link href='https://fonts.gstatic.com' crossorigin rel='preconnect' />
-		<script type="text/javascript">
-			window._wpemojiSettings = {"baseUrl":"https:\/\/s.w.org\/images\/core\/emoji\/11\/72x72\/","ext":".png","svgUrl":"https:\/\/s.w.org\/images\/core\/emoji\/11\/svg\/","svgExt":".svg","source":{"concatemoji":"https:\/\/opcodesolutions.com\/tech\/wp-includes\/js\/wp-emoji-release.min.js?ver=5.0.3"}};
-			!function(a,b,c){function d(a,b){var c=String.fromCharCode;l.clearRect(0,0,k.width,k.height),l.fillText(c.apply(this,a),0,0);var d=k.toDataURL();l.clearRect(0,0,k.width,k.height),l.fillText(c.apply(this,b),0,0);var e=k.toDataURL();return d===e}function e(a){var b;if(!l||!l.fillText)return!1;switch(l.textBaseline="top",l.font="600 32px Arial",a){case"flag":return!(b=d([55356,56826,55356,56819],[55356,56826,8203,55356,56819]))&&(b=d([55356,57332,56128,56423,56128,56418,56128,56421,56128,56430,56128,56423,56128,56447],[55356,57332,8203,56128,56423,8203,56128,56418,8203,56128,56421,8203,56128,56430,8203,56128,56423,8203,56128,56447]),!b);case"emoji":return b=d([55358,56760,9792,65039],[55358,56760,8203,9792,65039]),!b}return!1}function f(a){var c=b.createElement("script");c.src=a,c.defer=c.type="text/javascript",b.getElementsByTagName("head")[0].appendChild(c)}var g,h,i,j,k=b.createElement("canvas"),l=k.getContext&&k.getContext("2d");for(j=Array("flag","emoji"),c.supports={everything:!0,everythingExceptFlag:!0},i=0;i<j.length;i++)c.supports[j[i]]=e(j[i]),c.supports.everything=c.supports.everything&&c.supports[j[i]],"flag"!==j[i]&&(c.supports.everythingExceptFlag=c.supports.everythingExceptFlag&&c.supports[j[i]]);c.supports.everythingExceptFlag=c.supports.everythingExceptFlag&&!c.supports.flag,c.DOMReady=!1,c.readyCallback=function(){c.DOMReady=!0},c.supports.everything||(h=function(){c.readyCallback()},b.addEventListener?(b.addEventListener("DOMContentLoaded",h,!1),a.addEventListener("load",h,!1)):(a.attachEvent("onload",h),b.attachEvent("onreadystatechange",function(){"complete"===b.readyState&&c.readyCallback()})),g=c.source||{},g.concatemoji?f(g.concatemoji):g.wpemoji&&g.twemoji&&(f(g.twemoji),f(g.wpemoji)))}(window,document,window._wpemojiSettings);
-		</script>
-		<style type="text/css">
-img.wp-smiley,
-img.emoji {
-	display: inline !important;
-	border: none !important;
-	box-shadow: none !important;
-	height: 1em !important;
-	width: 1em !important;
-	margin: 0 .07em !important;
-	vertical-align: -0.1em !important;
-	background: none !important;
-	padding: 0 !important;
-}
-</style>
-<link rel='stylesheet' id='crayon-css'  href='../wp-content/plugins/crayon-syntax-highlighter/css/min/crayon.min.css%3Fver=_2.7.2_beta.css' type='text/css' media='all' />
-<link rel='stylesheet' id='crayon-theme-eclipse-css'  href='../wp-content/plugins/crayon-syntax-highlighter/themes/eclipse/eclipse.css%3Fver=_2.7.2_beta.css' type='text/css' media='all' />
-<link rel='stylesheet' id='crayon-font-monaco-css'  href='../wp-content/plugins/crayon-syntax-highlighter/fonts/monaco.css%3Fver=_2.7.2_beta.css' type='text/css' media='all' />
-<link rel='stylesheet' id='wp-block-library-css'  href='../wp-includes/css/dist/block-library/style.min.css%3Fver=5.0.3.css' type='text/css' media='all' />
-<link rel='stylesheet' id='wp-block-library-theme-css'  href='../wp-includes/css/dist/block-library/theme.min.css%3Fver=5.0.3.css' type='text/css' media='all' />
-<link rel='stylesheet' id='twentytwelve-fonts-css'  href='https://fonts.googleapis.com/css?family=Open+Sans:400italic,700italic,400,700&#038;subset=latin,latin-ext' type='text/css' media='all' />
-<link rel='stylesheet' id='twentytwelve-style-css'  href='../wp-content/themes/twentytwelve/style.css%3Fver=5.0.3.css' type='text/css' media='all' />
-<link rel='stylesheet' id='twentytwelve-block-style-css'  href='../wp-content/themes/twentytwelve/css/blocks.css%3Fver=20181230.css' type='text/css' media='all' />
-<!--[if lt IE 9]>
-<link rel='stylesheet' id='twentytwelve-ie-css'  href='https://opcodesolutions.com/tech/wp-content/themes/twentytwelve/css/ie.css?ver=20121010' type='text/css' media='all' />
-<![endif]-->
-<script type='text/javascript' src='../wp-includes/js/jquery/jquery.js%3Fver=1.12.4'></script>
-<script type='text/javascript' src='../wp-includes/js/jquery/jquery-migrate.min.js%3Fver=1.4.1'></script>
-<script type='text/javascript'>
-/* <![CDATA[ */
-var CrayonSyntaxSettings = {"version":"_2.7.2_beta","is_admin":"0","ajaxurl":"https:\/\/opcodesolutions.com\/tech\/wp-admin\/admin-ajax.php","prefix":"crayon-","setting":"crayon-setting","selected":"crayon-setting-selected","changed":"crayon-setting-changed","special":"crayon-setting-special","orig_value":"data-orig-value","debug":""};
-var CrayonSyntaxStrings = {"copy":"Press %s to Copy, %s to Paste","minimize":"Click To Expand Code"};
-/* ]]> */
-</script>
-<script type='text/javascript' src='../wp-content/plugins/crayon-syntax-highlighter/js/min/crayon.min.js%3Fver=_2.7.2_beta'></script>
-<link rel="EditURI" type="application/rsd+xml" title="RSD" href="../xmlrpc.php%3Frsd" />
-<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="../wp-includes/wlwmanifest.xml" /> 
-<link rel='prev' title='New website for my software development company' href='../new-website-for-my-software-development-company/index.html' />
-<link rel='next' title='How to fix java.lang.OutOfMemoryError: Java heap space' href='../solve-java-lang-outofmemoryerror-java-heap-space/index.html' />
-<meta name="generator" content="WordPress 5.0.3" />
-<link rel="canonical" href="index.html" />
-	<style type="text/css" id="twentytwelve-header-css">
-			.site-header h1 a,
-		.site-header h2 {
-			color: #8b0000;
-		}
-		</style>
-	</head>
+<meta name="generator" content="Jekyll v4.3.1" />
+<meta property="og:title" content="How to fix java.lang.OutOfMemoryError: PermGen space" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="When you get an OutOfMemoryError with the message “PermGen space” (not to be confused with message “Java heap space”), this means the memory used for class definition is exhausted. Fortunately, most of the time, this is easy to fix." />
+<meta property="og:description" content="When you get an OutOfMemoryError with the message “PermGen space” (not to be confused with message “Java heap space”), this means the memory used for class definition is exhausted. Fortunately, most of the time, this is easy to fix." />
+<link rel="canonical" href="https://opcodesolutions.com/tech/java-lang-outofmemoryerror-permgen-space/" />
+<meta property="og:url" content="https://opcodesolutions.com/tech/java-lang-outofmemoryerror-permgen-space/" />
+<meta property="og:site_name" content="OpCode Tech" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2014-05-30T00:00:00-04:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="How to fix java.lang.OutOfMemoryError: PermGen space" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","dateModified":"2014-05-30T00:00:00-04:00","datePublished":"2014-05-30T00:00:00-04:00","description":"When you get an OutOfMemoryError with the message “PermGen space” (not to be confused with message “Java heap space”), this means the memory used for class definition is exhausted. Fortunately, most of the time, this is easy to fix.","headline":"How to fix java.lang.OutOfMemoryError: PermGen space","mainEntityOfPage":{"@type":"WebPage","@id":"https://opcodesolutions.com/tech/java-lang-outofmemoryerror-permgen-space/"},"url":"https://opcodesolutions.com/tech/java-lang-outofmemoryerror-permgen-space/"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/tech/assets/main.css"><link type="application/atom+xml" rel="alternate" href="https://opcodesolutions.com/tech/feed.xml" title="OpCode Tech" /></head>
+<body><header class="site-header" role="banner">
 
-<body class="post-template-default single single-post postid-7 single-format-standard wp-embed-responsive custom-font-enabled single-author">
-<div id="page" class="hfeed site">
-	<header id="masthead" class="site-header" role="banner">
-		<hgroup>
-			<h1 class="site-title"><a href="../../tech.html" title="OpCode Tech" rel="home">OpCode Tech</a></h1>
-			<h2 class="site-description">Optimize Your Processes</h2>
-		</hgroup>
+  <div class="wrapper"><a class="site-title" rel="author" href="/tech/">OpCode Tech</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
 
-		<nav id="site-navigation" class="main-navigation" role="navigation">
-			<button class="menu-toggle">Menu</button>
-			<a class="assistive-text" href="index.html#content" title="Skip to content">Skip to content</a>
-			<div class="menu-default-container"><ul id="menu-default" class="nav-menu"><li id="menu-item-19" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-19"><a href="../../tech.html">Home</a></li>
-<li id="menu-item-18" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-18"><a href="../category/news/index.html">News</a></li>
-<li id="menu-item-153" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-153"><a href="../category/how-to/index.html">How To</a></li>
-<li id="menu-item-17" class="menu-item menu-item-type-taxonomy menu-item-object-category current-post-ancestor current-menu-parent current-post-parent menu-item-17"><a href="../category/development/index.html">Development</a></li>
-<li id="menu-item-159" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-159"><a href="../contact/index.html">Contact</a></li>
-</ul></div>		</nav><!-- #site-navigation -->
+        <div class="trigger"><a class="page-link" href="/tech/contact/">Contact</a></div>
+      </nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
 
-			</header><!-- #masthead -->
+  <header class="post-header">
+    <h1 class="post-title p-name" itemprop="name headline">How to fix java.lang.OutOfMemoryError: PermGen space</h1>
+    <p class="post-meta">
+      <time class="dt-published" datetime="2014-05-30T00:00:00-04:00" itemprop="datePublished">May 30, 2014
+      </time></p>
+  </header>
 
-	<div id="main" class="wrapper">
+  <div class="post-content e-content" itemprop="articleBody">
+    <p>When you get an <code class="language-plaintext highlighter-rouge">OutOfMemoryError</code> with the message <strong>“PermGen space”</strong> (not to be confused with message “<a href="/tech/solve-java-lang-outofmemoryerror-java-heap-space/">Java heap space</a>”), this means the memory used for <strong>class definition</strong> is exhausted. Fortunately, most of the time, this is easy to fix.</p>
 
-	<div id="primary" class="site-content">
-		<div id="content" role="main">
+<h2 id="solution-1-your-best-bet-increase-the-size-of-permgen-space">Solution 1. (your best bet). Increase the size of PermGen space</h2>
 
-			
-				
-	<article id="post-7" class="post-7 post type-post status-publish format-standard hentry category-development">
-				<header class="entry-header">
-			
-						<h1 class="entry-title">How to fix java.lang.OutOfMemoryError: PermGen space</h1>
-								</header><!-- .entry-header -->
+<p>If you have a Java process that uses a lot of classes (lots of jars) or if you have many applications deployed to your application container (Tomcat), you can allocate more memory to that “PermGen space” using the <code class="language-plaintext highlighter-rouge">-XX:MaxPermSize</code> VM argument. For instance, to allocate 1024 MB of RAM to PermGen space, use:</p>
 
-				<div class="entry-content">
-			<p>When you get an OutOfMemoryError with the message &#8220;<strong>PermGen space</strong>&#8221; (not to be confused with message &#8220;<a title="java.lang.OutOfMemoryError: Java heap space" href="../solve-java-lang-outofmemoryerror-java-heap-space/index.html">Java heap space</a>&#8220;), this means the memory used for <strong>class definition</strong> is exhausted. Fortunately, most of the time, this is easy to fix.</p>
-<h2>Solution 1 (your best bet). Increase the size of <strong>PermGen</strong> space</h2>
-<p>If you have a Java process that uses a lot of classes (lots of jars) or if you have many applications deployed to your application container (Tomcat), you can allocate more memory to that &#8220;PermGen space&#8221; using the <b>-XX:MaxPermSize</b> VM argument. For instance, to allocate 512 MB of RAM to PermGen space, use:</p><!-- Crayon Syntax Highlighter v_2.7.2_beta -->
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>java <span class="nt">-XX</span>:MaxPermSize<span class="o">=</span>1024M ...
+</code></pre></div></div>
 
-		<div id="crayon-5c44b1f35910f259477775" class="crayon-syntax crayon-theme-eclipse crayon-font-monaco crayon-os-pc print-yes notranslate" data-settings=" minimize scroll-mouseover" style=" margin-top: 12px; margin-bottom: 12px; font-size: 12px !important; line-height: 15px !important;">
-		
-			<div class="crayon-toolbar" data-settings=" show" style="font-size: 12px !important;height: 18px !important; line-height: 18px !important;"><span class="crayon-title">Configuring PermGen space</span>
-			<div class="crayon-tools" style="font-size: 12px !important;height: 18px !important; line-height: 18px !important;"><div class="crayon-button crayon-nums-button" title="Toggle Line Numbers"><div class="crayon-button-icon"></div></div><div class="crayon-button crayon-plain-button" title="Toggle Plain Code"><div class="crayon-button-icon"></div></div><div class="crayon-button crayon-wrap-button" title="Toggle Line Wrap"><div class="crayon-button-icon"></div></div><div class="crayon-button crayon-expand-button" title="Expand Code"><div class="crayon-button-icon"></div></div><div class="crayon-button crayon-copy-button" title="Copy"><div class="crayon-button-icon"></div></div><div class="crayon-button crayon-popup-button" title="Open Code In New Window"><div class="crayon-button-icon"></div></div><span class="crayon-language">Shell</span></div></div>
-			<div class="crayon-info" style="min-height: 16.8px !important; line-height: 16.8px !important;"></div>
-			<div class="crayon-plain-wrap"><textarea wrap="soft" class="crayon-plain print-no" data-settings="dblclick" readonly style="-moz-tab-size:4; -o-tab-size:4; -webkit-tab-size:4; tab-size:4; font-size: 12px !important; line-height: 15px !important;">
+<h2 id="solution-2-restart-your-application-container">Solution 2. Restart your application container</h2>
 
-java -XX:MaxPermSize=512M ...
-</textarea></div>
-			<div class="crayon-main" style="">
-				<table class="crayon-table">
-					<tr class="crayon-row">
-				<td class="crayon-nums " data-settings="show">
-					<div class="crayon-nums-content" style="font-size: 12px !important; line-height: 15px !important;"><div class="crayon-num" data-line="crayon-5c44b1f35910f259477775-1">1</div><div class="crayon-num crayon-striped-num" data-line="crayon-5c44b1f35910f259477775-2">2</div><div class="crayon-num" data-line="crayon-5c44b1f35910f259477775-3">3</div></div>
-				</td>
-						<td class="crayon-code"><div class="crayon-pre" style="font-size: 12px !important; line-height: 15px !important; -moz-tab-size:4; -o-tab-size:4; -webkit-tab-size:4; tab-size:4;"><div class="crayon-line" id="crayon-5c44b1f35910f259477775-1">&nbsp;</div><div class="crayon-line crayon-striped-line" id="crayon-5c44b1f35910f259477775-2"><span class="crayon-v">java</span><span class="crayon-h"> </span><span class="crayon-o">-</span><span class="crayon-v">XX</span><span class="crayon-o">:</span><span class="crayon-v">MaxPermSize</span><span class="crayon-o">=</span><span class="crayon-cn">512M</span><span class="crayon-h"> </span><span class="crayon-sy">.</span><span class="crayon-sy">.</span><span class="crayon-sy">.</span></div><div class="crayon-line" id="crayon-5c44b1f35910f259477775-3">&nbsp;</div></div></td>
-					</tr>
-				</table>
-			</div>
-		</div>
-<!-- [Format Time: 0.0003 seconds] -->
-<p></p>
-<h2>Solution 2. Restart your application container</h2>
-<p>You can get this error if you redeploy an application (webapp) several time without restarting your application container (like Tomcat). Most application containers support hot-redeployment, but class-loading is complex and sometimes old class definitions remain in memory. In that case, your best option is to get used to <span style="text-decoration: underline;">always restart your application container (Tomcat) after you deploy an application to it</span>. This is easy and it fixes many problems.</p>
-<h2>Solution 3. Fix your class-loader leak</h2>
+<p>You can get this error if you redeploy an application (webapp) several time without restarting your application container (like Tomcat). Most application containers support hot-redeployment, but class-loading is complex and sometimes old class definitions remain in memory. In that case, your best option is to get used to <u>always restart your application container (Tomcat) after you deploy an application to it</u>. This is easy and it fixes many problems.</p>
+
+<h2 id="solution-3-fix-your-class-loader-leak">Solution 3. Fix your class-loader leak</h2>
+
 <p>If none of the above works, you are in trouble 🙁 Seriously, unless you hacked the class-loading of the JVM or application container, you should not have that problem. Or maybe it is a bug in a library you are using or in your application container. You can try to upgrade to latest versions. If you hacked the class-loaders yourself, you may want to reconsider it. Why did you do that? Unless you are developing a JVM or an application container, you should not have to do that.</p>
-					</div><!-- .entry-content -->
-		
-		<footer class="entry-meta">
-			This entry was posted in <a href="../category/development/index.html" rel="category tag">Development</a> on <a href="index.html" title="8:48 am" rel="bookmark"><time class="entry-date" datetime="2014-05-30T08:48:05+00:00">May 30, 2014</time></a><span class="by-author"> by <span class="author vcard"><a class="url fn n" href="https://www.linkedin.com/in/jonathan-demers-ing" title="Jonathan Demers">Jonathan Demers</a></span></span>.								</footer><!-- .entry-meta -->
-	</article><!-- #post -->
 
-				<nav class="nav-single">
-					<h3 class="assistive-text">Post navigation</h3>
-					<span class="nav-previous"><a href="../new-website-for-my-software-development-company/index.html" rel="prev"><span class="meta-nav">&larr;</span> New website for my software development company</a></span>
-					<span class="nav-next"><a href="../solve-java-lang-outofmemoryerror-java-heap-space/index.html" rel="next">How to fix java.lang.OutOfMemoryError: Java heap space <span class="meta-nav">&rarr;</span></a></span>
-				</nav><!-- .nav-single -->
+<p><em>Author: <a href="https://www.linkedin.com/in/jonathan-demers-ing" title="Jonathan Demers">Jonathan Demers</a></em></p>
 
-				
-<div id="comments" class="comments-area">
+  </div><a class="u-url" href="/tech/java-lang-outofmemoryerror-permgen-space/" hidden></a>
+</article>
 
-	
-	
-	
-</div><!-- #comments .comments-area -->
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/tech/"></data>
 
-			
-		</div><!-- #content -->
-	</div><!-- #primary -->
+  <div class="wrapper">
 
+    <h2 class="footer-heading">OpCode Tech</h2>
 
-			<div id="secondary" class="widget-area" role="complementary">
-					<aside id="recent-posts-2" class="widget widget_recent_entries">		<h3 class="widget-title">More Articles</h3>		<ul>
-											<li>
-					<a href="../how-to-migrate-3-mysql-databases-to-amazon-rds-in-5-minutes/index.html">How to Migrate 3 MySQL Databases to Amazon RDS in 5 Minutes</a>
-									</li>
-											<li>
-					<a href="../imageio-read-causes-outofmemoryerror/index.html">ImageIO.read() causes OutOfMemoryError</a>
-									</li>
-											<li>
-					<a href="../https-wildcard-subdomain-dns-apache-tomcat-config/index.html">HTTPS Wildcard Subdomain: DNS + Apache + Tomcat Config</a>
-									</li>
-											<li>
-					<a href="../ubuntu-apache-reverse-proxy-rewrite-html-links/index.html">Ubuntu Apache Reverse Proxy Rewrite HTML Links</a>
-									</li>
-											<li>
-					<a href="../programmatically-configure-hibernate-jpa-with-dbcp/index.html">Programmatically Configure Hibernate (JPA) with DBCP</a>
-									</li>
-					</ul>
-		</aside><aside id="categories-2" class="widget widget_categories"><h3 class="widget-title">Categories</h3>		<ul>
-	<li class="cat-item cat-item-2"><a href="../category/development/index.html" >Development</a>
-</li>
-	<li class="cat-item cat-item-50"><a href="../category/how-to/index.html" >How To</a>
-</li>
-	<li class="cat-item cat-item-12"><a href="../category/news/index.html" >News</a>
-</li>
-		</ul>
-</aside>		</div><!-- #secondary -->
-		</div><!-- #main .wrapper -->
-	<footer id="colophon" role="contentinfo">
-		<div class="site-info">
-									<a href="https://wordpress.org/" class="imprint" title="Semantic Personal Publishing Platform">
-				Proudly powered by WordPress			</a>
-		</div><!-- .site-info -->
-	</footer><!-- #colophon -->
-</div><!-- #page -->
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li class="p-name">OpCode Tech</li><li><a class="u-email" href="mailto:jdemers@opcodesolutions.com">jdemers@opcodesolutions.com</a></li></ul>
+      </div>
 
-<script type='text/javascript' src='../wp-content/themes/twentytwelve/js/navigation.js%3Fver=20140711'></script>
-<script type='text/javascript' src='../wp-includes/js/wp-embed.min.js%3Fver=5.0.3'></script>
+      <div class="footer-col footer-col-2"><ul class="social-media-list"><li><a href="https://github.com/JonDemers"><svg class="svg-icon"><use xlink:href="/tech/assets/minima-social-icons.svg#github"></use></svg> <span class="username">JonDemers</span></a></li></ul>
+</div>
+
+      <div class="footer-col footer-col-3">
+        <p>Optimize Your Processes</p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
 </body>
+
 </html>
