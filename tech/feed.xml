@@ -1,9 +1,143 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.1">Jekyll</generator><link href="https://opcodesolutions.com/tech/feed.xml" rel="self" type="application/atom+xml" /><link href="https://opcodesolutions.com/tech/" rel="alternate" type="text/html" /><updated>2022-12-01T06:57:46-05:00</updated><id>https://opcodesolutions.com/tech/feed.xml</id><title type="html">OpCode Tech</title><subtitle>Optimize Your Processes</subtitle><entry><title type="html">Debian -bash: netstat: command not found</title><link href="https://opcodesolutions.com/tech/debian-bash-netstat-command-not-found/" rel="alternate" type="text/html" title="Debian -bash: netstat: command not found" /><published>2022-12-01T00:00:00-05:00</published><updated>2022-12-01T00:00:00-05:00</updated><id>https://opcodesolutions.com/tech/debian-bash-netstat-command-not-found</id><content type="html" xml:base="https://opcodesolutions.com/tech/debian-bash-netstat-command-not-found/"><![CDATA[<h2 id="solution">Solution</h2>
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.1">Jekyll</generator><link href="https://opcodesolutions.com/tech/feed.xml" rel="self" type="application/atom+xml" /><link href="https://opcodesolutions.com/tech/" rel="alternate" type="text/html" /><updated>2022-12-01T07:53:20-05:00</updated><id>https://opcodesolutions.com/tech/feed.xml</id><title type="html">OpCode Tech</title><subtitle>Optimize Your Processes</subtitle><entry><title type="html">Debian -bash: netstat: command not found</title><link href="https://opcodesolutions.com/tech/debian-bash-netstat-command-not-found/" rel="alternate" type="text/html" title="Debian -bash: netstat: command not found" /><published>2022-12-01T00:00:00-05:00</published><updated>2022-12-01T00:00:00-05:00</updated><id>https://opcodesolutions.com/tech/debian-bash-netstat-command-not-found</id><content type="html" xml:base="https://opcodesolutions.com/tech/debian-bash-netstat-command-not-found/"><![CDATA[<h2 id="solution">Solution</h2>
 
 <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>apt <span class="nb">install </span>net-tools
 </code></pre></div></div>
 
-<p><em>Author: <a href="https://www.linkedin.com/in/jonathan-demers-ing" title="Jonathan Demers">Jonathan Demers</a></em></p>]]></content><author><name></name></author><summary type="html"><![CDATA[Solution]]></summary></entry><entry><title type="html">How to Migrate 3 MySQL Databases to Amazon RDS in 5 Minutes</title><link href="https://opcodesolutions.com/tech/how-to-migrate-3-mysql-databases-to-amazon-rds-in-5-minutes/" rel="alternate" type="text/html" title="How to Migrate 3 MySQL Databases to Amazon RDS in 5 Minutes" /><published>2014-12-23T00:00:00-05:00</published><updated>2014-12-23T00:00:00-05:00</updated><id>https://opcodesolutions.com/tech/how-to-migrate-3-mysql-databases-to-amazon-rds-in-5-minutes</id><content type="html" xml:base="https://opcodesolutions.com/tech/how-to-migrate-3-mysql-databases-to-amazon-rds-in-5-minutes/"><![CDATA[<p>I had a LAMT (Linux-Apache-MySQL-Tomcat) on <a href="https://aws.amazon.com/ec2/">Amazon EC2</a> and I wanted to move all remaining MySQL databases (3) to an existing <a href="https://aws.amazon.com/rds/">Amazon RDS</a> instance. This would allow me to shutdown the MySQL instance on EC2, freeing RAM for Tomcat and leveraging RDS automated backups for those 3 databases in case of a disaster. The databases to migrate only contain low volume TEST data, but I already have that RDS instance, so why not use it?</p>
+<p><em>Author: <a href="https://www.linkedin.com/in/jonathan-demers-ing" title="Jonathan Demers">Jonathan Demers</a></em></p>]]></content><author><name></name></author><summary type="html"><![CDATA[Solution]]></summary></entry><entry><title type="html">Increase disk size of Debian cloud image</title><link href="https://opcodesolutions.com/tech/increase-disk-size-of-debian-cloud-image/" rel="alternate" type="text/html" title="Increase disk size of Debian cloud image" /><published>2022-12-01T00:00:00-05:00</published><updated>2022-12-01T00:00:00-05:00</updated><id>https://opcodesolutions.com/tech/increase-disk-size-of-debian-cloud-image</id><content type="html" xml:base="https://opcodesolutions.com/tech/increase-disk-size-of-debian-cloud-image/"><![CDATA[<p>Generic Debian cloud images come with small disk size by default: <strong>2GB</strong>. We can resize/increase the disk storage after the VM is created, but this is not convenient because we’d have to do this for each VM we create.</p>
+
+<p>A better solution is to convert the could image to have bigger disk size by default. In this article we’ll create an Debian cloud image with <strong>32GB</strong> of storage.</p>
+
+<h2 id="step-1-get-the-generic-debian-cloud-image">Step 1. Get the Generic Debian cloud image</h2>
+
+<p>Get the image</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code># wget https://cloud.debian.org/images/cloud/bullseye/latest/debian-11-genericcloud-amd64.qcow2
+</code></pre></div></div>
+
+<p>Validate the checksum, checksum are here: <a href="https://cloud.debian.org/images/cloud/bullseye/latest/SHA512SUMS">https://cloud.debian.org/images/cloud/bullseye/latest/SHA512SUMS</a></p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code># sha512sum debian-11-genericcloud-amd64.qcow2
+
+71f1c376e585a87299f751e076689d7ebe2a897649b65071878eb5694be76b771f37c21d7a88630214f4650dec5307e9f73d597ec326f99bd3451e23f607e5b8  debian-11-genericcloud-amd64.qcow2
+</code></pre></div></div>
+
+<p>Current image size is <strong>2GB</strong></p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code># qemu-img info debian-11-genericcloud-amd64.qcow2
+
+image: debian-11-genericcloud-amd64.qcow2
+file format: qcow2
+virtual size: 2 GiB (2147483648 bytes)
+disk size: 236 MiB
+cluster_size: 65536
+Format specific information:
+    compat: 1.1
+    compression type: zlib
+    lazy refcounts: false
+    refcount bits: 16
+    corrupt: false
+    extended l2: false
+</code></pre></div></div>
+
+<h2 id="step-2-increase-image-size">Step 2. Increase image size</h2>
+
+<p>Use qemu-img to resize the image</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code># qemu-img resize debian-11-genericcloud-amd64.qcow2 32G
+
+Image resized.
+</code></pre></div></div>
+
+<h2 id="step-3-increase-partition-size-to-match-image-size">Step 3. Increase partition size to match image size</h2>
+
+<p>Mount partition with nbd</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code># modprobe nbd max_part=10
+# qemu-nbd -c /dev/nbd0 debian-11-genericcloud-amd64.qcow2
+</code></pre></div></div>
+
+<p>Install parted</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code># apt -y install parted
+</code></pre></div></div>
+
+<p>Print and fix partition with parted. Press <strong>F</strong> to Fix the warning</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code># parted /dev/nbd0 print free
+
+Warning: Not all of the space available to /dev/nbd0 appears to be used, you can fix the GPT to use all of the space (an extra 62914560 blocks) or continue with the current setting?
+Fix/Ignore? F
+Model: Unknown (unknown)
+Disk /dev/nbd0: 34.4GB
+Sector size (logical/physical): 512B/512B
+Partition Table: gpt
+Disk Flags:
+
+Number  Start   End     Size    File system  Name  Flags
+        17.4kB  1049kB  1031kB  Free Space
+14      1049kB  4194kB  3146kB                     bios_grub
+15      4194kB  134MB   130MB   fat16              boot, esp
+ 1      134MB   2147MB  2013MB  ext4
+        2147MB  34.4GB  32.2GB  Free Space
+</code></pre></div></div>
+
+<p>Resize partition and print its new size</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code># parted -s /dev/nbd0 "resizepart 1 100%" quit
+# parted /dev/nbd0 print free
+
+Model: Unknown (unknown)
+Disk /dev/nbd0: 34.4GB
+Sector size (logical/physical): 512B/512B
+Partition Table: gpt
+Disk Flags:
+
+Number  Start   End     Size    File system  Name  Flags
+        17.4kB  1049kB  1031kB  Free Space
+14      1049kB  4194kB  3146kB                     bios_grub
+15      4194kB  134MB   130MB   fat16              boot, esp
+ 1      134MB   34.4GB  34.2GB  ext4
+</code></pre></div></div>
+
+<h2 id="step-4-increase-filesystem-to-match-partition-size">Step 4. Increase filesystem to match partition size</h2>
+
+<p>Use resize2fs to resize filesystem</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code># resize2fs /dev/nbd0p1
+
+resize2fs 1.46.5 (30-Dec-2021)
+Resizing the filesystem on /dev/nbd0p1 to 8355835 (4k) blocks.
+The filesystem on /dev/nbd0p1 is now 8355835 (4k) blocks long.
+</code></pre></div></div>
+
+<p>Unmount nbd</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code># qemu-nbd -d /dev/nbd0
+
+/dev/nbd0 disconnected
+</code></pre></div></div>
+
+<h2 id="step-5-verify-new-cloud-image-size-is-32gb">Step 5. Verify new cloud image size is 32GB</h2>
+
+<p>New image size is 32GB</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code># qemu-img info debian-11-genericcloud-amd64.qcow2
+
+image: debian-11-genericcloud-amd64.qcow2
+file format: qcow2
+virtual size: 32 GiB (34359738368 bytes)
+disk size: 240 MiB
+cluster_size: 65536
+Format specific information:
+    compat: 1.1
+    compression type: zlib
+    lazy refcounts: false
+    refcount bits: 16
+    corrupt: false
+    extended l2: false
+</code></pre></div></div>
+
+<p><em>Author: <a href="https://www.linkedin.com/in/jonathan-demers-ing" title="Jonathan Demers">Jonathan Demers</a></em></p>]]></content><author><name></name></author><summary type="html"><![CDATA[Generic Debian cloud images come with small disk size by default: 2GB. We can resize/increase the disk storage after the VM is created, but this is not convenient because we’d have to do this for each VM we create.]]></summary></entry><entry><title type="html">How to Migrate 3 MySQL Databases to Amazon RDS in 5 Minutes</title><link href="https://opcodesolutions.com/tech/how-to-migrate-3-mysql-databases-to-amazon-rds-in-5-minutes/" rel="alternate" type="text/html" title="How to Migrate 3 MySQL Databases to Amazon RDS in 5 Minutes" /><published>2014-12-23T00:00:00-05:00</published><updated>2014-12-23T00:00:00-05:00</updated><id>https://opcodesolutions.com/tech/how-to-migrate-3-mysql-databases-to-amazon-rds-in-5-minutes</id><content type="html" xml:base="https://opcodesolutions.com/tech/how-to-migrate-3-mysql-databases-to-amazon-rds-in-5-minutes/"><![CDATA[<p>I had a LAMT (Linux-Apache-MySQL-Tomcat) on <a href="https://aws.amazon.com/ec2/">Amazon EC2</a> and I wanted to move all remaining MySQL databases (3) to an existing <a href="https://aws.amazon.com/rds/">Amazon RDS</a> instance. This would allow me to shutdown the MySQL instance on EC2, freeing RAM for Tomcat and leveraging RDS automated backups for those 3 databases in case of a disaster. The databases to migrate only contain low volume TEST data, but I already have that RDS instance, so why not use it?</p>
 
 <p>I also have a SLA with my clients that allows me to perform <em>“Standard daily maintenance”</em>. Basically, the <em>“Standard daily maintenance”</em> must be performed outside business hours and must last <strong>at most 15 minutes</strong>.</p>
 
@@ -496,27 +630,4 @@ Heap dump file created
 
 <p>Alright, enough bragging, back to work now!</p>
 
-<p><em>Author: <a href="https://www.linkedin.com/in/jonathan-demers-ing" title="Jonathan Demers">Jonathan Demers</a></em></p>]]></content><author><name></name></author><summary type="html"><![CDATA[My application development company just got a new website. It shows more relevant information and has a lean design powered by Bootstrap. It is now hosted on Amazon EC2. If you need a software for your business, call us. We will discuss your project and we’ll give you a free quote, see our pricing and application hosting packages. All the applications we develop run on desktop, tablet and smartphone out of the box.]]></summary></entry><entry><title type="html">VisualVM slow with heap dump files</title><link href="https://opcodesolutions.com/tech/visualvm-slow-with-heap-dump-files/" rel="alternate" type="text/html" title="VisualVM slow with heap dump files" /><published>2010-06-12T00:00:00-04:00</published><updated>2010-06-12T00:00:00-04:00</updated><id>https://opcodesolutions.com/tech/visualvm-slow-with-heap-dump-files</id><content type="html" xml:base="https://opcodesolutions.com/tech/visualvm-slow-with-heap-dump-files/"><![CDATA[<p>One great feature of <a href="https://visualvm.dev.java.net/">VisualVM</a> is that it can read heap dump files. Heap dumps are useful to diagnose memory leaks. See this post for more details about <a href="/tech/solve-java-lang-outofmemoryerror-java-heap-space/">memory leaks and how to solve them</a>.</p>
-
-<h2 id="why-visualvm-is-slow-with-heap-dump">Why VisualVM is slow with heap dump</h2>
-
-<p>Another great feature of VisualVM is that you can read a huge heap dump file and VisualVm will consume a minimal amount of memory to do so. For instance, you will be able to read a 8 Gigabytes heap dump file with VisualVM running on a development workstation having only 2 Gigabytes of RAM. In order to achieve that, VisualVM will parse the heap dump file and will create a work file on disk in the default system temp folder (/tmp by default on Linux). In theory that’s great, but in practice, VisualVM becomes painfully slow because it constantly have to do disk I/O’s to process the information.</p>
-
-<p>This behavior is even more frustrating if you happen to have a server with 12 Gigabytes of RAM available for you. A simple solution for that is to create a ramdisk and tell VisualVM to use that ramdisk as the tmp folder.</p>
-
-<h2 id="the-solution-use-a-ramdisk">The solution: use a RAMDisk</h2>
-
-<p>First, create the RAMDisk (tmpfs). Here I am on a linux development server and I create a tmp folder in my home. Then I create (mount) the ramdisk in the tmp folder I just created:</p>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span><span class="nb">mkdir</span> /tmp/ramdisk
-<span class="nv">$ </span><span class="nb">sudo </span>mount <span class="nt">-t</span> tmpfs none /tmp/ramdisk
-</code></pre></div></div>
-
-<p>Then I launch VisualVM and I modify the java.io.tmpdir VM arg that tells VisualVM where the system tmp folder is.</p>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>jvisualvm <span class="nt">-J-Djava</span>.io.tmpdir<span class="o">=</span>/tmp/ramdisk
-</code></pre></div></div>
-
-<p>Now VisualVM is much much faster and I can investigate and find the root cause of that memory leak much faster.</p>
-
-<p><em>Author: <a href="https://www.linkedin.com/in/jonathan-demers-ing" title="Jonathan Demers">Jonathan Demers</a></em></p>]]></content><author><name></name></author><summary type="html"><![CDATA[One great feature of VisualVM is that it can read heap dump files. Heap dumps are useful to diagnose memory leaks. See this post for more details about memory leaks and how to solve them.]]></summary></entry></feed>
+<p><em>Author: <a href="https://www.linkedin.com/in/jonathan-demers-ing" title="Jonathan Demers">Jonathan Demers</a></em></p>]]></content><author><name></name></author><summary type="html"><![CDATA[My application development company just got a new website. It shows more relevant information and has a lean design powered by Bootstrap. It is now hosted on Amazon EC2. If you need a software for your business, call us. We will discuss your project and we’ll give you a free quote, see our pricing and application hosting packages. All the applications we develop run on desktop, tablet and smartphone out of the box.]]></summary></entry></feed>

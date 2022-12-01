@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Increase disk size of Debian cloud image | OpCode Tech</title>
+<meta name="generator" content="Jekyll v4.3.1" />
+<meta property="og:title" content="Increase disk size of Debian cloud image" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Generic Debian cloud images come with small disk size by default: 2GB. We can resize/increase the disk storage after the VM is created, but this is not convenient because we’d have to do this for each VM we create." />
+<meta property="og:description" content="Generic Debian cloud images come with small disk size by default: 2GB. We can resize/increase the disk storage after the VM is created, but this is not convenient because we’d have to do this for each VM we create." />
+<link rel="canonical" href="https://opcodesolutions.com/tech/increase-disk-size-of-debian-cloud-image/" />
+<meta property="og:url" content="https://opcodesolutions.com/tech/increase-disk-size-of-debian-cloud-image/" />
+<meta property="og:site_name" content="OpCode Tech" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2022-12-01T00:00:00-05:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Increase disk size of Debian cloud image" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","dateModified":"2022-12-01T00:00:00-05:00","datePublished":"2022-12-01T00:00:00-05:00","description":"Generic Debian cloud images come with small disk size by default: 2GB. We can resize/increase the disk storage after the VM is created, but this is not convenient because we’d have to do this for each VM we create.","headline":"Increase disk size of Debian cloud image","mainEntityOfPage":{"@type":"WebPage","@id":"https://opcodesolutions.com/tech/increase-disk-size-of-debian-cloud-image/"},"url":"https://opcodesolutions.com/tech/increase-disk-size-of-debian-cloud-image/"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/tech/assets/main.css"><link type="application/atom+xml" rel="alternate" href="https://opcodesolutions.com/tech/feed.xml" title="OpCode Tech" /></head>
+<body><header class="site-header" role="banner">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/tech/">OpCode Tech</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger"><a class="page-link" href="/tech/contact/">Contact</a></div>
+      </nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title p-name" itemprop="name headline">Increase disk size of Debian cloud image</h1>
+    <p class="post-meta">
+      <time class="dt-published" datetime="2022-12-01T00:00:00-05:00" itemprop="datePublished">Dec 1, 2022
+      </time></p>
+  </header>
+
+  <div class="post-content e-content" itemprop="articleBody">
+    <p>Generic Debian cloud images come with small disk size by default: <strong>2GB</strong>. We can resize/increase the disk storage after the VM is created, but this is not convenient because we’d have to do this for each VM we create.</p>
+
+<p>A better solution is to convert the could image to have bigger disk size by default. In this article we’ll create an Debian cloud image with <strong>32GB</strong> of storage.</p>
+
+<h2 id="step-1-get-the-generic-debian-cloud-image">Step 1. Get the Generic Debian cloud image</h2>
+
+<p>Get the image</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code># wget https://cloud.debian.org/images/cloud/bullseye/latest/debian-11-genericcloud-amd64.qcow2
+</code></pre></div></div>
+
+<p>Validate the checksum, checksum are here: <a href="https://cloud.debian.org/images/cloud/bullseye/latest/SHA512SUMS">https://cloud.debian.org/images/cloud/bullseye/latest/SHA512SUMS</a></p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code># sha512sum debian-11-genericcloud-amd64.qcow2
+
+71f1c376e585a87299f751e076689d7ebe2a897649b65071878eb5694be76b771f37c21d7a88630214f4650dec5307e9f73d597ec326f99bd3451e23f607e5b8  debian-11-genericcloud-amd64.qcow2
+</code></pre></div></div>
+
+<p>Current image size is <strong>2GB</strong></p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code># qemu-img info debian-11-genericcloud-amd64.qcow2
+
+image: debian-11-genericcloud-amd64.qcow2
+file format: qcow2
+virtual size: 2 GiB (2147483648 bytes)
+disk size: 236 MiB
+cluster_size: 65536
+Format specific information:
+    compat: 1.1
+    compression type: zlib
+    lazy refcounts: false
+    refcount bits: 16
+    corrupt: false
+    extended l2: false
+</code></pre></div></div>
+
+<h2 id="step-2-increase-image-size">Step 2. Increase image size</h2>
+
+<p>Use qemu-img to resize the image</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code># qemu-img resize debian-11-genericcloud-amd64.qcow2 32G
+
+Image resized.
+</code></pre></div></div>
+
+<h2 id="step-3-increase-partition-size-to-match-image-size">Step 3. Increase partition size to match image size</h2>
+
+<p>Mount partition with nbd</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code># modprobe nbd max_part=10
+# qemu-nbd -c /dev/nbd0 debian-11-genericcloud-amd64.qcow2
+</code></pre></div></div>
+
+<p>Install parted</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code># apt -y install parted
+</code></pre></div></div>
+
+<p>Print and fix partition with parted. Press <strong>F</strong> to Fix the warning</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code># parted /dev/nbd0 print free
+
+Warning: Not all of the space available to /dev/nbd0 appears to be used, you can fix the GPT to use all of the space (an extra 62914560 blocks) or continue with the current setting?
+Fix/Ignore? F
+Model: Unknown (unknown)
+Disk /dev/nbd0: 34.4GB
+Sector size (logical/physical): 512B/512B
+Partition Table: gpt
+Disk Flags:
+
+Number  Start   End     Size    File system  Name  Flags
+        17.4kB  1049kB  1031kB  Free Space
+14      1049kB  4194kB  3146kB                     bios_grub
+15      4194kB  134MB   130MB   fat16              boot, esp
+ 1      134MB   2147MB  2013MB  ext4
+        2147MB  34.4GB  32.2GB  Free Space
+</code></pre></div></div>
+
+<p>Resize partition and print its new size</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code># parted -s /dev/nbd0 "resizepart 1 100%" quit
+# parted /dev/nbd0 print free
+
+Model: Unknown (unknown)
+Disk /dev/nbd0: 34.4GB
+Sector size (logical/physical): 512B/512B
+Partition Table: gpt
+Disk Flags:
+
+Number  Start   End     Size    File system  Name  Flags
+        17.4kB  1049kB  1031kB  Free Space
+14      1049kB  4194kB  3146kB                     bios_grub
+15      4194kB  134MB   130MB   fat16              boot, esp
+ 1      134MB   34.4GB  34.2GB  ext4
+</code></pre></div></div>
+
+<h2 id="step-4-increase-filesystem-to-match-partition-size">Step 4. Increase filesystem to match partition size</h2>
+
+<p>Use resize2fs to resize filesystem</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code># resize2fs /dev/nbd0p1
+
+resize2fs 1.46.5 (30-Dec-2021)
+Resizing the filesystem on /dev/nbd0p1 to 8355835 (4k) blocks.
+The filesystem on /dev/nbd0p1 is now 8355835 (4k) blocks long.
+</code></pre></div></div>
+
+<p>Unmount nbd</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code># qemu-nbd -d /dev/nbd0
+
+/dev/nbd0 disconnected
+</code></pre></div></div>
+
+<h2 id="step-5-verify-new-cloud-image-size-is-32gb">Step 5. Verify new cloud image size is 32GB</h2>
+
+<p>New image size is 32GB</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code># qemu-img info debian-11-genericcloud-amd64.qcow2
+
+image: debian-11-genericcloud-amd64.qcow2
+file format: qcow2
+virtual size: 32 GiB (34359738368 bytes)
+disk size: 240 MiB
+cluster_size: 65536
+Format specific information:
+    compat: 1.1
+    compression type: zlib
+    lazy refcounts: false
+    refcount bits: 16
+    corrupt: false
+    extended l2: false
+</code></pre></div></div>
+
+<p><em>Author: <a href="https://www.linkedin.com/in/jonathan-demers-ing" title="Jonathan Demers">Jonathan Demers</a></em></p>
+
+
+  </div><a class="u-url" href="/tech/increase-disk-size-of-debian-cloud-image/" hidden></a>
+</article>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/tech/"></data>
+
+  <div class="wrapper">
+
+    <h2 class="footer-heading">OpCode Tech</h2>
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li class="p-name">OpCode Tech</li><li><a class="u-email" href="mailto:jdemers@opcodesolutions.com">jdemers@opcodesolutions.com</a></li></ul>
+      </div>
+
+      <div class="footer-col footer-col-2"><ul class="social-media-list"><li><a href="https://github.com/JonDemers"><svg class="svg-icon"><use xlink:href="/tech/assets/minima-social-icons.svg#github"></use></svg> <span class="username">JonDemers</span></a></li></ul>
+</div>
+
+      <div class="footer-col footer-col-3">
+        <p>Optimize Your Processes</p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>
