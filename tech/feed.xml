@@ -1,4 +1,92 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.1">Jekyll</generator><link href="https://opcodesolutions.com/tech/feed.xml" rel="self" type="application/atom+xml" /><link href="https://opcodesolutions.com/tech/" rel="alternate" type="text/html" /><updated>2022-12-01T07:53:20-05:00</updated><id>https://opcodesolutions.com/tech/feed.xml</id><title type="html">OpCode Tech</title><subtitle>Optimize Your Processes</subtitle><entry><title type="html">Debian -bash: netstat: command not found</title><link href="https://opcodesolutions.com/tech/debian-bash-netstat-command-not-found/" rel="alternate" type="text/html" title="Debian -bash: netstat: command not found" /><published>2022-12-01T00:00:00-05:00</published><updated>2022-12-01T00:00:00-05:00</updated><id>https://opcodesolutions.com/tech/debian-bash-netstat-command-not-found</id><content type="html" xml:base="https://opcodesolutions.com/tech/debian-bash-netstat-command-not-found/"><![CDATA[<h2 id="solution">Solution</h2>
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.1">Jekyll</generator><link href="https://opcodesolutions.com/tech/feed.xml" rel="self" type="application/atom+xml" /><link href="https://opcodesolutions.com/tech/" rel="alternate" type="text/html" /><updated>2022-12-02T07:32:14-05:00</updated><id>https://opcodesolutions.com/tech/feed.xml</id><title type="html">OpCode Tech</title><subtitle>Optimize Your Processes</subtitle><entry><title type="html">Script to automate VM creation on Proxmox VE</title><link href="https://opcodesolutions.com/tech/script-to-automate-vm-creation-on-proxmox-ve/" rel="alternate" type="text/html" title="Script to automate VM creation on Proxmox VE" /><published>2022-12-02T00:00:00-05:00</published><updated>2022-12-02T00:00:00-05:00</updated><id>https://opcodesolutions.com/tech/script-to-automate-vm-creation-on-proxmox-ve</id><content type="html" xml:base="https://opcodesolutions.com/tech/script-to-automate-vm-creation-on-proxmox-ve/"><![CDATA[<p>This script will create a VM on Proxmox VE without requiring any user interation. Upon completion, you’ll be able to ssh to the VM with your ssh key, just like you’d do with a VM hosted on a major cloud provider like AWS.</p>
+
+<p>You’ll need an OS <em>cloud image</em> for this, it will install the OS without any user interaction. We’ll use Debian cloud image, but you can use a cloud image of any distro.</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>wget https://cloud.debian.org/images/cloud/bullseye/latest/debian-11-genericcloud-amd64.qcow2
+</code></pre></div></div>
+
+<p>It has 2GB disk space by default, but you can <a href="/tech/increase-disk-size-of-debian-cloud-image/">Increase disk size of cloud image</a> before running the script.</p>
+
+<h2 id="step-1-the-script">Step 1. The Script</h2>
+
+<p>We’ll copy-paste this script in a file <code class="language-plaintext highlighter-rouge">create-vm.sh</code>. You can read comments in the script for more details.</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#!/bin/bash</span>
+
+<span class="c"># Exit on error</span>
+<span class="nb">set</span> <span class="nt">-e</span>
+
+<span class="k">if</span> <span class="o">[</span> <span class="s2">"$#"</span> <span class="nt">-ne</span> 7 <span class="o">]</span><span class="p">;</span> <span class="k">then
+  </span><span class="nb">echo</span> <span class="s2">"Usage: </span><span class="nv">$0</span><span class="s2"> &lt;id&gt; &lt;name&gt; &lt;memory&gt; &lt;cores&gt; &lt;image&gt; &lt;ciuser&gt; &lt;sshkey&gt;"</span>
+  <span class="nb">exit </span>1
+<span class="k">fi
+
+</span><span class="nb">id</span><span class="o">=</span><span class="nv">$1</span>
+<span class="nv">name</span><span class="o">=</span><span class="nv">$2</span>
+<span class="nv">memory</span><span class="o">=</span><span class="nv">$3</span>
+<span class="nv">cores</span><span class="o">=</span><span class="nv">$4</span>
+<span class="nv">image</span><span class="o">=</span><span class="nv">$5</span>
+<span class="nv">ciuser</span><span class="o">=</span><span class="nv">$6</span>
+<span class="nv">sshkey</span><span class="o">=</span><span class="nv">$7</span>
+
+<span class="nb">echo </span>Creating VM using parameters:
+<span class="nb">echo id</span><span class="o">=</span><span class="nv">$id</span>
+<span class="nb">echo </span><span class="nv">name</span><span class="o">=</span><span class="nv">$name</span>
+<span class="nb">echo </span><span class="nv">memory</span><span class="o">=</span><span class="nv">$memory</span>
+<span class="nb">echo </span><span class="nv">cores</span><span class="o">=</span><span class="nv">$cores</span>
+<span class="nb">echo </span><span class="nv">image</span><span class="o">=</span><span class="nv">$image</span>
+<span class="nb">echo </span><span class="nv">ciuser</span><span class="o">=</span><span class="nv">$ciuser</span>
+<span class="nb">echo </span><span class="nv">sshkey</span><span class="o">=</span><span class="nv">$sshkey</span>
+
+<span class="c"># Print commands that are executed (facilitates debugging)</span>
+<span class="nb">set</span> <span class="nt">-x</span>
+
+<span class="c"># Destroy the VM if it exists</span>
+qm stop <span class="nv">$id</span> <span class="o">||</span> <span class="nb">true
+</span>qm destroy <span class="nv">$id</span> <span class="nt">-purge</span> 1 <span class="o">||</span> <span class="nb">true</span>
+
+<span class="c"># Create the VM</span>
+qm create <span class="nv">$id</span>
+qm <span class="nb">set</span> <span class="nv">$id</span> <span class="nt">--name</span> <span class="nv">$name</span>
+qm <span class="nb">set</span> <span class="nv">$id</span> <span class="nt">--memory</span> <span class="nv">$memory</span>
+qm <span class="nb">set</span> <span class="nv">$id</span> <span class="nt">--cores</span> <span class="nv">$cores</span>
+qm <span class="nb">set</span> <span class="nv">$id</span> <span class="nt">--net0</span> virtio,bridge<span class="o">=</span>vmbr0
+qm importdisk <span class="nv">$id</span> <span class="nv">$image</span> local-lvm
+qm <span class="nb">set</span> <span class="nv">$id</span> <span class="nt">--scsihw</span> virtio-scsi-pci
+qm <span class="nb">set</span> <span class="nv">$id</span> <span class="nt">--scsi0</span> local-lvm:vm-<span class="nv">$id</span><span class="nt">-disk-0</span>
+qm <span class="nb">set</span> <span class="nv">$id</span> <span class="nt">--ide2</span> local-lvm:cloudinit
+qm <span class="nb">set</span> <span class="nv">$id</span> <span class="nt">--ciuser</span> <span class="nv">$ciuser</span>
+qm <span class="nb">set</span> <span class="nv">$id</span> <span class="nt">--sshkey</span> <span class="nv">$sshkey</span>
+qm <span class="nb">set</span> <span class="nv">$id</span> <span class="nt">--serial0</span> socket <span class="nt">--vga</span> serial0
+
+<span class="c"># Start the VM for the first time, this will install the OS from the cloud image</span>
+qm start <span class="nv">$id</span>
+
+<span class="c"># Reboot for a clean start</span>
+<span class="nb">sleep </span>60
+qm reboot <span class="nv">$id</span>
+</code></pre></div></div>
+
+<p>We make the script executable</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">chmod</span> +x create-vm.sh
+</code></pre></div></div>
+
+<h2 id="step-2-run-the-script">Step 2. Run the Script</h2>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>./create-vm.sh 999 debian-999 4096 2 debian-11-genericcloud-amd64.qcow2 jdemers jdemers.id_rsa.pub
+</code></pre></div></div>
+
+<h2 id="step-3-ssh-to-your-vm">Step 3. SSH to your VM</h2>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ssh debian-999
+</code></pre></div></div>
+
+<h2 id="step-4-automate-vm-setup-with-ansible">Step 4. Automate VM setup with ansible…</h2>
+
+<p>Not in scope of this article</p>
+
+<p><em>Author: <a href="https://www.linkedin.com/in/jonathan-demers-ing" title="Jonathan Demers">Jonathan Demers</a></em></p>]]></content><author><name></name></author><summary type="html"><![CDATA[This script will create a VM on Proxmox VE without requiring any user interation. Upon completion, you’ll be able to ssh to the VM with your ssh key, just like you’d do with a VM hosted on a major cloud provider like AWS.]]></summary></entry><entry><title type="html">Debian -bash: netstat: command not found</title><link href="https://opcodesolutions.com/tech/debian-bash-netstat-command-not-found/" rel="alternate" type="text/html" title="Debian -bash: netstat: command not found" /><published>2022-12-01T00:00:00-05:00</published><updated>2022-12-01T00:00:00-05:00</updated><id>https://opcodesolutions.com/tech/debian-bash-netstat-command-not-found</id><content type="html" xml:base="https://opcodesolutions.com/tech/debian-bash-netstat-command-not-found/"><![CDATA[<h2 id="solution">Solution</h2>
 
 <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>apt <span class="nb">install </span>net-tools
 </code></pre></div></div>
@@ -626,8 +714,4 @@ Heap dump file created
 
 <p>If none of the above works, you are in trouble 🙁 Seriously, unless you hacked the class-loading of the JVM or application container, you should not have that problem. Or maybe it is a bug in a library you are using or in your application container. You can try to upgrade to latest versions. If you hacked the class-loaders yourself, you may want to reconsider it. Why did you do that? Unless you are developing a JVM or an application container, you should not have to do that.</p>
 
-<p><em>Author: <a href="https://www.linkedin.com/in/jonathan-demers-ing" title="Jonathan Demers">Jonathan Demers</a></em></p>]]></content><author><name></name></author><summary type="html"><![CDATA[When you get an OutOfMemoryError with the message “PermGen space” (not to be confused with message “Java heap space”), this means the memory used for class definition is exhausted. Fortunately, most of the time, this is easy to fix.]]></summary></entry><entry><title type="html">New website for my software development company</title><link href="https://opcodesolutions.com/tech/new-website-for-my-software-development-company/" rel="alternate" type="text/html" title="New website for my software development company" /><published>2014-05-29T00:00:00-04:00</published><updated>2014-05-29T00:00:00-04:00</updated><id>https://opcodesolutions.com/tech/new-website-for-my-software-development-company</id><content type="html" xml:base="https://opcodesolutions.com/tech/new-website-for-my-software-development-company/"><![CDATA[<p>My <a href="https://opcodesolutions.com/">application development company</a> just got a new website. It shows more relevant information and has a lean design powered by <a href="https://getbootstrap.com/">Bootstrap</a>. It is now hosted on <a href="https://aws.amazon.com/ec2/">Amazon EC2</a>. If you need a software for your business, call us. We will discuss your project and we’ll give you a free quote, see our <a href="https://opcodesolutions.com/en/pricing/">pricing</a> and <a href="https://opcodesolutions.com/en/hosting/">application hosting packages</a>. All the applications we develop <a href="https://opcodesolutions.com/en/demo/index.html">run on desktop, tablet and smartphone out of the box</a>.</p>
-
-<p>Alright, enough bragging, back to work now!</p>
-
-<p><em>Author: <a href="https://www.linkedin.com/in/jonathan-demers-ing" title="Jonathan Demers">Jonathan Demers</a></em></p>]]></content><author><name></name></author><summary type="html"><![CDATA[My application development company just got a new website. It shows more relevant information and has a lean design powered by Bootstrap. It is now hosted on Amazon EC2. If you need a software for your business, call us. We will discuss your project and we’ll give you a free quote, see our pricing and application hosting packages. All the applications we develop run on desktop, tablet and smartphone out of the box.]]></summary></entry></feed>
+<p><em>Author: <a href="https://www.linkedin.com/in/jonathan-demers-ing" title="Jonathan Demers">Jonathan Demers</a></em></p>]]></content><author><name></name></author><summary type="html"><![CDATA[When you get an OutOfMemoryError with the message “PermGen space” (not to be confused with message “Java heap space”), this means the memory used for class definition is exhausted. Fortunately, most of the time, this is easy to fix.]]></summary></entry></feed>
