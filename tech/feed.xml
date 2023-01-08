@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.1">Jekyll</generator><link href="https://opcodesolutions.com/tech/feed.xml" rel="self" type="application/atom+xml" /><link href="https://opcodesolutions.com/tech/" rel="alternate" type="text/html" /><updated>2022-12-13T07:26:05-05:00</updated><id>https://opcodesolutions.com/tech/feed.xml</id><title type="html">OpCode Tech</title><subtitle>Optimize Your Processes</subtitle><entry><title type="html">Apache Reverse Proxy with Secure TLS WebSocket (wss://)</title><link href="https://opcodesolutions.com/tech/apache-reverse-proxy-with-secure-tls-websocket-wss/" rel="alternate" type="text/html" title="Apache Reverse Proxy with Secure TLS WebSocket (wss://)" /><published>2022-12-13T00:00:00-05:00</published><updated>2022-12-13T00:00:00-05:00</updated><id>https://opcodesolutions.com/tech/apache-reverse-proxy-with-secure-tls-websocket-wss</id><content type="html" xml:base="https://opcodesolutions.com/tech/apache-reverse-proxy-with-secure-tls-websocket-wss/"><![CDATA[<p>Configuring Apache reverse proxy with WebSocket can be tricky. It is even trickier if the WebSocket is secured with TLS (wss://). Here is how to do it.</p>
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.1">Jekyll</generator><link href="https://opcodesolutions.com/tech/feed.xml" rel="self" type="application/atom+xml" /><link href="https://opcodesolutions.com/tech/" rel="alternate" type="text/html" /><updated>2023-01-08T09:10:34-05:00</updated><id>https://opcodesolutions.com/tech/feed.xml</id><title type="html">OpCode Tech</title><subtitle>Optimize Your Processes</subtitle><entry><title type="html">Apache Reverse Proxy with Secure TLS WebSocket (wss://)</title><link href="https://opcodesolutions.com/tech/apache-reverse-proxy-with-secure-tls-websocket-wss/" rel="alternate" type="text/html" title="Apache Reverse Proxy with Secure TLS WebSocket (wss://)" /><published>2022-12-13T00:00:00-05:00</published><updated>2022-12-13T00:00:00-05:00</updated><id>https://opcodesolutions.com/tech/apache-reverse-proxy-with-secure-tls-websocket-wss</id><content type="html" xml:base="https://opcodesolutions.com/tech/apache-reverse-proxy-with-secure-tls-websocket-wss/"><![CDATA[<p>Configuring Apache reverse proxy with WebSocket can be tricky. It is even trickier if the WebSocket is secured with TLS (wss://). Here is how to do it.</p>
 
 <h2 id="step-1-enable-required-apache-modules">Step 1. Enable required apache modules</h2>
 
@@ -26,6 +26,7 @@
 
   <span class="c"># This is for regular HTTPS reverse proxy</span>
   <span class="nc">ProxyRequests</span> <span class="ss">Off</span>
+  <span class="nc">ProxyPreserveHost</span> <span class="ss">On</span>
   <span class="nc">ProxyPass</span> / https://proxied-host:port/
   <span class="nc">ProxyPassReverse</span> / https://proxied-host:port/
 
@@ -43,6 +44,7 @@
 
   <span class="c"># This is for regular HTTP reverse proxy</span>
   <span class="nc">ProxyRequests</span> <span class="ss">Off</span>
+  <span class="nc">ProxyPreserveHost</span> <span class="ss">On</span>
   <span class="nc">ProxyPass</span> / http://proxied-host:port/
   <span class="nc">ProxyPassReverse</span> / http://proxied-host:port/
 
@@ -618,6 +620,7 @@ Format specific information:
             onkeydown onkeyup onfocus onblur onload \
             onunload onsubmit onreset onselect onchange
 
+        <span class="nc">ProxyPreserveHost</span> <span class="ss">On</span>
         <span class="nc">ProxyPass</span> http://host2.example.com/path2
         <span class="nc">ProxyPassReverse</span> http://host2.example.com/path2
         <span class="nc">ProxyHTMLEnable</span> <span class="ss">On</span>

@@ -75,6 +75,7 @@
 
   <span class="c"># This is for regular HTTPS reverse proxy</span>
   <span class="nc">ProxyRequests</span> <span class="ss">Off</span>
+  <span class="nc">ProxyPreserveHost</span> <span class="ss">On</span>
   <span class="nc">ProxyPass</span> / https://proxied-host:port/
   <span class="nc">ProxyPassReverse</span> / https://proxied-host:port/
 
@@ -92,6 +93,7 @@
 
   <span class="c"># This is for regular HTTP reverse proxy</span>
   <span class="nc">ProxyRequests</span> <span class="ss">Off</span>
+  <span class="nc">ProxyPreserveHost</span> <span class="ss">On</span>
   <span class="nc">ProxyPass</span> / http://proxied-host:port/
   <span class="nc">ProxyPassReverse</span> / http://proxied-host:port/
 
