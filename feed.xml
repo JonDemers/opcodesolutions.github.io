@@ -1,4 +1,79 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.2">Jekyll</generator><link href="/feed.xml" rel="self" type="application/atom+xml" /><link href="/" rel="alternate" type="text/html" /><updated>2023-11-12T11:56:12-05:00</updated><id>/feed.xml</id><title type="html">OpCode Solutions</title><subtitle>Optimize Your Processes</subtitle><author><name>OpCode Solutions</name><email>info@opcodesolutions.com</email></author><entry><title type="html">Apache Reverse Proxy with Secure TLS WebSocket (wss://)</title><link href="/tech/apache-reverse-proxy-with-secure-tls-websocket-wss/" rel="alternate" type="text/html" title="Apache Reverse Proxy with Secure TLS WebSocket (wss://)" /><published>2022-12-13T00:00:00-05:00</published><updated>2022-12-13T00:00:00-05:00</updated><id>/tech/apache-reverse-proxy-with-secure-tls-websocket-wss</id><content type="html" xml:base="/tech/apache-reverse-proxy-with-secure-tls-websocket-wss/"><![CDATA[<p>Configuring Apache reverse proxy with WebSocket can be tricky. It is even trickier if the WebSocket is secured with TLS (wss://). Here is how to do it.</p>
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.2">Jekyll</generator><link href="/feed.xml" rel="self" type="application/atom+xml" /><link href="/" rel="alternate" type="text/html" /><updated>2023-11-12T12:42:31-05:00</updated><id>/feed.xml</id><title type="html">OpCode Solutions</title><subtitle>Optimize Your Processes</subtitle><author><name>OpCode Solutions</name><email>info@opcodesolutions.com</email></author><entry><title type="html">A/B Testing Landing Pages When Launching New Product</title><link href="/tech/a-b-testing-landing-pages-when-launching-new-product/" rel="alternate" type="text/html" title="A/B Testing Landing Pages When Launching New Product" /><published>2023-11-12T00:00:00-05:00</published><updated>2023-11-12T00:00:00-05:00</updated><id>/tech/a-b-testing-landing-pages-when-launching-new-product</id><content type="html" xml:base="/tech/a-b-testing-landing-pages-when-launching-new-product/"><![CDATA[<h4 id="so-you-have-a-new-product-or-service-you-are-not-sure-how-to-promote-it-online">So you have a new product or service? You are not sure how to promote it online?</h4>
+
+<h2 id="the-problem">The Problem</h2>
+
+<p>When launching a new product, it is sometimes hard to know in advance what key features will be the most appealing to our future customers and how to promote our product. So let’s test some variants! This is called A/B testing.</p>
+
+<h2 id="setting-up-the-test">Setting Up The Test</h2>
+
+<p>In our case, our SaaS File Transfer Solution has many interesting features. The test consist to select 6 prominent features of the product and create a landing page for each. Each page will focus on the selected prominent feature first, but also mention the other features. On each page, we have a “Free Trial” form inviting our prospect to try the product.</p>
+
+<ul>
+  <li><a href="/en/saas/file-transfer/affordable-file-sharing-solution/">Affordable File Sharing Solution</a></li>
+  <li><a href="/en/saas/file-transfer/scalable-file-sharing-solution/">Scalable File Sharing Solution</a></li>
+  <li><a href="/en/saas/file-transfer/file-sharing-automation-solution/">File Sharing Automation Solution</a></li>
+  <li><a href="/en/saas/file-transfer/effortless-file-transfer-solution/">Effortless File Transfer Solution</a></li>
+  <li><a href="/en/saas/file-transfer/reliable-file-transfer-solution/">Reliable File Transfer Solution</a></li>
+  <li><a href="/en/saas/file-transfer/secure-file-sharing-solution/">Secure File Sharing Solution</a></li>
+</ul>
+
+<h2 id="measuring-the-results">Measuring The Results</h2>
+
+<p>Measuring the number of signup from each landing page is the easiest way to measure the interest in the feature. With tools like Google Analytics, we can make even more detailed analysis.</p>
+
+<h2 id="speeding-up-the-process">Speeding up the process</h2>
+
+<p>Once the test is running, we may realize we do not get much visits to our site. With paid advertizing, we can speed things up. We just have to create 1 Ad for each variant of the landing page.</p>
+
+<h3 id="advertisement-1">Advertisement #1</h3>
+
+<ul>
+  <li><strong>Short Headline:</strong> <a href="/en/saas/file-transfer/affordable-file-sharing-solution/">Affordable File Sharing Solution</a></li>
+  <li><strong>Long Headline:</strong> Affordable File Sharing: Start at $9/Month for Professional, Feature-Rich Client Collaborations.</li>
+  <li><strong>Description:</strong> Experience top-tier file sharing without breaking the bank. Elevate client collaborations starting at just $9/month!</li>
+</ul>
+
+<h3 id="advertisement-2">Advertisement #2</h3>
+
+<ul>
+  <li><strong>Short Headline:</strong> <a href="/en/saas/file-transfer/scalable-file-sharing-solution/">Scalable File Sharing Solution</a></li>
+  <li><strong>Long Headline:</strong> Scalable File Sharing: Unlimited Users, Admins for Seamless, Scalable File Sharing with Clients.</li>
+  <li><strong>Description:</strong> Expand your client connections seamlessly. Our scalable solution adapts to your growing file sharing needs.</li>
+</ul>
+
+<h3 id="advertisement-3">Advertisement #3</h3>
+
+<ul>
+  <li><strong>Short Headline:</strong> <a href="/en/saas/file-transfer/file-sharing-automation-solution/">File Sharing Automation Solution</a></li>
+  <li><strong>Long Headline:</strong> File Sharing Automation: APIs, Integration, High-Speed File Transfers for Effortless File Sharing with Clients.</li>
+  <li><strong>Description:</strong> Boost productivity with file transfer automations. Integrate seamlessly for efficient client collaborations. Try it now!</li>
+</ul>
+
+<h3 id="advertisement-4">Advertisement #4</h3>
+
+<ul>
+  <li><strong>Short Headline:</strong> <a href="/en/saas/file-transfer/effortless-file-transfer-solution/">Effortless File Transfer Solution</a></li>
+  <li><strong>Long Headline:</strong> Effortless File Transfer: Centralized Management, Organized Folders, User-Friendly Interface.</li>
+  <li><strong>Description:</strong> Simplify client collaborations with our easy-to-use solution. Organize, share, and impress with every file transfer.</li>
+</ul>
+
+<h3 id="advertisement-5">Advertisement #5</h3>
+
+<ul>
+  <li><strong>Short Headline:</strong> <a href="/en/saas/file-transfer/reliable-file-transfer-solution/">Reliable File Transfer Solution</a></li>
+  <li><strong>Long Headline:</strong> Reliable File Transfer: Professional, Easy-to-Use, Dependable Solutions for Client Interactions.</li>
+  <li><strong>Description:</strong> Choose reliability for client file transfers. Our SaaS solution ensures every file is delivered with utmost professionalism.</li>
+</ul>
+
+<h3 id="advertisement-6">Advertisement #6</h3>
+
+<ul>
+  <li><strong>Short Headline:</strong> <a href="/en/saas/file-transfer/secure-file-sharing-solution/">Secure File Sharing Solution</a></li>
+  <li><strong>Long Headline:</strong> Secure File Sharing: Authenticated, Encrypted, Reliable Transfers for Client Collaboration.</li>
+  <li><strong>Description:</strong> Trust our SaaS for secure and professional file transfers. Elevate client collaboration with peace of mind.</li>
+</ul>
+
+<p><em>Author: <a href="https://www.linkedin.com/in/jonathan-demers-ing/" title="Jonathan Demers">Jonathan Demers</a></em></p>]]></content><author><name>OpCode Solutions</name><email>info@opcodesolutions.com</email></author><summary type="html"><![CDATA[So you have a new product or service? You are not sure how to promote it online?]]></summary></entry><entry><title type="html">Apache Reverse Proxy with Secure TLS WebSocket (wss://)</title><link href="/tech/apache-reverse-proxy-with-secure-tls-websocket-wss/" rel="alternate" type="text/html" title="Apache Reverse Proxy with Secure TLS WebSocket (wss://)" /><published>2022-12-13T00:00:00-05:00</published><updated>2022-12-13T00:00:00-05:00</updated><id>/tech/apache-reverse-proxy-with-secure-tls-websocket-wss</id><content type="html" xml:base="/tech/apache-reverse-proxy-with-secure-tls-websocket-wss/"><![CDATA[<p>Configuring Apache reverse proxy with WebSocket can be tricky. It is even trickier if the WebSocket is secured with TLS (wss://). Here is how to do it.</p>
 
 <h2 id="step-1-enable-required-apache-modules">Step 1. Enable required apache modules</h2>
 
@@ -631,62 +706,4 @@ Format specific information:
 &lt;/</span><span class="nl">VirtualHost</span><span class="p">&gt;
 </span></code></pre></div></div>
 
-<p><em>Author: <a href="https://www.linkedin.com/in/jonathan-demers-ing/" title="Jonathan Demers">Jonathan Demers</a></em></p>]]></content><author><name>OpCode Solutions</name><email>info@opcodesolutions.com</email></author><summary type="html"><![CDATA[I just wasted few hours on this, so I will share a few tips. If you want to setup a reverse proxy and rewrite links in html pages, you can use Apache module mod_proxy_html.]]></summary></entry><entry><title type="html">Programmatically Configure Hibernate (JPA) with DBCP</title><link href="/tech/programmatically-configure-hibernate-jpa-with-dbcp/" rel="alternate" type="text/html" title="Programmatically Configure Hibernate (JPA) with DBCP" /><published>2014-11-04T00:00:00-05:00</published><updated>2014-11-04T00:00:00-05:00</updated><id>/tech/programmatically-configure-hibernate-jpa-with-dbcp</id><content type="html" xml:base="/tech/programmatically-configure-hibernate-jpa-with-dbcp/"><![CDATA[<p>I recently had deadlock issues with c3p0 and statement caching. Long story short, after investigating c3p0 code, I decided to switch to <a href="https://commons.apache.org/proper/commons-dbcp/">DBCP</a> (maybe I’ll write a post with the long story).</p>
-
-<p>I am not a big fan of Spring (here again, maybe I’ll write a post about that). If you are like me, here is how to programmatically configure <a href="https://hibernate.org/">Hibernate</a> (JPA) to use DBCP, without Spring and without JNDI.</p>
-
-<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">package</span> <span class="nn">com.opcodesolutions.demo</span><span class="o">;</span>
-
-<span class="kn">import</span> <span class="nn">java.util.HashMap</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">java.util.Map</span><span class="o">;</span>
-
-<span class="kn">import</span> <span class="nn">javax.persistence.EntityManager</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">javax.persistence.EntityManagerFactory</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">javax.persistence.Persistence</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">javax.persistence.TypedQuery</span><span class="o">;</span>
-
-<span class="kn">import</span> <span class="nn">org.apache.commons.dbcp2.BasicDataSource</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">org.hibernate.cfg.AvailableSettings</span><span class="o">;</span>
-
-<span class="kn">import</span> <span class="nn">com.opcodesolutions.generic.jpa.entity.User</span><span class="o">;</span>
-
-<span class="kd">public</span> <span class="kd">class</span> <span class="nc">HibernateJPAWithDBCP</span> <span class="o">{</span>
-
-    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="nc">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
-
-        <span class="c1">// Create and configure DBCP DataSource</span>
-        <span class="nc">BasicDataSource</span> <span class="n">dbcpDataSource</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">BasicDataSource</span><span class="o">();</span>
-        <span class="n">dbcpDataSource</span><span class="o">.</span><span class="na">setDriverClassName</span><span class="o">(</span><span class="s">"com.mysql.jdbc.Driver"</span><span class="o">);</span>
-        <span class="n">dbcpDataSource</span><span class="o">.</span><span class="na">setUrl</span><span class="o">(</span><span class="s">"jdbc:mysql://localhost:3306/database"</span><span class="o">);</span>
-        <span class="n">dbcpDataSource</span><span class="o">.</span><span class="na">setUsername</span><span class="o">(</span><span class="s">"user"</span><span class="o">);</span>
-        <span class="n">dbcpDataSource</span><span class="o">.</span><span class="na">setPassword</span><span class="o">(</span><span class="s">"************"</span><span class="o">);</span>
-
-        <span class="c1">// Enable statement caching (Optional)</span>
-        <span class="n">dbcpDataSource</span><span class="o">.</span><span class="na">setPoolPreparedStatements</span><span class="o">(</span><span class="kc">true</span><span class="o">);</span>
-        <span class="n">dbcpDataSource</span><span class="o">.</span><span class="na">setMaxOpenPreparedStatements</span><span class="o">(</span><span class="mi">50</span><span class="o">);</span>
-
-        <span class="c1">// JPA properties</span>
-        <span class="nc">Map</span><span class="o">&lt;</span><span class="nc">String</span><span class="o">,</span> <span class="nc">Object</span><span class="o">&gt;</span> <span class="n">properties</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">HashMap</span><span class="o">&lt;&gt;();</span>
-
-        <span class="c1">// This line will tell hibernate (JPA) to use DBCP</span>
-        <span class="n">properties</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="nc">AvailableSettings</span><span class="o">.</span><span class="na">DATASOURCE</span><span class="o">,</span> <span class="n">dbcpDataSource</span><span class="o">);</span>
-
-        <span class="c1">// Create the EntityManagerFactory with JPA properties</span>
-        <span class="nc">EntityManagerFactory</span> <span class="n">factory</span> <span class="o">=</span>
-            <span class="nc">Persistence</span><span class="o">.</span><span class="na">createEntityManagerFactory</span><span class="o">(</span><span class="s">"User"</span><span class="o">,</span> <span class="n">properties</span><span class="o">);</span>
-
-        <span class="c1">// Test with simple query</span>
-        <span class="nc">EntityManager</span> <span class="n">entityManager</span> <span class="o">=</span> <span class="n">factory</span><span class="o">.</span><span class="na">createEntityManager</span><span class="o">();</span>
-        <span class="nc">TypedQuery</span><span class="o">&lt;</span><span class="nc">User</span><span class="o">&gt;</span> <span class="n">query</span> <span class="o">=</span>
-            <span class="n">entityManager</span><span class="o">.</span><span class="na">createQuery</span><span class="o">(</span><span class="s">"select u from User u"</span><span class="o">,</span> <span class="nc">User</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
-        <span class="k">for</span> <span class="o">(</span><span class="nc">User</span> <span class="n">user</span> <span class="o">:</span> <span class="n">query</span><span class="o">.</span><span class="na">getResultList</span><span class="o">())</span> <span class="o">{</span>
-            <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">user</span><span class="o">.</span><span class="na">getFullName</span><span class="o">());</span>
-        <span class="o">}</span>
-
-    <span class="o">}</span>
-<span class="o">}</span>
-</code></pre></div></div>
-
-<p>With DBCP, all my deadlock issues disappeared. Thank you <a href="https://www.apache.org/">ASF</a>.</p>
-
-<p><em>Author: <a href="https://www.linkedin.com/in/jonathan-demers-ing/" title="Jonathan Demers">Jonathan Demers</a></em></p>]]></content><author><name>OpCode Solutions</name><email>info@opcodesolutions.com</email></author><summary type="html"><![CDATA[I recently had deadlock issues with c3p0 and statement caching. Long story short, after investigating c3p0 code, I decided to switch to DBCP (maybe I’ll write a post with the long story).]]></summary></entry></feed>
+<p><em>Author: <a href="https://www.linkedin.com/in/jonathan-demers-ing/" title="Jonathan Demers">Jonathan Demers</a></em></p>]]></content><author><name>OpCode Solutions</name><email>info@opcodesolutions.com</email></author><summary type="html"><![CDATA[I just wasted few hours on this, so I will share a few tips. If you want to setup a reverse proxy and rewrite links in html pages, you can use Apache module mod_proxy_html.]]></summary></entry></feed>
