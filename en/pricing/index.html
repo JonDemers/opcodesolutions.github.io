@@ -26,6 +26,12 @@
 <meta name="msapplication-TileColor" content="#2b5797">
 <meta name="theme-color" content="#ffffff">
 <link type="application/atom+xml" rel="alternate" href="/feed.xml" title="OpCode Solutions" />
+<script>
+  function writeMailtoLink(encoded) {
+    var mailto = atob(atob(atob(encoded)));
+    document.write('<a href="mailto:' + mailto + '" target="_blank">' + mailto + '</a>');
+  }
+</script>
 </head>
 
 <body>
