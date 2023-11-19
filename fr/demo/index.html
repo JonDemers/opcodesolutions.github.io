@@ -52,33 +52,44 @@
 <body>
 
 <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-    <div class="container">
-      <div class="navbar-header">
-        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-          <span class="sr-only">Changer la navigation</span> <span class="icon-bar"></span> <span class="icon-bar"></span> <span
-            class="icon-bar"></span>
-        </button>
-        <a title="Solutions OpCode" class="navbar-brand" href="/fr/"><span >OpCode</span></a>
-      </div>
-      <div class="navbar-collapse collapse">
-        
-        <ul class="nav navbar-nav">
-          <li ><a href="/fr/solutions/">Solutions</a></li>
-          <li  class="active"><a href="/fr/demo/">Démo</a></li>
-          <li ><a href="/fr/prix/">Nos Prix</a></li>
-          <li ><a href="/fr/hebergement/">Hébergement</a></li>
-          <li ><a href="/tech/">Tech Blog</a></li>
-          <li ><a href="/fr/contact/">Contact</a></li>
-        </ul>
-        
-        <ul class="nav navbar-nav navbar-right">
-          <li><a href="/en/">English</a></li>
-          <li><div class="navbar-form"><a class="btn btn-primary" href="https://clients.opcodesolutions.com/" role="button" target="_blank"><b>Espace Client</b></a></div></li>
-        </ul>
-      </div>
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+        <span class="sr-only">Changer la navigation</span> <span class="icon-bar"></span> <span
+          class="icon-bar"></span> <span class="icon-bar"></span>
+      </button>
+      <a title="Solutions OpCode" class="navbar-brand" href="/fr/"><span >OpCode</span></a>
     </div>
-  </nav>
-
+    <div class="navbar-collapse collapse">
+      <ul class="nav navbar-nav"><li class="dropdown active">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+            aria-expanded="false">Développement <span class="caret"></span></a>
+          <ul class="dropdown-menu"><li ><a href="/fr/solutions/">Solutions</a></li>
+            <li  class="active" ><a href="/fr/demo/">Démo</a></li>
+            <li ><a href="/fr/prix/">Nos Prix</a></li>
+            <li ><a href="/fr/hebergement/">Hébergement</a></li>
+            
+          </ul>
+        </li><li class="dropdown ">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+            aria-expanded="false">SaaS <span class="caret"></span></a>
+          <ul class="dropdown-menu"><li ><a href="/en/saas/file-transfer/secure-file-sharing-solution/">Secure File Sharing Solution</a></li>
+            
+          </ul>
+        </li><li ><a href="/tech/">Tech Blog</a></li>
+        <li ><a href="/fr/contact/">Contact</a></li>
+        
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li><a href="/en/">English</a></li>
+        <li>
+          <div class="navbar-form"><a class="btn btn-primary" href="https://clients.opcodesolutions.com/" role="button"
+              target="_blank"><b>Espace Client</b></a></div>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
   <div class="container">
     <h1>Démo</h1>
     <p>Les applications que nous développons sont accessible avec tout appareil possédant un navigateur web: ordinateur,
@@ -134,22 +145,19 @@
 
 <div class="container">
   <hr>
-  <footer class="text-muted">
-    <p class="pull-left"><a title="Privacy Policy" href="/en/privacy-policy/" class="text-muted">Privacy Policy</a></p>
+  <footer class="text-muted"><p class="pull-left"><a title="Politique de confidentialité" href="/fr/politique-de-confidentialite/" class="text-muted">Politique de confidentialité</a></p>
     <p class="pull-right">&copy; Solutions OpCode 2023</p>
   </footer>
 </div>
 <nav id="optimal-browsing" class="navbar navbar-inverse navbar-fixed-bottom">
   <div class="container">
-    <div class="navbar-text">
-      <p class="lead" style="color: white">Optimal Browsing Technologies Consent</p>
-      <p><strong>We use <i>Optimal Browsing Technologies</i> to enhance your user experience and improve our service.
-          By clicking "Accept" you agree to the use of these technologies. If you do not wish to proceed, click
-          "Decline."</strong></p>
-      <p><a title="Privacy Policy" href="/en/privacy-policy/">Privacy Policy</a></p>
-      <p><button type="button" class="btn btn-primary navbar-btn" onclick="acceptOptimalBrowsing()">Accept</button>
-        <button type="button" class="btn btn-primary navbar-btn" onclick="declineOptimalBrowsing()">Decline</button>
-      </p>
+    <div class="navbar-text"><p class="lead" style="color: white">Technologies de navigation optimales</p>
+      <p><strong>Nous utilisons des <i>Technologies de navigation optimales</i> pour améliorer votre expérience utilisateur et améliorer notre service. En cliquant sur « Accepter », vous acceptez l'utilisation de ces technologies. Si vous ne souhaitez pas continuer, cliquez sur « Refuser ».</strong></p>
+      <p><a title="Politique de confidentialité" href="/fr/politique-de-confidentialite/">Politique de confidentialité</a></p>
+      <p class="pull-left"><button type="button" class="btn btn-primary navbar-btn"
+          onclick="acceptOptimalBrowsing()">Accepter</button></p>
+      <p class="pull-right"><button type="button" class="btn btn-primary navbar-btn"
+          onclick="declineOptimalBrowsing()">Refuser</button></p>
     </div>
   </div>
 </nav>
