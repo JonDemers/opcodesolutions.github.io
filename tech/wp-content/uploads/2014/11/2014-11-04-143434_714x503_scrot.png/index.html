@@ -21,9 +21,9 @@
 
   <meta name="description" content="" />
   <meta name="author" content="OpCode Solutions" />
-  <title>Ubuntu Apache Reverse Proxy Rewrite HTML Links | OpCode Solutions</title>
-  <link rel="canonical" href="https://opcodesolutions.com/tech/ubuntu-apache-reverse-proxy-rewrite-html-links/" />
-  <meta property="og:title" content="Ubuntu Apache Reverse Proxy Rewrite HTML Links" />
+  <title>How to fix java.lang.OutOfMemoryError: Java heap space | OpCode Solutions</title>
+  <link rel="canonical" href="https://opcodesolutions.com/tech/solve-java-lang-outofmemoryerror-java-heap-space/" />
+  <meta property="og:title" content="How to fix java.lang.OutOfMemoryError: Java heap space" />
   <meta property="og:locale" content="en" />
   <meta property="og:description" content="" />
   <meta property="og:site_name" content="OpCode Solutions" />
@@ -97,68 +97,82 @@
 <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
 
   <header class="post-header">
-    <h1 class="post-title p-name" itemprop="name headline">Ubuntu Apache Reverse Proxy Rewrite HTML Links</h1>
-    <p class="post-meta"><time class="dt-published" datetime="2014-11-07T00:00:00-05:00" itemprop="datePublished">
-        Nov 7, 2014
+    <h1 class="post-title p-name" itemprop="name headline">How to fix java.lang.OutOfMemoryError: Java heap space</h1>
+    <p class="post-meta"><time class="dt-published" datetime="2014-11-04T00:00:00-05:00" itemprop="datePublished">
+        Nov 4, 2014
       </time></p>
   </header>
 
   <div class="post-content e-content" itemprop="articleBody">
-    <p>I just spent few hours on this, so I will share a few tips. If you want to setup a reverse proxy and <strong>rewrite links in html</strong> pages, you can use Apache module <a href="https://httpd.apache.org/docs/current/mod/mod_proxy_html.html">mod_proxy_html</a>.</p>
+    <p>If you get an <code class="language-plaintext highlighter-rouge">OutOfMemoryError</code> with the message <strong>“Java heap space”</strong> (not to be confused with message “<a href="/tech/java-lang-outofmemoryerror-permgen-space/">PermGen space</a>”), it simply means the JVM ran out of memory. When it occurs, you basically have 2 options:</p>
 
-<h2 id="step-1-install-and-enable-apache-mod_proxy">Step 1. Install and enable Apache mod_proxy</h2>
+<h2 id="solution-1-allow-the-jvm-to-use-more-memory">Solution 1. Allow the JVM to use more memory</h2>
 
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span><span class="nb">sudo </span>apt-get <span class="nb">install </span>libapache2-mod-proxy-html libxml2-dev
-<span class="nv">$ </span><span class="nb">sudo </span>a2enmod proxy
-<span class="nv">$ </span><span class="nb">sudo </span>a2enmod proxy_http
-<span class="nv">$ </span><span class="nb">sudo </span>a2enmod proxy_html
-<span class="nv">$ </span><span class="nb">sudo </span>a2enmod xml2enc
+<p>With the <code class="language-plaintext highlighter-rouge">-Xmx</code> JVM argument, you can set the heap size. For instance, you can allow the JVM to use 4 GB (4096 MB) of memory with the following command:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>java <span class="nt">-Xmx4096m</span> ...
 </code></pre></div></div>
 
-<h2 id="step-2-apache-configuration">Step 2. Apache configuration</h2>
+<h2 id="solution-2-improve-or-fix-the-application-to-reduce-memory-usage">Solution 2. Improve or fix the application to reduce memory usage</h2>
 
-<p>In <strong>Ubuntu 14.04 LTS</strong>, it does not work “out of the box”, because some standard config is missing when enabling mod_proxy_html. More specifically, the <a href="https://httpd.apache.org/docs/current/mod/mod_proxy_html.html#proxyhtmllinks">ProxyHTMLLinks</a> directives are missing in Ubuntu 14.04. I say “missing”, because those directives are included by default in earlier releases and in other distros (in a file called proxy_html.conf). Also, pay particular attention to the directives <a href="https://httpd.apache.org/docs/current/mod/mod_proxy_html.html#proxyhtmlenable">ProxyHTMLEnable</a>, <a href="https://httpd.apache.org/docs/current/mod/mod_proxy_html.html#proxyhtmlextended">ProxyHTMLExtended</a> and <a href="https://httpd.apache.org/docs/current/mod/core.html#setoutputfilter">SetOutputFilter</a>.</p>
+<p>In many cases, like in the case of a memory leak, that second option is the only good solution. A memory leak happens when the application creates more and more objects and never releases them. The garbage collector cannot collect those objects and the application will eventually run out of memory. At this point, the JVM will throw an OOM (<code class="language-plaintext highlighter-rouge">OutOfMemoryError</code>).</p>
 
-<p>So, let’s say you want to have your apache server at <code class="language-plaintext highlighter-rouge">http://host1.example.com/path1</code> to serve (proxy) the content of the server at <code class="language-plaintext highlighter-rouge">http://host2.example.com/path2</code> and <strong>rewrite HTML links</strong>. Here is the config that works for me on Ubuntu 14.04 LTS.</p>
+<p>A memory leak can be very latent. For instance, the application might behave flawlessly during development and QA. However, it suddenly throws a OOM after several days in production at customer site. To solve that issue, you first need to find the root cause of it. The root cause can be very hard to find in development if the problem cannot be reproduced. Follow those steps to find the root cause of the OOM:</p>
 
-<div class="language-apache highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">&lt;</span><span class="nl">VirtualHost</span><span class="sr"> *:80</span><span class="p">&gt;
-</span>    <span class="nc">ServerName</span> host1.example.com
-    <span class="nc">ProxyRequests</span> <span class="ss">Off</span>
-    <span class="p">&lt;</span><span class="nl">Location</span><span class="sr"> /path1</span><span class="p">&gt;
-</span>        <span class="nc">ProxyHTMLLinks</span> a href
-        <span class="nc">ProxyHTMLLinks</span> area href
-        <span class="nc">ProxyHTMLLinks</span> link href
-        <span class="nc">ProxyHTMLLinks</span> img src longdesc usemap
-        <span class="nc">ProxyHTMLLinks</span> object classid codebase data usemap
-        <span class="nc">ProxyHTMLLinks</span> q cite
-        <span class="nc">ProxyHTMLLinks</span> blockquote cite
-        <span class="nc">ProxyHTMLLinks</span> ins cite
-        <span class="nc">ProxyHTMLLinks</span> del cite
-        <span class="nc">ProxyHTMLLinks</span> <span class="ss">form</span> <span class="ss">action</span>
-        <span class="nc">ProxyHTMLLinks</span> <span class="ss">input</span> src usemap
-        <span class="nc">ProxyHTMLLinks</span> head profile
-        <span class="nc">ProxyHTMLLinks</span> <span class="ss">base</span> href
-        <span class="nc">ProxyHTMLLinks</span> <span class="ss">script</span> src for
+<h3 id="step-1-generate-a-heap-dump-on-outofmemoryerror">Step 1. Generate a heap dump on OutOfMemoryError</h3>
 
-        <span class="nc">ProxyHTMLEvents</span> onclick ondblclick onmousedown onmouseup \
-            onmouseover onmousemove onmouseout onkeypress \
-            onkeydown onkeyup onfocus onblur onload \
-            onunload onsubmit onreset onselect onchange
+<p>Start the application with the VM argument <code class="language-plaintext highlighter-rouge">-XX:+HeapDumpOnOutOfMemoryError</code>. This will tell the JVM to produce a heap dump when a OOM occurs:</p>
 
-        <span class="nc">ProxyPreserveHost</span> <span class="ss">On</span>
-        <span class="nc">ProxyPass</span> http://host2.example.com/path2
-        <span class="nc">ProxyPassReverse</span> http://host2.example.com/path2
-        <span class="nc">ProxyHTMLEnable</span> <span class="ss">On</span>
-        <span class="nc">ProxyHTMLExtended</span> <span class="ss">On</span>
-        <span class="nc">SetOutputFilter</span> INFLATE;proxy-html;DEFLATE;
-        <span class="nc">ProxyHTMLURLMap</span> http://host2.example.com/path2 /path1
-    <span class="p">&lt;/</span><span class="nl">Location</span><span class="p">&gt;
-&lt;/</span><span class="nl">VirtualHost</span><span class="p">&gt;
-</span></code></pre></div></div>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>java <span class="nt">-XX</span>:+HeapDumpOnOutOfMemoryError ...
+</code></pre></div></div>
+
+<h3 id="step-2-reproduce-the-problem">Step 2. Reproduce the problem</h3>
+
+<p>Well, if you cannot reproduce the problem in dev, you may have to use the production environment. When you reproduce the problem and the application throws an OOM, it will generate a heap dump file.</p>
+
+<h3 id="step-3-investigate-the-issue-using-the-heap-dump-file">Step 3. Investigate the issue using the heap dump file</h3>
+
+<p>Use <a href="https://visualvm.github.io/">VisualVM</a> to read the heap dump file and diagnose the issue. VisualVM is a program located in <code class="language-plaintext highlighter-rouge">JDK_HOME/bin/jvisualvm</code>. The heap dump file has all information about the memory usage of the application. It allows you to navigate the heap and see which objects use the most memory and what references prevent the garbage collector from reclaiming the memory. Here is a screenshot of <a href="https://visualvm.github.io/">VisualVM</a> with a heap dump loaded:</p>
+
+<p><img src="/assets/images/2014-11-04-solve-java-lang-outofmemoryerror-java-heap-space-visualvm.png" alt="Heap Dump in VisualVM" title="Heap Dump in VisualVM" /></p>
+
+<p>This will give you very strong hints and you will (hopefully) be able to find the root cause of the problem. The problem could be a cache that grows indefinitely, a list that keeps collecting business-specific data in memory, a huge request that tries to load almost all data from database in memory, etc.</p>
+
+<p>Once you know the root cause of the problem, you can elaborate solutions to fix it. In case of a cache that grows indefinitely, a good solution could be to set a reasonable limit to that cache. In case of a query that tries to load almost all data from database in memory, you may have to change the way you manipulate data; you could even have to change the behavior of some functionalities of the application.</p>
+
+<h2 id="manually-triggering-heap-dump">Manually triggering heap dump</h2>
+
+<p>If you do not want to wait for an OOM or if you just want to see what is in memory now, you can manually generate heap dump. Here 2 options to manually trigger a heap dump.</p>
+
+<h3 id="option-1-use-visualvm">Option 1. Use <a href="https://visualvm.github.io/">VisualVM</a></h3>
+
+<p>Open VisualVM (<code class="language-plaintext highlighter-rouge">JDK_HOME/bin/jvisualvm</code>), right-click on the process on the left pane and select Heap Dump. That’s it.</p>
+
+<h3 id="option-2-use-command-line-tools">Option 2. Use command line tools</h3>
+
+<p>If you do not have a graphical environment and can’t use vnc (<a href="https://visualvm.github.io/">VisualVM</a> needs a graphical environment), use <a href="https://docs.oracle.com/en/java/javase/17/docs/specs/man/jps.html">jps</a> and <a href="https://docs.oracle.com/en/java/javase/17/docs/specs/man/jmap.html">jmap</a> to generate the heap dump file. Those programs are also located in <code class="language-plaintext highlighter-rouge">JDK_HOME/bin/</code>.</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>jps
+6162 Jps
+4729 org.eclipse.equinox.launcher_1.3.0.v20130327-1440.jar
+6057 Bootstrap
+
+<span class="nv">$ </span>jmap <span class="nt">-dump</span>:live,format<span class="o">=</span>b,file<span class="o">=</span>heap.bin 6057
+Dumping heap to /home/user/heap.bin ...
+Heap dump file created
+</code></pre></div></div>
+
+<p>Finally copy the heap dump file (heap.bin) to your workstation and use <a href="https://visualvm.github.io/">VisualVM</a> to read the heap dump: <em>File -&gt; Load…</em></p>
+
+<p>Alternatively, you can also use <a href="https://docs.oracle.com/javase/7/docs/technotes/tools/share/jhat.html">jhat</a> to read heap dump files.</p>
+
+<h2 id="solution-3-bonus-call-me">Solution 3 (bonus). Call me</h2>
+
+<p>You can also contact my <a href="https://opcodesolutions.com/">application development company</a> and I can personally help you with those kind of issues 🙂</p>
 
 <p><em>Author: <a href="https://www.linkedin.com/in/jonathan-demers-ing/" title="Jonathan Demers">Jonathan Demers</a></em></p>
 
-  </div><a class="u-url" href="/tech/ubuntu-apache-reverse-proxy-rewrite-html-links/" hidden></a>
+  </div><a class="u-url" href="/tech/solve-java-lang-outofmemoryerror-java-heap-space/" hidden></a>
 </article>
 </div>
 
@@ -215,7 +229,7 @@
   integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd" crossorigin="anonymous"></script>
 
 <script>
-  fetch("https://web-tools.opcodesolutions.com/mailer?p=/tech/ubuntu-apache-reverse-proxy-rewrite-html-links/", { mode: 'no-cors' });
+  fetch("https://web-tools.opcodesolutions.com/mailer?p=/tech/solve-java-lang-outofmemoryerror-java-heap-space/", { mode: 'no-cors' });
 </script>
 
 </body>
