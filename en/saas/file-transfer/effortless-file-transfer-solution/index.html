@@ -146,6 +146,13 @@
 <form class="form-horizontal" role="form" id="contact-form" method="POST" action="https://web-tools.opcodesolutions.com/mailer" target="_blank">
 
   <div class="form-group">
+    <label for="company" class="col-sm-2 control-label">Company</label>
+    <div class="col-sm-10">
+      <input type="text" class="form-control" name="company" id="company" />
+    </div>
+  </div>
+
+  <div class="form-group">
     <label for="name" class="col-sm-2 control-label"><b class="text-danger">*</b> Name</label>
     <div class="col-sm-10">
       <input type="text" class="form-control" name="name" id="name" required="" />
@@ -156,13 +163,6 @@
     <label for="email" class="col-sm-2 control-label"><b class="text-danger">*</b> Email</label>
     <div class="col-sm-10">
       <input type="email" class="form-control" name="email" id="email" required="" />
-    </div>
-  </div>
-
-  <div class="form-group">
-    <label for="company" class="col-sm-2 control-label">Company</label>
-    <div class="col-sm-10">
-      <input type="text" class="form-control" name="company" id="company" required="" />
     </div>
   </div>
 
@@ -187,7 +187,14 @@ Regards
 </textarea>
     </div>
   </div>
-
+  
+  <div class="form-group">
+    <label for="promocode" class="col-sm-2 control-label">Code promo</label>
+    <div class="col-sm-10">
+      <input type="text" class="form-control" name="promocode" id="promocode" />
+    </div>
+  </div>
+  
   <div class="form-group">
     <div class="col-sm-offset-2 col-sm-10">
       <input type="submit" class="btn btn-success" role="button" value="Send" />
@@ -202,6 +209,11 @@ Regards
 
 </form>
 <script>
+  var promocodeElement = document.getElementById('promocode');
+  if (promocodeElement) {
+    promocodeElement.value = new URLSearchParams(window.location.search).get('promocode');
+  }
+
   function getTimestampString(date) {
     var timestampPart = 'timestampPart';
     var timeZonePart = 'timeZonePart';
