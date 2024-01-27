@@ -1,0 +1,2634 @@
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.2">Jekyll</generator><link href="https://opcodesolutions.com/feed/pages.xml" rel="self" type="application/atom+xml" /><link href="https://opcodesolutions.com/" rel="alternate" type="text/html" /><updated>2024-01-27T07:55:50-05:00</updated><id>https://opcodesolutions.com/feed/pages.xml</id><title type="html">OpCode Solutions | Pages</title><subtitle>Optimize Your Processes</subtitle><author><name>OpCode Solutions</name><email>info@opcodesolutions.com</email></author><entry><title type="html"></title><link href="https://opcodesolutions.com/feed.xml" rel="alternate" type="text/html" title="" /><published></published><updated></updated><id></id><content type="html" xml:base="https://opcodesolutions.com/feed.xml"><![CDATA[<?xml version="1.0" encoding="utf-8"?>{% if page.xsl %}<?xml-stylesheet type="text/xml" href="{{ '/feed.xslt.xml' | absolute_url }}"?>{% endif %}<feed xmlns="http://www.w3.org/2005/Atom" {% if site.lang %}xml:lang="{{ site.lang }}"{% endif %}><generator uri="https://jekyllrb.com/" version="{{ jekyll.version }}">Jekyll</generator><link href="{{ page.url | absolute_url }}" rel="self" type="application/atom+xml" /><link href="{{ '/' | absolute_url }}" rel="alternate" type="text/html" {% if site.lang %}hreflang="{{ site.lang }}" {% endif %}/><updated>{{ site.time | date_to_xmlschema }}</updated><id>{{ page.url | absolute_url | xml_escape }}</id>{% assign title = site.title | default: site.name %}{% if page.collection != "posts" %}{% assign collection = page.collection | capitalize %}{% assign title = title | append: " | " | append: collection %}{% endif %}{% if page.category %}{% assign category = page.category | capitalize %}{% assign title = title | append: " | " | append: category %}{% endif %}{% if title %}<title type="html">{{ title | smartify | xml_escape }}</title>{% endif %}{% if site.description %}<subtitle>{{ site.description | xml_escape }}</subtitle>{% endif %}{% if site.author %}<author><name>{{ site.author.name | default: site.author | xml_escape }}</name>{% if site.author.email %}<email>{{ site.author.email | xml_escape }}</email>{% endif %}{% if site.author.uri %}<uri>{{ site.author.uri | xml_escape }}</uri>{% endif %}</author>{% endif %}{% if page.tags %}{% assign posts = site.tags[page.tags] %}{% else %}{% assign posts = site[page.collection] %}{% endif %}{% if page.category %}{% assign posts = posts | where: "categories", page.category %}{% endif %}{% unless site.show_drafts %}{% assign posts = posts | where_exp: "post", "post.draft != true" %}{% endunless %}{% assign posts = posts | sort: "date" | reverse %}{% assign posts_limit = site.feed.posts_limit | default: 10 %}{% for post in posts limit: posts_limit %}<entry{% if post.lang %}{{" "}}xml:lang="{{ post.lang }}"{% endif %}>{% assign post_title = post.title | smartify | strip_html | normalize_whitespace | xml_escape %}<title type="html">{{ post_title }}</title><link href="{{ post.url | absolute_url }}" rel="alternate" type="text/html" title="{{ post_title }}" /><published>{{ post.date | date_to_xmlschema }}</published><updated>{{ post.last_modified_at | default: post.date | date_to_xmlschema }}</updated><id>{{ post.id | absolute_url | xml_escape }}</id>{% assign excerpt_only = post.feed.excerpt_only | default: site.feed.excerpt_only %}{% unless excerpt_only %}<content type="html" xml:base="{{ post.url | absolute_url | xml_escape }}"><![CDATA[{{ post.content | strip }}]]></content>{% endunless %}{% assign post_author = post.author | default: post.authors[0] | default: site.author %}{% assign post_author = site.data.authors[post_author] | default: post_author %}{% assign post_author_email = post_author.email | default: nil %}{% assign post_author_uri = post_author.uri | default: nil %}{% assign post_author_name = post_author.name | default: post_author %}<author><name>{{ post_author_name | default: "" | xml_escape }}</name>{% if post_author_email %}<email>{{ post_author_email | xml_escape }}</email>{% endif %}{% if post_author_uri %}<uri>{{ post_author_uri | xml_escape }}</uri>{% endif %}</author>{% if post.category %}<category term="{{ post.category | xml_escape }}" />{% elsif post.categories %}{% for category in post.categories %}<category term="{{ category | xml_escape }}" />{% endfor %}{% endif %}{% for tag in post.tags %}<category term="{{ tag | xml_escape }}" />{% endfor %}{% assign post_summary = post.description | default: post.excerpt %}{% if post_summary and post_summary != empty %}<summary type="html"><![CDATA[{{ post_summary | strip_html | normalize_whitespace }}]]></summary>{% endif %}{% assign post_image = post.image.path | default: post.image %}{% if post_image %}{% unless post_image contains "://" %}{% assign post_image = post_image | absolute_url %}{% endunless %}<media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="{{ post_image | xml_escape }}" /><media:content medium="image" url="{{ post_image | xml_escape }}" xmlns:media="http://search.yahoo.com/mrss/" />{% endif %}</entry>{% endfor %}</feed>]]></content><author><name>OpCode Solutions</name><email>info@opcodesolutions.com</email></author></entry><entry><title type="html"></title><link href="https://opcodesolutions.com/feed/pages.xml" rel="alternate" type="text/html" title="" /><published></published><updated></updated><id></id><content type="html" xml:base="https://opcodesolutions.com/feed/pages.xml"><![CDATA[<?xml version="1.0" encoding="utf-8"?>{% if page.xsl %}<?xml-stylesheet type="text/xml" href="{{ '/feed.xslt.xml' | absolute_url }}"?>{% endif %}<feed xmlns="http://www.w3.org/2005/Atom" {% if site.lang %}xml:lang="{{ site.lang }}"{% endif %}><generator uri="https://jekyllrb.com/" version="{{ jekyll.version }}">Jekyll</generator><link href="{{ page.url | absolute_url }}" rel="self" type="application/atom+xml" /><link href="{{ '/' | absolute_url }}" rel="alternate" type="text/html" {% if site.lang %}hreflang="{{ site.lang }}" {% endif %}/><updated>{{ site.time | date_to_xmlschema }}</updated><id>{{ page.url | absolute_url | xml_escape }}</id>{% assign title = site.title | default: site.name %}{% if page.collection != "posts" %}{% assign collection = page.collection | capitalize %}{% assign title = title | append: " | " | append: collection %}{% endif %}{% if page.category %}{% assign category = page.category | capitalize %}{% assign title = title | append: " | " | append: category %}{% endif %}{% if title %}<title type="html">{{ title | smartify | xml_escape }}</title>{% endif %}{% if site.description %}<subtitle>{{ site.description | xml_escape }}</subtitle>{% endif %}{% if site.author %}<author><name>{{ site.author.name | default: site.author | xml_escape }}</name>{% if site.author.email %}<email>{{ site.author.email | xml_escape }}</email>{% endif %}{% if site.author.uri %}<uri>{{ site.author.uri | xml_escape }}</uri>{% endif %}</author>{% endif %}{% if page.tags %}{% assign posts = site.tags[page.tags] %}{% else %}{% assign posts = site[page.collection] %}{% endif %}{% if page.category %}{% assign posts = posts | where: "categories", page.category %}{% endif %}{% unless site.show_drafts %}{% assign posts = posts | where_exp: "post", "post.draft != true" %}{% endunless %}{% assign posts = posts | sort: "date" | reverse %}{% assign posts_limit = site.feed.posts_limit | default: 10 %}{% for post in posts limit: posts_limit %}<entry{% if post.lang %}{{" "}}xml:lang="{{ post.lang }}"{% endif %}>{% assign post_title = post.title | smartify | strip_html | normalize_whitespace | xml_escape %}<title type="html">{{ post_title }}</title><link href="{{ post.url | absolute_url }}" rel="alternate" type="text/html" title="{{ post_title }}" /><published>{{ post.date | date_to_xmlschema }}</published><updated>{{ post.last_modified_at | default: post.date | date_to_xmlschema }}</updated><id>{{ post.id | absolute_url | xml_escape }}</id>{% assign excerpt_only = post.feed.excerpt_only | default: site.feed.excerpt_only %}{% unless excerpt_only %}<content type="html" xml:base="{{ post.url | absolute_url | xml_escape }}"><![CDATA[{{ post.content | strip }}]]></content>{% endunless %}{% assign post_author = post.author | default: post.authors[0] | default: site.author %}{% assign post_author = site.data.authors[post_author] | default: post_author %}{% assign post_author_email = post_author.email | default: nil %}{% assign post_author_uri = post_author.uri | default: nil %}{% assign post_author_name = post_author.name | default: post_author %}<author><name>{{ post_author_name | default: "" | xml_escape }}</name>{% if post_author_email %}<email>{{ post_author_email | xml_escape }}</email>{% endif %}{% if post_author_uri %}<uri>{{ post_author_uri | xml_escape }}</uri>{% endif %}</author>{% if post.category %}<category term="{{ post.category | xml_escape }}" />{% elsif post.categories %}{% for category in post.categories %}<category term="{{ category | xml_escape }}" />{% endfor %}{% endif %}{% for tag in post.tags %}<category term="{{ tag | xml_escape }}" />{% endfor %}{% assign post_summary = post.description | default: post.excerpt %}{% if post_summary and post_summary != empty %}<summary type="html"><![CDATA[{{ post_summary | strip_html | normalize_whitespace }}]]></summary>{% endif %}{% assign post_image = post.image.path | default: post.image %}{% if post_image %}{% unless post_image contains "://" %}{% assign post_image = post_image | absolute_url %}{% endunless %}<media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="{{ post_image | xml_escape }}" /><media:content medium="image" url="{{ post_image | xml_escape }}" xmlns:media="http://search.yahoo.com/mrss/" />{% endif %}</entry>{% endfor %}</feed>]]></content><author><name>OpCode Solutions</name><email>info@opcodesolutions.com</email></author></entry><entry><title type="html">OpCode Solutions Privacy Policy</title><link href="https://opcodesolutions.com/en/privacy-policy/" rel="alternate" type="text/html" title="OpCode Solutions Privacy Policy" /><published></published><updated></updated><id></id><content type="html" xml:base="https://opcodesolutions.com/en/privacy-policy/"><![CDATA[<h1 id="opcode-solutions-privacy-policy">OpCode Solutions Privacy Policy</h1>
+
+<p><strong>Last updated:</strong> November 17, 2023</p>
+
+<h2 id="introduction">Introduction</h2>
+
+<p>This Privacy Policy outlines the policies and procedures of OpCode Solutions (“we”, “us”, or “our”) regarding the collection, use, and disclosure of personal information when you use our website, <a href="https://opcodesolutions.com/">OpCode Solutions</a>. We prioritize the protection of your privacy and aim to provide a comprehensive explanation of how your information is collected and utilized.</p>
+
+<h2 id="collection-of-routine-information">Collection of Routine Information</h2>
+
+<p>We collect basic information about our website visitors, including but not limited to:</p>
+
+<ul>
+  <li>IP addresses</li>
+  <li>Browser details</li>
+  <li>Timestamps</li>
+  <li>Referring pages</li>
+</ul>
+
+<p>This information is gathered for routine administration and maintenance purposes and is not personally identifiable.</p>
+
+<h2 id="cookies">Cookies</h2>
+
+<p>We utilize cookies to store information about your preferences and browsing history. Cookies enhance your experience by providing customized content. You have the option to adjust your browser settings to refuse cookies, but please note that this may impact your ability to use certain features of our website.</p>
+
+<p><button type="button" class="btn btn-primary" onclick="resetOptimalBrowsing()">Reset Preferences</button></p>
+
+<h2 id="advertisement-and-other-third-parties">Advertisement and Other Third Parties</h2>
+
+<p>Third-party advertisers and partners may employ cookies, scripts, and web beacons to track visitor activities on our website. These technologies are subject to the privacy policies of the third parties, and we have no control over their use.</p>
+
+<p>For your reference, here is the link to the privacy policy of a third-party service provider used by the website: <a href="https://policies.google.com/privacy" target="_blank">Google</a></p>
+
+<h2 id="security">Security</h2>
+
+<p>While we employ commercially acceptable means to protect your personal information, it’s essential to recognize that no method of transmission over the Internet or electronic storage is 100% secure. Absolute security cannot be guaranteed.</p>
+
+<h2 id="use-of-your-personal-data">Use of Your Personal Data</h2>
+
+<p>We may use your personal data for various purposes, including but not limited to:</p>
+
+<ul>
+  <li>Providing and maintaining our service</li>
+  <li>Managing your account</li>
+  <li>Contacting you</li>
+  <li>Providing news and offers</li>
+  <li>Managing requests</li>
+  <li>Business transfers</li>
+  <li>Law enforcement and other legal obligations</li>
+</ul>
+
+<p>See more details in the “Disclosure of Your Personal Data” section below.</p>
+
+<h2 id="retention-and-transfer-of-your-personal-data">Retention and Transfer of Your Personal Data</h2>
+
+<p>We retain your personal data only as long as necessary for the purposes outlined in this policy. Your data may be processed outside your jurisdiction, and by using our service, you consent to such transfer. We take steps to ensure your data is treated securely and in accordance with this Privacy Policy.</p>
+
+<h2 id="delete-your-personal-data">Delete Your Personal Data</h2>
+
+<p>You have the right to request the deletion of your personal data. You can manage your information within the service or contact us for assistance. However, certain information may need to be retained for legal obligations.</p>
+
+<h2 id="disclosure-of-your-personal-data">Disclosure of Your Personal Data</h2>
+
+<p>We may disclose your personal data in the following situations:</p>
+
+<ul>
+  <li>Business transactions</li>
+  <li>Law enforcement</li>
+  <li>Other legal requirements</li>
+</ul>
+
+<p>We may share your information with:</p>
+
+<ul>
+  <li>Service providers</li>
+  <li>Affiliates</li>
+  <li>Business partners</li>
+  <li>Law enforcement officers</li>
+</ul>
+
+<h2 id="changes-to-this-privacy-policy">Changes To This Privacy Policy</h2>
+
+<p>This Privacy Policy may be updated. The updated policy will be posted on this page. It is advised to review this Privacy Policy periodically.</p>
+
+<h2 id="contact-information">Contact Information</h2>
+
+<p>If you have any questions about this Privacy Policy, you can contact us:</p>
+
+<ul>
+  <li>By email: <script>writeMailtoLink("WVZjMWJXSXdRblpqUjA1MldrZFdlbUl5ZURGa1IyeDJZbTVOZFZreU9YUT0=");</script></li>
+  <li>By visiting this page on our website: <a href="/en/contact/">Contact Us</a></li>
+</ul>
+
+<p><strong>Our Postal Address:</strong> 4070 Rue de Louisbourg, Montréal, QC H4J 1K5</p>]]></content><author><name>OpCode Solutions</name><email>info@opcodesolutions.com</email></author><summary type="html"><![CDATA[This Privacy Policy outlines the policies and procedures of OpCode Solutions regarding the collection, use, and disclosure of personal information when you use our website, OpCode Solutions.]]></summary></entry><entry xml:lang="en"><title type="html">Secure File Sharing Solution</title><link href="https://opcodesolutions.com/en/saas/file-transfer/secure-file-sharing-solution/" rel="alternate" type="text/html" title="Secure File Sharing Solution" /><published></published><updated></updated><id></id><content type="html" xml:base="https://opcodesolutions.com/en/saas/file-transfer/secure-file-sharing-solution/"><![CDATA[<h2 id="key-features">Key Features:</h2>
+
+<h3 id="authenticated-transfers">Authenticated Transfers</h3>
+<p>Feel confident in the authenticity of your file transfers. Our solution ensures that every interaction is authenticated, providing a secure and reliable channel for sharing sensitive data with your clients.</p>
+
+<h3 id="encrypted-communication">Encrypted Communication</h3>
+<p>Security is at the forefront of our priorities. Experience file sharing with enterprise-grade encryption, ensuring the confidentiality and integrity of your data throughout the entire transfer process.</p>
+
+<h3 id="reliable-performance">Reliable Performance</h3>
+<p>Your business demands dependability. Count on us for consistent and reliable file transfers. Our SaaS solution is engineered to deliver your files promptly, contributing to a smoother workflow and enhanced client interactions.</p>
+
+<h3 id="easy-to-use-interface">Easy-to-Use Interface</h3>
+<p>Simplify your file sharing processes. Our user-friendly interface is designed with your convenience in mind, making collaboration with clients effortless and enjoyable.</p>
+
+<h3 id="additional-features">Additional Features:</h3>
+
+<ul>
+  <li><strong>Organized Folders:</strong> Effortlessly manage your files with an organized folder structure.</li>
+  <li><strong>Centralized Management:</strong> Streamline control with centralized file management.</li>
+  <li><strong>Scalability:</strong> Grow your business without limitations with our scalable solution.</li>
+  <li><strong>Unlimited Users and Admins:</strong> Collaborate with an unlimited number of users and administrators.</li>
+  <li><strong>Professional Branding:</strong> Showcase your professionalism with branded file sharing.</li>
+  <li><strong>Access from Any Device:</strong> Stay connected and share files seamlessly from any device.</li>
+  <li><strong>Automation Capabilities:</strong> Save time with automated file transfer processes.</li>
+  <li><strong>API and Integration Support:</strong> Integrate seamlessly with other tools and systems.</li>
+  <li><strong>Large File Support:</strong> Transfer large files effortlessly without compromising speed.</li>
+  <li><strong>High-Speed Transfers:</strong> Experience swift and efficient file transfers.</li>
+  <li><strong>Web-Based Convenience:</strong> Access and manage your files conveniently through our web-based platform.</li>
+  <li><strong>Affordable Pricing:</strong> Enhance client collaborations without breaking the bank, starting at just $19 per month.</li>
+</ul>
+
+<h2 id="get-started-today">Get Started Today!</h2>
+
+<p>Join the ranks of businesses that prioritize secure and professional file sharing with their clients. Elevate your collaboration game, streamline your workflow, and strengthen your client relationships.</p>
+
+<p><a href="#start-your-free-trial">Sign Up Now</a> for a free trial and experience the future of secure file sharing! Trust our SaaS solution to be your reliable partner in client collaboration.</p>
+
+<h2 id="start-your-free-trial">Start Your Free Trial</h2>
+
+<p>Just fill the form below. Providing us with your company name will allow us to personalize your Free Trial.</p>
+
+<p><br /></p>
+
+<form class="form-horizontal" role="form" id="contact-form" method="POST" action="https://web-tools.opcodesolutions.com/mailer" target="_blank">
+
+  <div class="form-group">
+    <label for="company" class="col-sm-2 control-label">Company</label>
+    <div class="col-sm-10">
+      <input type="text" class="form-control" name="company" id="company" />
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="name" class="col-sm-2 control-label"><b class="text-danger">*</b> Name</label>
+    <div class="col-sm-10">
+      <input type="text" class="form-control" name="name" id="name" required="" />
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="email" class="col-sm-2 control-label"><b class="text-danger">*</b> Email</label>
+    <div class="col-sm-10">
+      <input type="email" class="form-control" name="email" id="email" required="" />
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="subject" class="col-sm-2 control-label"><b class="text-danger">*</b> Subject</label>
+    <div class="col-sm-10">
+      <input type="text" class="form-control" name="subject" id="subject" required="" value="Secure File Sharing Solution - Free Trial Request" />
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="message" class="col-sm-2 control-label"><b class="text-danger">*</b> Message</label>
+    <div class="col-sm-10">
+      <textarea class="form-control" name="message" id="message" rows="8" required="">
+Hi,
+
+I&#39;d like to get a Free Trial of your &quot;Secure File Sharing Solution&quot;.
+
+Looking forward to hear back from you.
+
+Regards
+</textarea>
+    </div>
+  </div>
+  
+  <div class="form-group">
+    <label for="promocode" class="col-sm-2 control-label">Promo Code</label>
+    <div class="col-sm-10">
+      <input type="text" class="form-control" name="promocode" id="promocode" />
+    </div>
+  </div>
+  
+  <div class="form-group">
+    <div class="col-sm-offset-2 col-sm-10">
+      <input type="submit" class="btn btn-success" role="button" value="Send" />
+    </div>
+  </div>
+
+  <input type="hidden" name="page-load-timestamp" id="page-load-timestamp" value="No Javascript" />
+  <input type="hidden" name="page-submit-timestamp" id="page-submit-timestamp" value="No Javascript" />
+  <input type="hidden" name="page-load-to-submit-time" id="page-load-to-submit-time" value="No Javascript" />
+  <input type="hidden" name="recipient" id="recipient" value="opcode" />
+  <input type="hidden" name="lang" id="lang" value="en" />
+  <input type="hidden" name="source" id="source" value="/en/saas/file-transfer/secure-file-sharing-solution/" />
+
+</form>
+<script>
+  var promocodeElement = document.getElementById('promocode');
+  if (promocodeElement) {
+    promocodeElement.value = new URLSearchParams(window.location.search).get('promocode');
+  }
+
+  function getTimestampString(date) {
+    var timestampPart = 'timestampPart';
+    var timeZonePart = 'timeZonePart';
+    try {
+      timestampPart = date.toLocaleString("en-CA");
+    } catch (e) {
+      timestampPart = 'Failed to compute timestampPart: ' + e;
+    }
+    try {
+      timeZonePart = Intl.DateTimeFormat().resolvedOptions().timeZone;
+    } catch (e) {
+      timeZonePart = 'Failed to compute timeZonePart: ' + e;
+    }
+    return timestampPart + ' (' + timeZonePart + ')';
+  }
+  var pageLoadTimestamp = new Date();
+  document.getElementById('source').value = window.location.href + ' ';
+  document.getElementById('page-load-timestamp').value = getTimestampString(pageLoadTimestamp);
+  document.getElementById('contact-form').onsubmit = function () {
+    var subjectElement = document.getElementById('subject');
+    var name = document.getElementById('name').value
+    if (!subjectElement.value.endsWith(name)) {
+      subjectElement.value += ' - ' + document.getElementById('name').value;
+    }
+    var pageSubmitTimestamp = new Date();
+    var pageLoadToSubmitMillis = pageSubmitTimestamp.getTime() - pageLoadTimestamp.getTime();
+    document.getElementById('page-submit-timestamp').value = getTimestampString(pageSubmitTimestamp);
+    document.getElementById('page-load-to-submit-time').value = (pageLoadToSubmitMillis / 1000.0) + " seconds";
+    return true;
+  }
+</script>
+
+<hr />
+
+<p><strong>OR</strong> Send us an email to <script>writeMailtoLink("WVZjMWJXSXdRblpqUjA1MldrZFdlbUl5ZURGa1IyeDJZbTVOZFZreU9YUT0=");</script>.</p>]]></content><author><name>OpCode Solutions</name><email>info@opcodesolutions.com</email></author><summary type="html"><![CDATA[Elevate Your Client Collaboration with Peace of Mind]]></summary></entry><entry xml:lang="en"><title type="html">Reliable File Transfer Solution</title><link href="https://opcodesolutions.com/en/saas/file-transfer/reliable-file-transfer-solution/" rel="alternate" type="text/html" title="Reliable File Transfer Solution" /><published></published><updated></updated><id></id><content type="html" xml:base="https://opcodesolutions.com/en/saas/file-transfer/reliable-file-transfer-solution/"><![CDATA[<h2 id="key-features">Key Features:</h2>
+
+<h3 id="professional-and-easy-to-use">Professional and Easy-to-Use</h3>
+<p>Experience a professional touch in every file transfer. Our platform is designed with a user-friendly interface, making every interaction seamless and easy for both you and your clients.</p>
+
+<h3 id="dependable-solutions">Dependable Solutions</h3>
+<p>Rely on us for consistent and dependable file transfers. Our SaaS solution is built to deliver your files promptly, contributing to a smoother workflow and enhanced client interactions.</p>
+
+<h3 id="additional-features">Additional Features:</h3>
+
+<ul>
+  <li><strong>Secure File Transfers:</strong> Prioritize the security of your files with our encrypted and authenticated transfers.</li>
+  <li><strong>Authentication and Permissions:</strong> Ensure data integrity with secure authentication and permission controls.</li>
+  <li><strong>Organized Folders:</strong> Effortlessly manage your files with an organized folder structure.</li>
+  <li><strong>Centralized Management:</strong> Streamline control with centralized file management.</li>
+  <li><strong>Scalability:</strong> Grow your business without constraints with our scalable file transfer solution.</li>
+  <li><strong>Unlimited Users and Admins:</strong> Collaborate seamlessly with an unlimited number of users and administrators.</li>
+  <li><strong>Professional Branding:</strong> Showcase your professionalism with branded file sharing experiences.</li>
+  <li><strong>Access from Any Device:</strong> Stay connected and share files seamlessly from any device.</li>
+  <li><strong>Automation Capabilities:</strong> Save time with automated file transfer processes.</li>
+  <li><strong>API and Integration Support:</strong> Integrate seamlessly with other tools and systems.</li>
+  <li><strong>Large File Support:</strong> Transfer large files effortlessly without compromising speed.</li>
+  <li><strong>High-Speed Transfers:</strong> Experience swift and efficient file transfers.</li>
+  <li><strong>Web-Based Convenience:</strong> Access and manage your files conveniently through our web-based platform.</li>
+  <li><strong>Affordable Pricing:</strong> Enhance client collaborations without breaking the bank, starting at just $19 per month.</li>
+</ul>
+
+<h2 id="elevate-your-professionalism-today">Elevate Your Professionalism Today!</h2>
+
+<p>Choose reliability for your client file transfers. Elevate your collaboration, streamline your workflow, and ensure every file is delivered with the utmost professionalism.</p>
+
+<p><a href="#start-your-free-trial">Sign Up Now</a> for a free trial and experience the future of reliable and professional file transfers! Trust our SaaS solution to be your partner in enhancing client interactions and business success.</p>
+
+<h2 id="start-your-free-trial">Start Your Free Trial</h2>
+
+<p>Just fill the form below. Providing us with your company name will allow us to personalize your Free Trial.</p>
+
+<p><br /></p>
+
+<form class="form-horizontal" role="form" id="contact-form" method="POST" action="https://web-tools.opcodesolutions.com/mailer" target="_blank">
+
+  <div class="form-group">
+    <label for="company" class="col-sm-2 control-label">Company</label>
+    <div class="col-sm-10">
+      <input type="text" class="form-control" name="company" id="company" />
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="name" class="col-sm-2 control-label"><b class="text-danger">*</b> Name</label>
+    <div class="col-sm-10">
+      <input type="text" class="form-control" name="name" id="name" required="" />
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="email" class="col-sm-2 control-label"><b class="text-danger">*</b> Email</label>
+    <div class="col-sm-10">
+      <input type="email" class="form-control" name="email" id="email" required="" />
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="subject" class="col-sm-2 control-label"><b class="text-danger">*</b> Subject</label>
+    <div class="col-sm-10">
+      <input type="text" class="form-control" name="subject" id="subject" required="" value="Reliable File Transfer Solution - Free Trial Request" />
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="message" class="col-sm-2 control-label"><b class="text-danger">*</b> Message</label>
+    <div class="col-sm-10">
+      <textarea class="form-control" name="message" id="message" rows="8" required="">
+Hi,
+
+I&#39;d like to get a Free Trial of your &quot;Reliable File Transfer Solution&quot;.
+
+Looking forward to hear back from you.
+
+Regards
+</textarea>
+    </div>
+  </div>
+  
+  <div class="form-group">
+    <label for="promocode" class="col-sm-2 control-label">Promo Code</label>
+    <div class="col-sm-10">
+      <input type="text" class="form-control" name="promocode" id="promocode" />
+    </div>
+  </div>
+  
+  <div class="form-group">
+    <div class="col-sm-offset-2 col-sm-10">
+      <input type="submit" class="btn btn-success" role="button" value="Send" />
+    </div>
+  </div>
+
+  <input type="hidden" name="page-load-timestamp" id="page-load-timestamp" value="No Javascript" />
+  <input type="hidden" name="page-submit-timestamp" id="page-submit-timestamp" value="No Javascript" />
+  <input type="hidden" name="page-load-to-submit-time" id="page-load-to-submit-time" value="No Javascript" />
+  <input type="hidden" name="recipient" id="recipient" value="opcode" />
+  <input type="hidden" name="lang" id="lang" value="en" />
+  <input type="hidden" name="source" id="source" value="/en/saas/file-transfer/reliable-file-transfer-solution/" />
+
+</form>
+<script>
+  var promocodeElement = document.getElementById('promocode');
+  if (promocodeElement) {
+    promocodeElement.value = new URLSearchParams(window.location.search).get('promocode');
+  }
+
+  function getTimestampString(date) {
+    var timestampPart = 'timestampPart';
+    var timeZonePart = 'timeZonePart';
+    try {
+      timestampPart = date.toLocaleString("en-CA");
+    } catch (e) {
+      timestampPart = 'Failed to compute timestampPart: ' + e;
+    }
+    try {
+      timeZonePart = Intl.DateTimeFormat().resolvedOptions().timeZone;
+    } catch (e) {
+      timeZonePart = 'Failed to compute timeZonePart: ' + e;
+    }
+    return timestampPart + ' (' + timeZonePart + ')';
+  }
+  var pageLoadTimestamp = new Date();
+  document.getElementById('source').value = window.location.href + ' ';
+  document.getElementById('page-load-timestamp').value = getTimestampString(pageLoadTimestamp);
+  document.getElementById('contact-form').onsubmit = function () {
+    var subjectElement = document.getElementById('subject');
+    var name = document.getElementById('name').value
+    if (!subjectElement.value.endsWith(name)) {
+      subjectElement.value += ' - ' + document.getElementById('name').value;
+    }
+    var pageSubmitTimestamp = new Date();
+    var pageLoadToSubmitMillis = pageSubmitTimestamp.getTime() - pageLoadTimestamp.getTime();
+    document.getElementById('page-submit-timestamp').value = getTimestampString(pageSubmitTimestamp);
+    document.getElementById('page-load-to-submit-time').value = (pageLoadToSubmitMillis / 1000.0) + " seconds";
+    return true;
+  }
+</script>
+
+<hr />
+
+<p><strong>OR</strong> Send us an email to <script>writeMailtoLink("WVZjMWJXSXdRblpqUjA1MldrZFdlbUl5ZURGa1IyeDJZbTVOZFZreU9YUT0=");</script>.</p>]]></content><author><name>OpCode Solutions</name><email>info@opcodesolutions.com</email></author><summary type="html"><![CDATA[Deliver Files with Utmost Professionalism and Dependability]]></summary></entry><entry xml:lang="en"><title type="html">Effortless File Transfer Solution</title><link href="https://opcodesolutions.com/en/saas/file-transfer/effortless-file-transfer-solution/" rel="alternate" type="text/html" title="Effortless File Transfer Solution" /><published></published><updated></updated><id></id><content type="html" xml:base="https://opcodesolutions.com/en/saas/file-transfer/effortless-file-transfer-solution/"><![CDATA[<h2 id="key-features">Key Features:</h2>
+
+<h3 id="centralized-management">Centralized Management</h3>
+<p>Experience the power of centralized file management. Our solution allows you to effortlessly organize, control, and track all your file transfers from a single, intuitive dashboard.</p>
+
+<h3 id="organized-folders">Organized Folders</h3>
+<p>Navigate through your files seamlessly with an organized folder structure. Our platform ensures that your files are easy to find and manage, promoting a more structured and efficient workflow.</p>
+
+<h3 id="user-friendly-interface">User-Friendly Interface</h3>
+<p>Simplicity is key. Our user-friendly interface is crafted for easy navigation and a delightful user experience. Say goodbye to complexity and hello to smooth, user-centric file transfers.</p>
+
+<h3 id="additional-features">Additional Features:</h3>
+
+<ul>
+  <li><strong>Secure File Transfers:</strong> Prioritize the security of your files with our encrypted and authenticated transfers.</li>
+  <li><strong>Authentication and Permissions:</strong> Ensure data integrity with secure authentication and permission controls.</li>
+  <li><strong>Scalability:</strong> Grow your business without constraints with our scalable file transfer solution.</li>
+  <li><strong>Unlimited Users and Admins:</strong> Collaborate seamlessly with an unlimited number of users and administrators.</li>
+  <li><strong>Professional Branding:</strong> Showcase your professionalism with branded file sharing experiences.</li>
+  <li><strong>Access from Any Device:</strong> Stay connected and share files seamlessly from any device.</li>
+  <li><strong>Automation Capabilities:</strong> Save time with automated file transfer processes.</li>
+  <li><strong>API and Integration Support:</strong> Integrate seamlessly with other tools and systems.</li>
+  <li><strong>Large File Support:</strong> Transfer large files effortlessly without compromising speed.</li>
+  <li><strong>High-Speed Transfers:</strong> Experience swift and efficient file transfers.</li>
+  <li><strong>Web-Based Convenience:</strong> Access and manage your files conveniently through our web-based platform.</li>
+  <li><strong>Affordable Pricing:</strong> Enhance client collaborations without breaking the bank, starting at just $19 per month.</li>
+</ul>
+
+<h2 id="streamline-your-workflow-today">Streamline Your Workflow Today!</h2>
+
+<p>Join the ranks of businesses that prioritize simple and efficient file transfers with their clients. Elevate your collaboration, streamline your workflow, and leave a lasting impression.</p>
+
+<p><a href="#start-your-free-trial">Sign Up Now</a> for a free trial and experience the future of effortless file transfers! Trust our SaaS solution to be your partner in seamless client collaboration.</p>
+
+<h2 id="start-your-free-trial">Start Your Free Trial</h2>
+
+<p>Just fill the form below. Providing us with your company name will allow us to personalize your Free Trial.</p>
+
+<p><br /></p>
+
+<form class="form-horizontal" role="form" id="contact-form" method="POST" action="https://web-tools.opcodesolutions.com/mailer" target="_blank">
+
+  <div class="form-group">
+    <label for="company" class="col-sm-2 control-label">Company</label>
+    <div class="col-sm-10">
+      <input type="text" class="form-control" name="company" id="company" />
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="name" class="col-sm-2 control-label"><b class="text-danger">*</b> Name</label>
+    <div class="col-sm-10">
+      <input type="text" class="form-control" name="name" id="name" required="" />
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="email" class="col-sm-2 control-label"><b class="text-danger">*</b> Email</label>
+    <div class="col-sm-10">
+      <input type="email" class="form-control" name="email" id="email" required="" />
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="subject" class="col-sm-2 control-label"><b class="text-danger">*</b> Subject</label>
+    <div class="col-sm-10">
+      <input type="text" class="form-control" name="subject" id="subject" required="" value="Effortless File Transfer Solution - Free Trial Request" />
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="message" class="col-sm-2 control-label"><b class="text-danger">*</b> Message</label>
+    <div class="col-sm-10">
+      <textarea class="form-control" name="message" id="message" rows="8" required="">
+Hi,
+
+I&#39;d like to get a Free Trial of your &quot;Effortless File Transfer Solution&quot;.
+
+Looking forward to hear back from you.
+
+Regards
+</textarea>
+    </div>
+  </div>
+  
+  <div class="form-group">
+    <label for="promocode" class="col-sm-2 control-label">Promo Code</label>
+    <div class="col-sm-10">
+      <input type="text" class="form-control" name="promocode" id="promocode" />
+    </div>
+  </div>
+  
+  <div class="form-group">
+    <div class="col-sm-offset-2 col-sm-10">
+      <input type="submit" class="btn btn-success" role="button" value="Send" />
+    </div>
+  </div>
+
+  <input type="hidden" name="page-load-timestamp" id="page-load-timestamp" value="No Javascript" />
+  <input type="hidden" name="page-submit-timestamp" id="page-submit-timestamp" value="No Javascript" />
+  <input type="hidden" name="page-load-to-submit-time" id="page-load-to-submit-time" value="No Javascript" />
+  <input type="hidden" name="recipient" id="recipient" value="opcode" />
+  <input type="hidden" name="lang" id="lang" value="en" />
+  <input type="hidden" name="source" id="source" value="/en/saas/file-transfer/effortless-file-transfer-solution/" />
+
+</form>
+<script>
+  var promocodeElement = document.getElementById('promocode');
+  if (promocodeElement) {
+    promocodeElement.value = new URLSearchParams(window.location.search).get('promocode');
+  }
+
+  function getTimestampString(date) {
+    var timestampPart = 'timestampPart';
+    var timeZonePart = 'timeZonePart';
+    try {
+      timestampPart = date.toLocaleString("en-CA");
+    } catch (e) {
+      timestampPart = 'Failed to compute timestampPart: ' + e;
+    }
+    try {
+      timeZonePart = Intl.DateTimeFormat().resolvedOptions().timeZone;
+    } catch (e) {
+      timeZonePart = 'Failed to compute timeZonePart: ' + e;
+    }
+    return timestampPart + ' (' + timeZonePart + ')';
+  }
+  var pageLoadTimestamp = new Date();
+  document.getElementById('source').value = window.location.href + ' ';
+  document.getElementById('page-load-timestamp').value = getTimestampString(pageLoadTimestamp);
+  document.getElementById('contact-form').onsubmit = function () {
+    var subjectElement = document.getElementById('subject');
+    var name = document.getElementById('name').value
+    if (!subjectElement.value.endsWith(name)) {
+      subjectElement.value += ' - ' + document.getElementById('name').value;
+    }
+    var pageSubmitTimestamp = new Date();
+    var pageLoadToSubmitMillis = pageSubmitTimestamp.getTime() - pageLoadTimestamp.getTime();
+    document.getElementById('page-submit-timestamp').value = getTimestampString(pageSubmitTimestamp);
+    document.getElementById('page-load-to-submit-time').value = (pageLoadToSubmitMillis / 1000.0) + " seconds";
+    return true;
+  }
+</script>
+
+<hr />
+
+<p><strong>OR</strong> Send us an email to <script>writeMailtoLink("WVZjMWJXSXdRblpqUjA1MldrZFdlbUl5ZURGa1IyeDJZbTVOZFZreU9YUT0=");</script>.</p>]]></content><author><name>OpCode Solutions</name><email>info@opcodesolutions.com</email></author><summary type="html"><![CDATA[Simplify Your Client Collaborations with Ease]]></summary></entry><entry xml:lang="en"><title type="html">File Sharing Automation Solution</title><link href="https://opcodesolutions.com/en/saas/file-transfer/file-sharing-automation-solution/" rel="alternate" type="text/html" title="File Sharing Automation Solution" /><published></published><updated></updated><id></id><content type="html" xml:base="https://opcodesolutions.com/en/saas/file-transfer/file-sharing-automation-solution/"><![CDATA[<h2 id="key-features">Key Features:</h2>
+
+<h3 id="automation-capabilities">Automation Capabilities</h3>
+<p>Save valuable time with file transfer automations. Our solution allows you to streamline repetitive tasks, making your workflow more efficient and allowing you to focus on what matters most.</p>
+
+<h3 id="api-and-integration-support">API and Integration Support</h3>
+<p>Integrate seamlessly with other tools and systems. Our platform offers robust API support, providing a flexible and powerful solution for connecting with your existing business applications.</p>
+
+<h3 id="high-speed-file-transfers">High-Speed File Transfers</h3>
+<p>Experience swift and efficient file transfers. Our SaaS solution is optimized for high-speed performance, ensuring that your files reach clients promptly, enhancing collaboration.</p>
+
+<h3 id="additional-features">Additional Features:</h3>
+
+<ul>
+  <li><strong>Secure File Transfers:</strong> Prioritize the security of your files with encrypted and authenticated transfers.</li>
+  <li><strong>Authentication and Permissions:</strong> Ensure data integrity with secure authentication and permission controls.</li>
+  <li><strong>Organized Folders:</strong> Effortlessly manage your files with an organized folder structure.</li>
+  <li><strong>Centralized Management:</strong> Streamline control with centralized file management.</li>
+  <li><strong>Scalability:</strong> Grow your business without constraints with our scalable file transfer solution.</li>
+  <li><strong>Unlimited Users and Admins:</strong> Collaborate seamlessly with an unlimited number of users and administrators.</li>
+  <li><strong>Professional Branding:</strong> Showcase your professionalism with branded file sharing experiences.</li>
+  <li><strong>Access from Any Device:</strong> Share files seamlessly from any device, enhancing flexibility.</li>
+  <li><strong>Large File Support:</strong> Transfer large files effortlessly without compromising speed.</li>
+  <li><strong>Easy-to-Use Interface:</strong> Navigate with ease through our user-friendly interface.</li>
+  <li><strong>Web-Based Convenience:</strong> Access and manage your files conveniently through our web-based platform.</li>
+  <li><strong>Affordable Pricing:</strong> Enhance client collaborations without breaking the bank, starting at just $19 per month.</li>
+</ul>
+
+<h2 id="elevate-your-efficiency-today">Elevate Your Efficiency Today!</h2>
+
+<p>Embrace the power of file sharing automation. Integrate seamlessly, experience high-speed transfers, and enhance your client collaborations effortlessly.</p>
+
+<p><a href="#start-your-free-trial">Sign Up Now</a> for a free trial and revolutionize your file sharing with automation! Trust our SaaS solution to be your partner in productivity and efficient client collaboration.</p>
+
+<h2 id="start-your-free-trial">Start Your Free Trial</h2>
+
+<p>Just fill the form below. Providing us with your company name will allow us to personalize your Free Trial.</p>
+
+<p><br /></p>
+
+<form class="form-horizontal" role="form" id="contact-form" method="POST" action="https://web-tools.opcodesolutions.com/mailer" target="_blank">
+
+  <div class="form-group">
+    <label for="company" class="col-sm-2 control-label">Company</label>
+    <div class="col-sm-10">
+      <input type="text" class="form-control" name="company" id="company" />
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="name" class="col-sm-2 control-label"><b class="text-danger">*</b> Name</label>
+    <div class="col-sm-10">
+      <input type="text" class="form-control" name="name" id="name" required="" />
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="email" class="col-sm-2 control-label"><b class="text-danger">*</b> Email</label>
+    <div class="col-sm-10">
+      <input type="email" class="form-control" name="email" id="email" required="" />
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="subject" class="col-sm-2 control-label"><b class="text-danger">*</b> Subject</label>
+    <div class="col-sm-10">
+      <input type="text" class="form-control" name="subject" id="subject" required="" value="File Sharing Automation Solution - Free Trial Request" />
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="message" class="col-sm-2 control-label"><b class="text-danger">*</b> Message</label>
+    <div class="col-sm-10">
+      <textarea class="form-control" name="message" id="message" rows="8" required="">
+Hi,
+
+I&#39;d like to get a Free Trial of your &quot;File Sharing Automation Solution&quot;.
+
+Looking forward to hear back from you.
+
+Regards
+</textarea>
+    </div>
+  </div>
+  
+  <div class="form-group">
+    <label for="promocode" class="col-sm-2 control-label">Promo Code</label>
+    <div class="col-sm-10">
+      <input type="text" class="form-control" name="promocode" id="promocode" />
+    </div>
+  </div>
+  
+  <div class="form-group">
+    <div class="col-sm-offset-2 col-sm-10">
+      <input type="submit" class="btn btn-success" role="button" value="Send" />
+    </div>
+  </div>
+
+  <input type="hidden" name="page-load-timestamp" id="page-load-timestamp" value="No Javascript" />
+  <input type="hidden" name="page-submit-timestamp" id="page-submit-timestamp" value="No Javascript" />
+  <input type="hidden" name="page-load-to-submit-time" id="page-load-to-submit-time" value="No Javascript" />
+  <input type="hidden" name="recipient" id="recipient" value="opcode" />
+  <input type="hidden" name="lang" id="lang" value="en" />
+  <input type="hidden" name="source" id="source" value="/en/saas/file-transfer/file-sharing-automation-solution/" />
+
+</form>
+<script>
+  var promocodeElement = document.getElementById('promocode');
+  if (promocodeElement) {
+    promocodeElement.value = new URLSearchParams(window.location.search).get('promocode');
+  }
+
+  function getTimestampString(date) {
+    var timestampPart = 'timestampPart';
+    var timeZonePart = 'timeZonePart';
+    try {
+      timestampPart = date.toLocaleString("en-CA");
+    } catch (e) {
+      timestampPart = 'Failed to compute timestampPart: ' + e;
+    }
+    try {
+      timeZonePart = Intl.DateTimeFormat().resolvedOptions().timeZone;
+    } catch (e) {
+      timeZonePart = 'Failed to compute timeZonePart: ' + e;
+    }
+    return timestampPart + ' (' + timeZonePart + ')';
+  }
+  var pageLoadTimestamp = new Date();
+  document.getElementById('source').value = window.location.href + ' ';
+  document.getElementById('page-load-timestamp').value = getTimestampString(pageLoadTimestamp);
+  document.getElementById('contact-form').onsubmit = function () {
+    var subjectElement = document.getElementById('subject');
+    var name = document.getElementById('name').value
+    if (!subjectElement.value.endsWith(name)) {
+      subjectElement.value += ' - ' + document.getElementById('name').value;
+    }
+    var pageSubmitTimestamp = new Date();
+    var pageLoadToSubmitMillis = pageSubmitTimestamp.getTime() - pageLoadTimestamp.getTime();
+    document.getElementById('page-submit-timestamp').value = getTimestampString(pageSubmitTimestamp);
+    document.getElementById('page-load-to-submit-time').value = (pageLoadToSubmitMillis / 1000.0) + " seconds";
+    return true;
+  }
+</script>
+
+<hr />
+
+<p><strong>OR</strong> Send us an email to <script>writeMailtoLink("WVZjMWJXSXdRblpqUjA1MldrZFdlbUl5ZURGa1IyeDJZbTVOZFZreU9YUT0=");</script>.</p>]]></content><author><name>OpCode Solutions</name><email>info@opcodesolutions.com</email></author><summary type="html"><![CDATA[Boost Productivity with Effortless File Sharing Automation]]></summary></entry><entry xml:lang="en"><title type="html">Scalable File Sharing Solution</title><link href="https://opcodesolutions.com/en/saas/file-transfer/scalable-file-sharing-solution/" rel="alternate" type="text/html" title="Scalable File Sharing Solution" /><published></published><updated></updated><id></id><content type="html" xml:base="https://opcodesolutions.com/en/saas/file-transfer/scalable-file-sharing-solution/"><![CDATA[<h2 id="key-features">Key Features:</h2>
+
+<h3 id="unlimited-users-and-admins">Unlimited Users and Admins</h3>
+<p>Collaborate without constraints. Our solution allows you to add an unlimited number of users and administrators, ensuring your file sharing capabilities grow with your business.</p>
+
+<h3 id="scalability-for-growing-businesses">Scalability for Growing Businesses</h3>
+<p>Embrace growth without limitations. Our scalable file sharing solution adapts to the evolving demands of your business, providing a platform that expands as you do.</p>
+
+<h3 id="additional-features">Additional Features:</h3>
+
+<ul>
+  <li><strong>Secure File Transfers:</strong> Ensure the safety of your files with encryption, authentication, and secure permissions.</li>
+  <li><strong>Organized Folders:</strong> Effortlessly manage your files with a structured and organized folder system.</li>
+  <li><strong>Centralized Management:</strong> Streamline control with centralized file management for improved efficiency.</li>
+  <li><strong>Reliable Performance:</strong> Rely on our solution for consistent and dependable file transfers.</li>
+  <li><strong>Professional Branding:</strong> Showcase your brand with every file shared, leaving a lasting professional impression.</li>
+  <li><strong>Access from Any Device:</strong> Share files seamlessly from any device, enhancing flexibility.</li>
+  <li><strong>Automation Capabilities:</strong> Save time with automated file transfer processes.</li>
+  <li><strong>API and Integration Support:</strong> Integrate seamlessly with other tools and systems.</li>
+  <li><strong>Large File Support:</strong> Transfer large files effortlessly without compromising speed.</li>
+  <li><strong>High-Speed Transfers:</strong> Experience swift and efficient file transfers.</li>
+  <li><strong>Web-Based Convenience:</strong> Access and manage your files conveniently through our web-based platform.</li>
+  <li><strong>Affordable Pricing:</strong> Enhance client collaborations without breaking the bank, starting at just $19 per month.</li>
+</ul>
+
+<h2 id="experience-limitless-collaboration-today">Experience Limitless Collaboration Today!</h2>
+
+<p>Join the ranks of businesses that prioritize scalable and seamless file sharing with their clients. Elevate your collaboration game, streamline your workflow, and strengthen your client relationships.</p>
+
+<p><a href="#start-your-free-trial">Sign Up Now</a> for a free trial and unlock the potential of scalable file sharing! Trust our SaaS solution to be your reliable partner in client collaboration and business growth.</p>
+
+<h2 id="start-your-free-trial">Start Your Free Trial</h2>
+
+<p>Just fill the form below. Providing us with your company name will allow us to personalize your Free Trial.</p>
+
+<p><br /></p>
+
+<form class="form-horizontal" role="form" id="contact-form" method="POST" action="https://web-tools.opcodesolutions.com/mailer" target="_blank">
+
+  <div class="form-group">
+    <label for="company" class="col-sm-2 control-label">Company</label>
+    <div class="col-sm-10">
+      <input type="text" class="form-control" name="company" id="company" />
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="name" class="col-sm-2 control-label"><b class="text-danger">*</b> Name</label>
+    <div class="col-sm-10">
+      <input type="text" class="form-control" name="name" id="name" required="" />
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="email" class="col-sm-2 control-label"><b class="text-danger">*</b> Email</label>
+    <div class="col-sm-10">
+      <input type="email" class="form-control" name="email" id="email" required="" />
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="subject" class="col-sm-2 control-label"><b class="text-danger">*</b> Subject</label>
+    <div class="col-sm-10">
+      <input type="text" class="form-control" name="subject" id="subject" required="" value="Scalable File Sharing Solution - Free Trial Request" />
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="message" class="col-sm-2 control-label"><b class="text-danger">*</b> Message</label>
+    <div class="col-sm-10">
+      <textarea class="form-control" name="message" id="message" rows="8" required="">
+Hi,
+
+I&#39;d like to get a Free Trial of your &quot;Scalable File Sharing Solution&quot;.
+
+Looking forward to hear back from you.
+
+Regards
+</textarea>
+    </div>
+  </div>
+  
+  <div class="form-group">
+    <label for="promocode" class="col-sm-2 control-label">Promo Code</label>
+    <div class="col-sm-10">
+      <input type="text" class="form-control" name="promocode" id="promocode" />
+    </div>
+  </div>
+  
+  <div class="form-group">
+    <div class="col-sm-offset-2 col-sm-10">
+      <input type="submit" class="btn btn-success" role="button" value="Send" />
+    </div>
+  </div>
+
+  <input type="hidden" name="page-load-timestamp" id="page-load-timestamp" value="No Javascript" />
+  <input type="hidden" name="page-submit-timestamp" id="page-submit-timestamp" value="No Javascript" />
+  <input type="hidden" name="page-load-to-submit-time" id="page-load-to-submit-time" value="No Javascript" />
+  <input type="hidden" name="recipient" id="recipient" value="opcode" />
+  <input type="hidden" name="lang" id="lang" value="en" />
+  <input type="hidden" name="source" id="source" value="/en/saas/file-transfer/scalable-file-sharing-solution/" />
+
+</form>
+<script>
+  var promocodeElement = document.getElementById('promocode');
+  if (promocodeElement) {
+    promocodeElement.value = new URLSearchParams(window.location.search).get('promocode');
+  }
+
+  function getTimestampString(date) {
+    var timestampPart = 'timestampPart';
+    var timeZonePart = 'timeZonePart';
+    try {
+      timestampPart = date.toLocaleString("en-CA");
+    } catch (e) {
+      timestampPart = 'Failed to compute timestampPart: ' + e;
+    }
+    try {
+      timeZonePart = Intl.DateTimeFormat().resolvedOptions().timeZone;
+    } catch (e) {
+      timeZonePart = 'Failed to compute timeZonePart: ' + e;
+    }
+    return timestampPart + ' (' + timeZonePart + ')';
+  }
+  var pageLoadTimestamp = new Date();
+  document.getElementById('source').value = window.location.href + ' ';
+  document.getElementById('page-load-timestamp').value = getTimestampString(pageLoadTimestamp);
+  document.getElementById('contact-form').onsubmit = function () {
+    var subjectElement = document.getElementById('subject');
+    var name = document.getElementById('name').value
+    if (!subjectElement.value.endsWith(name)) {
+      subjectElement.value += ' - ' + document.getElementById('name').value;
+    }
+    var pageSubmitTimestamp = new Date();
+    var pageLoadToSubmitMillis = pageSubmitTimestamp.getTime() - pageLoadTimestamp.getTime();
+    document.getElementById('page-submit-timestamp').value = getTimestampString(pageSubmitTimestamp);
+    document.getElementById('page-load-to-submit-time').value = (pageLoadToSubmitMillis / 1000.0) + " seconds";
+    return true;
+  }
+</script>
+
+<hr />
+
+<p><strong>OR</strong> Send us an email to <script>writeMailtoLink("WVZjMWJXSXdRblpqUjA1MldrZFdlbUl5ZURGa1IyeDJZbTVOZFZreU9YUT0=");</script>.</p>]]></content><author><name>OpCode Solutions</name><email>info@opcodesolutions.com</email></author><summary type="html"><![CDATA[Seamlessly Scale Your File Sharing Capabilities]]></summary></entry><entry xml:lang="en"><title type="html">Affordable File Sharing Solution</title><link href="https://opcodesolutions.com/en/saas/file-transfer/affordable-file-sharing-solution/" rel="alternate" type="text/html" title="Affordable File Sharing Solution" /><published></published><updated></updated><id></id><content type="html" xml:base="https://opcodesolutions.com/en/saas/file-transfer/affordable-file-sharing-solution/"><![CDATA[<h2 id="key-features">Key Features:</h2>
+
+<h3 id="professional-and-feature-rich">Professional and Feature-Rich</h3>
+<p>Enjoy top-tier file sharing with a suite of professional features. From organized folders to high-speed transfers, our platform provides everything you need for seamless client collaborations.</p>
+
+<h3 id="affordable-pricing">Affordable Pricing</h3>
+<p>Elevate your client collaborations without breaking the bank. Our pricing starts at just $19 per month, making it the perfect solution for businesses of all sizes.</p>
+
+<h3 id="additional-features">Additional Features:</h3>
+
+<ul>
+  <li><strong>Secure File Transfers:</strong> Prioritize the security of your files with encrypted and authenticated transfers.</li>
+  <li><strong>Authentication and Permissions:</strong> Ensure data integrity with secure authentication and permission controls.</li>
+  <li><strong>Centralized Management:</strong> Streamline control with centralized file management.</li>
+  <li><strong>Scalability:</strong> Grow your business without constraints with our scalable file transfer solution.</li>
+  <li><strong>Unlimited Users and Admins:</strong> Collaborate seamlessly with an unlimited number of users and administrators.</li>
+  <li><strong>Easy-to-Use Interface:</strong> Navigate with ease through our user-friendly interface.</li>
+  <li><strong>Branding:</strong> Showcase your professionalism with branded file sharing experiences.</li>
+  <li><strong>Access from Any Device:</strong> Share files seamlessly from any device, enhancing flexibility.</li>
+  <li><strong>Automation Capabilities:</strong> Save time with automated file transfer processes.</li>
+  <li><strong>API and Integration Support:</strong> Integrate seamlessly with other tools and systems.</li>
+  <li><strong>Large File Support:</strong> Transfer large files effortlessly without compromising speed.</li>
+  <li><strong>Web-Based Convenience:</strong> Access and manage your files conveniently through our web-based platform.</li>
+</ul>
+
+<h2 id="affordable-excellence-starts-here">Affordable Excellence Starts Here!</h2>
+
+<p>Discover the perfect balance of quality and affordability. Elevate your client collaborations with our Affordable File Sharing Solution starting at just $19/month.</p>
+
+<p><a href="#start-your-free-trial">Sign Up Now</a> for a free trial and experience the future of affordable and feature-rich file sharing! Trust our SaaS solution to be your partner in client collaboration without the hefty price tag.</p>
+
+<h2 id="start-your-free-trial">Start Your Free Trial</h2>
+
+<p>Just fill the form below. Providing us with your company name will allow us to personalize your Free Trial.</p>
+
+<p><br /></p>
+
+<form class="form-horizontal" role="form" id="contact-form" method="POST" action="https://web-tools.opcodesolutions.com/mailer" target="_blank">
+
+  <div class="form-group">
+    <label for="company" class="col-sm-2 control-label">Company</label>
+    <div class="col-sm-10">
+      <input type="text" class="form-control" name="company" id="company" />
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="name" class="col-sm-2 control-label"><b class="text-danger">*</b> Name</label>
+    <div class="col-sm-10">
+      <input type="text" class="form-control" name="name" id="name" required="" />
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="email" class="col-sm-2 control-label"><b class="text-danger">*</b> Email</label>
+    <div class="col-sm-10">
+      <input type="email" class="form-control" name="email" id="email" required="" />
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="subject" class="col-sm-2 control-label"><b class="text-danger">*</b> Subject</label>
+    <div class="col-sm-10">
+      <input type="text" class="form-control" name="subject" id="subject" required="" value="Affordable File Sharing Solution - Free Trial Request" />
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="message" class="col-sm-2 control-label"><b class="text-danger">*</b> Message</label>
+    <div class="col-sm-10">
+      <textarea class="form-control" name="message" id="message" rows="8" required="">
+Hi,
+
+I&#39;d like to get a Free Trial of your &quot;Affordable File Sharing Solution&quot;.
+
+Looking forward to hear back from you.
+
+Regards
+</textarea>
+    </div>
+  </div>
+  
+  <div class="form-group">
+    <label for="promocode" class="col-sm-2 control-label">Promo Code</label>
+    <div class="col-sm-10">
+      <input type="text" class="form-control" name="promocode" id="promocode" />
+    </div>
+  </div>
+  
+  <div class="form-group">
+    <div class="col-sm-offset-2 col-sm-10">
+      <input type="submit" class="btn btn-success" role="button" value="Send" />
+    </div>
+  </div>
+
+  <input type="hidden" name="page-load-timestamp" id="page-load-timestamp" value="No Javascript" />
+  <input type="hidden" name="page-submit-timestamp" id="page-submit-timestamp" value="No Javascript" />
+  <input type="hidden" name="page-load-to-submit-time" id="page-load-to-submit-time" value="No Javascript" />
+  <input type="hidden" name="recipient" id="recipient" value="opcode" />
+  <input type="hidden" name="lang" id="lang" value="en" />
+  <input type="hidden" name="source" id="source" value="/en/saas/file-transfer/affordable-file-sharing-solution/" />
+
+</form>
+<script>
+  var promocodeElement = document.getElementById('promocode');
+  if (promocodeElement) {
+    promocodeElement.value = new URLSearchParams(window.location.search).get('promocode');
+  }
+
+  function getTimestampString(date) {
+    var timestampPart = 'timestampPart';
+    var timeZonePart = 'timeZonePart';
+    try {
+      timestampPart = date.toLocaleString("en-CA");
+    } catch (e) {
+      timestampPart = 'Failed to compute timestampPart: ' + e;
+    }
+    try {
+      timeZonePart = Intl.DateTimeFormat().resolvedOptions().timeZone;
+    } catch (e) {
+      timeZonePart = 'Failed to compute timeZonePart: ' + e;
+    }
+    return timestampPart + ' (' + timeZonePart + ')';
+  }
+  var pageLoadTimestamp = new Date();
+  document.getElementById('source').value = window.location.href + ' ';
+  document.getElementById('page-load-timestamp').value = getTimestampString(pageLoadTimestamp);
+  document.getElementById('contact-form').onsubmit = function () {
+    var subjectElement = document.getElementById('subject');
+    var name = document.getElementById('name').value
+    if (!subjectElement.value.endsWith(name)) {
+      subjectElement.value += ' - ' + document.getElementById('name').value;
+    }
+    var pageSubmitTimestamp = new Date();
+    var pageLoadToSubmitMillis = pageSubmitTimestamp.getTime() - pageLoadTimestamp.getTime();
+    document.getElementById('page-submit-timestamp').value = getTimestampString(pageSubmitTimestamp);
+    document.getElementById('page-load-to-submit-time').value = (pageLoadToSubmitMillis / 1000.0) + " seconds";
+    return true;
+  }
+</script>
+
+<hr />
+
+<p><strong>OR</strong> Send us an email to <script>writeMailtoLink("WVZjMWJXSXdRblpqUjA1MldrZFdlbUl5ZURGa1IyeDJZbTVOZFZreU9YUT0=");</script>.</p>]]></content><author><name>OpCode Solutions</name><email>info@opcodesolutions.com</email></author><summary type="html"><![CDATA[Elevate Your Client Collaborations Without Breaking the Bank]]></summary></entry><entry xml:lang="en"><title type="html">Tech Blog</title><link href="https://opcodesolutions.com/tech/" rel="alternate" type="text/html" title="Tech Blog" /><published></published><updated></updated><id></id><content type="html" xml:base="https://opcodesolutions.com/tech/"><![CDATA[]]></content><author><name>OpCode Solutions</name><email>info@opcodesolutions.com</email></author></entry><entry xml:lang="fr"><title type="html">Partage de Fichiers Sécurisé</title><link href="https://opcodesolutions.com/fr/saas/transfert-de-fichiers/solution-de-partage-de-fichiers-securise/" rel="alternate" type="text/html" title="Partage de Fichiers Sécurisé" /><published></published><updated></updated><id></id><content type="html" xml:base="https://opcodesolutions.com/fr/saas/transfert-de-fichiers/solution-de-partage-de-fichiers-securise/"><![CDATA[<h2 id="principales-caractéristiques">Principales caractéristiques:</h2>
+
+<h3 id="transferts-authentifiés">Transferts authentifiés</h3>
+<p>Ayez confiance en l’authenticité de vos transferts de fichiers. Notre solution garantit que chaque interaction est authentifiée, fournissant ainsi un canal sécurisé et fiable pour partager des données sensibles avec vos clients.</p>
+
+<h3 id="communication-cryptée">Communication cryptée</h3>
+<p>La sécurité est au premier rang de nos priorités. Faites l’expérience du partage de fichiers avec un cryptage de niveau entreprise, garantissant la confidentialité et l’intégrité de vos données tout au long du processus de transfert.</p>
+
+<h3 id="performances-fiables">Performances fiables</h3>
+<p>Votre entreprise exige de la fiabilité. Comptez sur nous pour des transferts de fichiers cohérents et fiables. Notre solution SaaS est conçue pour livrer vos fichiers rapidement, contribuant ainsi à un flux de travail plus fluide et à des interactions client améliorées.</p>
+
+<h3 id="interface-facile-à-utiliser">Interface facile à utiliser</h3>
+<p>Simplifiez vos processus de partage de fichiers. Notre interface conviviale est conçue pour votre commodité, rendant la collaboration avec les clients facile et agréable.</p>
+
+<h3 id="caractéristiques-supplémentaires">Caractéristiques supplémentaires:</h3>
+
+<ul>
+  <li><strong>Dossiers organisés:</strong> Gérez sans effort vos fichiers grâce à une structure de dossiers organisée.</li>
+  <li><strong>Gestion centralisée:</strong> Rationalisez le contrôle grâce à la gestion centralisée des fichiers.</li>
+  <li><strong>Évolutivité:</strong> Développez votre entreprise sans limites grâce à notre solution évolutive.</li>
+  <li><strong>Utilisateurs et administrateurs illimités:</strong> Collaborez avec un nombre illimité d’utilisateurs et d’administrateurs.</li>
+  <li><strong>Votre marque:</strong> Présentez votre professionnalisme avec le partage de fichiers personnalisée à votre marque: votre logo et nom d’entreprise.</li>
+  <li><strong>Accès depuis n’importe quel appareil:</strong> Restez connecté et partagez des fichiers en toute transparence depuis n’importe quel appareil.</li>
+  <li><strong>Capacités d’automatisation:</strong> Gagnez du temps grâce aux processus de transfert de fichiers automatisés.</li>
+  <li><strong>API et intégration:</strong> Intégrez-vous de manière transparente à d’autres outils et systèmes.</li>
+  <li><strong>Prise en charge des fichiers volumineux:</strong> Transférez des fichiers volumineux sans effort sans compromettre la vitesse.</li>
+  <li><strong>Transferts à grande vitesse:</strong> Faites l’expérience de transferts de fichiers rapides et efficaces.</li>
+  <li><strong>Interface Web:</strong> Accédez et gérez facilement vos fichiers via notre plate-forme Web.</li>
+  <li><strong>Prix abordable:</strong> Améliorez les collaborations clients sans vous ruiner, à partir de seulement 19$ par mois.</li>
+</ul>
+
+<p><span id="start-your-free-trial"></span></p>
+
+<h2 id="commencer-aujourdhui">Commencer aujourd’hui!</h2>
+
+<p>Rejoignez les rangs des entreprises qui privilégient le partage de fichiers sécurisé et professionnel avec leurs clients. Améliorez votre collaboration, rationalisez votre flux de travail et renforcez vos relations avec vos clients.</p>
+
+<p><a href="#start-your-free-trial">Inscrivez-vous maintenant</a> pour un essai gratuit et découvrez l’avenir du partage de fichiers sécurisé! Faites confiance à notre solution SaaS pour être votre partenaire fiable dans la collaboration client.</p>
+
+<h2 id="commencer-votre-essai-gratuit">Commencer votre essai gratuit</h2>
+
+<p>Remplissez simplement le formulaire ci-dessous. En nous fournissant le nom de votre entreprise, nous pourrons personnaliser votre essai gratuit.</p>
+
+<p><br /></p>
+
+<form class="form-horizontal" role="form" id="contact-form" method="POST" action="https://web-tools.opcodesolutions.com/mailer" target="_blank">
+
+  <div class="form-group">
+    <label for="company" class="col-sm-2 control-label">Compagnie</label>
+    <div class="col-sm-10">
+      <input type="text" class="form-control" name="company" id="company" />
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="name" class="col-sm-2 control-label"><b class="text-danger">*</b> Nom</label>
+    <div class="col-sm-10">
+      <input type="text" class="form-control" name="name" id="name" required="" />
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="email" class="col-sm-2 control-label"><b class="text-danger">*</b> Courriel</label>
+    <div class="col-sm-10">
+      <input type="email" class="form-control" name="email" id="email" required="" />
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="subject" class="col-sm-2 control-label"><b class="text-danger">*</b> Sujet</label>
+    <div class="col-sm-10">
+      <input type="text" class="form-control" name="subject" id="subject" required="" value="Solution de partage de fichiers sécurisé - Demande d&#39;essai gratuit" />
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="message" class="col-sm-2 control-label"><b class="text-danger">*</b> Message</label>
+    <div class="col-sm-10">
+      <textarea class="form-control" name="message" id="message" rows="8" required="">
+Bonjour,
+
+J&#39;aimerais bénéficier d&#39;un essai gratuit de votre &quot;Solution de partage de fichiers sécurisé&quot;.
+
+Dans l&#39;attente d&#39;avoir de vos nouvelles.
+
+Salutations
+</textarea>
+    </div>
+  </div>
+  
+  <div class="form-group">
+    <label for="promocode" class="col-sm-2 control-label">Code promo</label>
+    <div class="col-sm-10">
+      <input type="text" class="form-control" name="promocode" id="promocode" />
+    </div>
+  </div>
+  
+  <div class="form-group">
+    <div class="col-sm-offset-2 col-sm-10">
+      <input type="submit" class="btn btn-success" role="button" value="Envoyer" />
+    </div>
+  </div>
+
+  <input type="hidden" name="page-load-timestamp" id="page-load-timestamp" value="No Javascript" />
+  <input type="hidden" name="page-submit-timestamp" id="page-submit-timestamp" value="No Javascript" />
+  <input type="hidden" name="page-load-to-submit-time" id="page-load-to-submit-time" value="No Javascript" />
+  <input type="hidden" name="recipient" id="recipient" value="opcode" />
+  <input type="hidden" name="lang" id="lang" value="fr" />
+  <input type="hidden" name="source" id="source" value="/fr/saas/transfert-de-fichiers/solution-de-partage-de-fichiers-securise/" />
+
+</form>
+<script>
+  var promocodeElement = document.getElementById('promocode');
+  if (promocodeElement) {
+    promocodeElement.value = new URLSearchParams(window.location.search).get('promocode');
+  }
+
+  function getTimestampString(date) {
+    var timestampPart = 'timestampPart';
+    var timeZonePart = 'timeZonePart';
+    try {
+      timestampPart = date.toLocaleString("en-CA");
+    } catch (e) {
+      timestampPart = 'Failed to compute timestampPart: ' + e;
+    }
+    try {
+      timeZonePart = Intl.DateTimeFormat().resolvedOptions().timeZone;
+    } catch (e) {
+      timeZonePart = 'Failed to compute timeZonePart: ' + e;
+    }
+    return timestampPart + ' (' + timeZonePart + ')';
+  }
+  var pageLoadTimestamp = new Date();
+  document.getElementById('source').value = window.location.href + ' ';
+  document.getElementById('page-load-timestamp').value = getTimestampString(pageLoadTimestamp);
+  document.getElementById('contact-form').onsubmit = function () {
+    var subjectElement = document.getElementById('subject');
+    var name = document.getElementById('name').value
+    if (!subjectElement.value.endsWith(name)) {
+      subjectElement.value += ' - ' + document.getElementById('name').value;
+    }
+    var pageSubmitTimestamp = new Date();
+    var pageLoadToSubmitMillis = pageSubmitTimestamp.getTime() - pageLoadTimestamp.getTime();
+    document.getElementById('page-submit-timestamp').value = getTimestampString(pageSubmitTimestamp);
+    document.getElementById('page-load-to-submit-time').value = (pageLoadToSubmitMillis / 1000.0) + " seconds";
+    return true;
+  }
+</script>
+
+<hr />
+
+<p><strong>OU</strong> Envoyez-nous un courriel à <script>writeMailtoLink("WVZjMWJXSXdRblpqUjA1MldrZFdlbUl5ZURGa1IyeDJZbTVOZFZreU9YUT0=");</script>.</p>]]></content><author><name>OpCode Solutions</name><email>info@opcodesolutions.com</email></author><summary type="html"><![CDATA[Améliorez la collaboration avec vos clients en toute tranquillité d'esprit]]></summary></entry><entry xml:lang="fr"><title type="html">Politique de confidentialité de Solutions OpCode</title><link href="https://opcodesolutions.com/fr/politique-de-confidentialite/" rel="alternate" type="text/html" title="Politique de confidentialité de Solutions OpCode" /><published></published><updated></updated><id></id><content type="html" xml:base="https://opcodesolutions.com/fr/politique-de-confidentialite/"><![CDATA[<h1 id="politique-de-confidentialité-de-solutions-opcode">Politique de confidentialité de Solutions OpCode</h1>
+
+<p><strong>Dernière mise à jour:</strong> 17 novembre 2023</p>
+
+<h2 id="introduction">Introduction</h2>
+
+<p>Cette politique de confidentialité décrit les politiques et procédures de Solutions OpCode (« nous », « notre ») concernant la collecte, l’utilisation et la divulgation d’informations personnelles lorsque vous utilisez notre site web, <a href="https://opcodesolutions.com/fr/">Solutions OpCode</a>. Nous accordons la priorité à la protection de votre vie privée et visons à fournir une explication complète de la manière dont vos informations sont collectées et utilisées.</p>
+
+<h2 id="collecte-dinformations-de-routine">Collecte d’informations de routine</h2>
+
+<p>Nous collectons des informations de base sur les visiteurs de notre site Web, y compris, mais sans s’y limiter:</p>
+
+<ul>
+  <li>Adresses IP</li>
+  <li>Détails du navigateur</li>
+  <li>Horodatages</li>
+  <li>Pages référentes</li>
+</ul>
+
+<p>Ces informations sont collectées à des fins d’administration et de maintenance de routine et ne sont pas personnellement identifiables.</p>
+
+<h2 id="cookies">Cookies</h2>
+
+<p>Nous utilisons des cookies pour stocker des informations sur vos préférences et votre historique de navigation. Les cookies améliorent votre expérience en fournissant un contenu personnalisé. Vous avez la possibilité d’ajuster les paramètres de votre navigateur pour refuser les cookies, mais veuillez noter que cela peut avoir un impact sur votre capacité à utiliser certaines fonctionnalités de notre site Web.</p>
+
+<p><button type="button" class="btn btn-primary" onclick="resetOptimalBrowsing()">Réinitialiser les préférences</button></p>
+
+<h2 id="publicité-et-autres-tiers">Publicité et autres tiers</h2>
+
+<p>Les annonceurs et partenaires tiers peuvent utiliser des cookies, des scripts et des balises Web pour suivre les activités des visiteurs sur notre site Web. Ces technologies sont soumises aux politiques de confidentialité de tiers et nous n’avons aucun contrôle sur leur utilisation.</p>
+
+<p>Pour information, voici le lien vers la politique de confidentialité d’un fournisseur de services tiers utilisé par le site Web: <a href="https://policies.google.com/privacy" target="_blank">Google</a></p>
+
+<h2 id="sécurité">Sécurité</h2>
+
+<p>Bien que nous utilisions des moyens commercialement acceptables pour protéger vos informations personnelles, il est essentiel de reconnaître qu’aucune méthode de transmission sur Internet ou de stockage électronique n’est sécurisée à 100 %. La sécurité absolue ne peut être garantie.</p>
+
+<h2 id="utilisation-de-vos-données-personnelles">Utilisation de vos données personnelles</h2>
+
+<p>Nous pouvons utiliser vos données personnelles à diverses fins, notamment, mais sans s’y limiter:</p>
+
+<ul>
+  <li>Fournir et maintenir notre service</li>
+  <li>Gérer votre compte</li>
+  <li>Vous contacter</li>
+  <li>Fournir des nouvelles et des offres</li>
+  <li>Gestion des demandes</li>
+  <li>Transfert d’entreprises</li>
+  <li>Application de la loi et autres obligations légales</li>
+</ul>
+
+<p>Voir plus de détails dans la section « Divulgation de vos données personnelles » ci-dessous.</p>
+
+<h2 id="conservation-et-transfert-de-vos-données-personnelles">Conservation et transfert de vos données personnelles</h2>
+
+<p>Nous conservons vos données personnelles uniquement aussi longtemps que nécessaire aux fins décrites dans cette politique. Vos données peuvent être traitées en dehors de votre juridiction et, en utilisant notre service, vous consentez à un tel transfert. Nous prenons des mesures pour garantir que vos données sont traitées de manière sécurisée et conformément à la présente politique de confidentialité.</p>
+
+<h2 id="supprimez-vos-données-personnelles">Supprimez vos données personnelles</h2>
+
+<p>Vous avez le droit de demander la suppression de vos données personnelles. Vous pouvez gérer vos informations au sein du service ou nous contacter pour obtenir de l’aide. Cependant, certaines informations peuvent devoir être conservées pour des obligations légales.</p>
+
+<h2 id="divulgation-de-vos-données-personnelles">Divulgation de vos données personnelles</h2>
+
+<p>Nous pouvons divulguer vos données personnelles dans les situations suivantes :</p>
+
+<ul>
+  <li>Transactions commerciales</li>
+  <li>Forces de l’ordre</li>
+  <li>Autres exigences légales</li>
+</ul>
+
+<p>Nous pouvons partager vos informations avec:</p>
+
+<ul>
+  <li>Les fournisseurs de services</li>
+  <li>Partenaires affiliés</li>
+  <li>Partenaires d’affaires</li>
+  <li>Officiers des forces de l’ordre</li>
+</ul>
+
+<h2 id="modifications-à-cette-politique-de-confidentialité">Modifications à cette politique de confidentialité</h2>
+
+<p>Cette politique de confidentialité peut être mise à jour. La politique mise à jour sera publiée sur cette page. Il est conseillé de consulter périodiquement cette politique de confidentialité.</p>
+
+<h2 id="coordonnées">Coordonnées</h2>
+
+<p>Si vous avez des questions concernant cette politique de confidentialité, vous pouvez nous contacter :</p>
+
+<ul>
+  <li>Par email : <script>writeMailtoLink("WVZjMWJXSXdRblpqUjA1MldrZFdlbUl5ZURGa1IyeDJZbTVOZFZreU9YUT0=");</script></li>
+  <li>En visitant cette page de notre site Internet : <a href="/fr/contact/">Contact</a></li>
+</ul>
+
+<p><strong>Notre adresse postale:</strong> 4070 Rue de Louisbourg, Montréal, QC H4J 1K5</p>]]></content><author><name>OpCode Solutions</name><email>info@opcodesolutions.com</email></author><summary type="html"><![CDATA[Cette politique de confidentialité décrit les politiques et procédures de Solutions OpCode (« nous », « notre ») concernant la collecte, l'utilisation et la divulgation d'informations personnelles lorsque vous utilisez notre site web, Solutions OpCode.]]></summary></entry><entry xml:lang="en"><title type="html">Home</title><link href="https://opcodesolutions.com/" rel="alternate" type="text/html" title="Home" /><published></published><updated></updated><id></id><content type="html" xml:base="https://opcodesolutions.com/"><![CDATA[<div class="jumbotron">
+    <div class="container">
+      <h1>Software for Businesses</h1>
+      <p>When you need more than a website and blog, we are the one to call. We develop custom applications from A to Z and
+        provide hosting as needed. This is our job, we are good at it and we love it.</p>
+      <p>
+        <a href="/en/solutions/" class="btn btn-success btn-lg" role="button">Learn more &raquo;</a>
+      </p>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="row">
+      <div class="col-md-4">
+        <h2>
+          <span class="glyphicon glyphicon-ok"></span> Accessible
+        </h2>
+        <p>Embrace the present and access your application from any device: desktop, tablet, mobile. No matter when and where
+          you are, you can keep an eye on your business and get things done. All you need is an internet-enabled device.</p>
+        <p>
+          <a class="btn btn-primary" href="/en/demo/" role="button">Demo &raquo;</a>
+        </p>
+      </div>
+      <div class="col-md-4">
+        <h2>
+          <span class="glyphicon glyphicon-ok"></span> Affordable
+        </h2>
+        <p>We have very competitive prices. Our secret: we spent years at perfecting our skills and we carefully chose every
+          single piece of our technology stack. We save time, you save money. Tell us what you need and we will quote a price, for
+          free.</p>
+        <p>
+          <a class="btn btn-primary" href="/en/pricing/" role="button">Pricing &raquo;</a>
+        </p>
+      </div>
+      <div class="col-md-4">
+        <h2>
+          <span class="glyphicon glyphicon-ok"></span> Managed
+        </h2>
+        <p>No technical skills required. Get peace of mind with managed hosting. We take care of backing up your data, applying
+          system updates, managing load and more. We know you have better things to do with your time. Focus on your business, not on
+          your servers.</p>
+        <p>
+          <a class="btn btn-primary" href="/en/hosting/" role="button">Hosting &raquo;</a>
+        </p>
+      </div>
+    </div>
+  </div>]]></content><author><name>OpCode Solutions</name><email>info@opcodesolutions.com</email></author><summary type="html"><![CDATA[We develop applications for businesses. This is our job, we are good at it and we love it.]]></summary></entry><entry xml:lang="en"><title type="html">Home</title><link href="https://opcodesolutions.com/en/" rel="alternate" type="text/html" title="Home" /><published></published><updated></updated><id></id><content type="html" xml:base="https://opcodesolutions.com/en/"><![CDATA[<div class="jumbotron">
+    <div class="container">
+      <h1>Software for Businesses</h1>
+      <p>When you need more than a website and blog, we are the one to call. We develop custom applications from A to Z and
+        provide hosting as needed. This is our job, we are good at it and we love it.</p>
+      <p>
+        <a href="/en/solutions/" class="btn btn-success btn-lg" role="button">Learn more &raquo;</a>
+      </p>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="row">
+      <div class="col-md-4">
+        <h2>
+          <span class="glyphicon glyphicon-ok"></span> Accessible
+        </h2>
+        <p>Embrace the present and access your application from any device: desktop, tablet, mobile. No matter when and where
+          you are, you can keep an eye on your business and get things done. All you need is an internet-enabled device.</p>
+        <p>
+          <a class="btn btn-primary" href="/en/demo/" role="button">Demo &raquo;</a>
+        </p>
+      </div>
+      <div class="col-md-4">
+        <h2>
+          <span class="glyphicon glyphicon-ok"></span> Affordable
+        </h2>
+        <p>We have very competitive prices. Our secret: we spent years at perfecting our skills and we carefully chose every
+          single piece of our technology stack. We save time, you save money. Tell us what you need and we will quote a price, for
+          free.</p>
+        <p>
+          <a class="btn btn-primary" href="/en/pricing/" role="button">Pricing &raquo;</a>
+        </p>
+      </div>
+      <div class="col-md-4">
+        <h2>
+          <span class="glyphicon glyphicon-ok"></span> Managed
+        </h2>
+        <p>No technical skills required. Get peace of mind with managed hosting. We take care of backing up your data, applying
+          system updates, managing load and more. We know you have better things to do with your time. Focus on your business, not on
+          your servers.</p>
+        <p>
+          <a class="btn btn-primary" href="/en/hosting/" role="button">Hosting &raquo;</a>
+        </p>
+      </div>
+    </div>
+  </div>]]></content><author><name>OpCode Solutions</name><email>info@opcodesolutions.com</email></author><summary type="html"><![CDATA[We develop applications for businesses. This is our job, we are good at it and we love it.]]></summary></entry><entry xml:lang="en"><title type="html">Contact</title><link href="https://opcodesolutions.com/en/contact/" rel="alternate" type="text/html" title="Contact" /><published></published><updated></updated><id></id><content type="html" xml:base="https://opcodesolutions.com/en/contact/"><![CDATA[<div class="container">
+  <h1>Contact Us</h1>
+  <br />
+  <div class="row">
+    <div class="col-md-3">
+      <address>
+        <strong>General Inquiry</strong>
+        <p>
+          <script>writeMailtoLink("WVZjMWJXSXdRblpqUjA1MldrZFdlbUl5ZURGa1IyeDJZbTVOZFZreU9YUT0=");</script>
+        </p>
+
+        <strong>Tech Support</strong>
+        <p>
+          <script>writeMailtoLink("WXpOV2QyTkhPWGxrUlVKMlkwZE9kbHBIVm5waU1uZ3haRWRzZG1KdVRYVlpNamww");</script>
+        </p>
+
+        <strong>Invoicing</strong>
+        <p>
+          <script>writeMailtoLink("V1cxc2MySkhiSFZhTUVKMlkwZE9kbHBIVm5waU1uZ3haRWRzZG1KdVRYVlpNamww");</script>
+        </p>
+
+        <strong>Postal address</strong>
+        <p>
+          OpCode Solutions, Inc.<br>
+          4070 Rue de Louisbourg<br>
+          Montréal, QC<br>
+          H4J 1K5
+        </p>
+
+        <strong>Phone</strong>
+        <p>+1 (514) 360-1620</p>
+
+        <strong>Founder</strong>
+        <p>
+          Jonathan Demers, Eng.<br />
+          <a title="Jonathan Demers" href="https://www.linkedin.com/in/jonathan-demers-ing/"
+            target="_blank">linkedin.com/in/jonathan-demers-ing/</a>
+        </p>
+      </address>
+    </div>
+    <div class="col-md-9" style="border-left: 1px solid #eee;">
+<form class="form-horizontal" role="form" id="contact-form" method="POST"
+  action="https://web-tools.opcodesolutions.com/mailer" target="_blank">
+
+  <div class="form-group">
+    <label for="company" class="col-sm-2 control-label">Company</label>
+    <div class="col-sm-10">
+      <input type="text" class="form-control" name="company" id="company">
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="name" class="col-sm-2 control-label"><b class="text-danger">*</b> Name</label>
+    <div class="col-sm-10">
+      <input type="text" class="form-control" name="name" id="name" required>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="email" class="col-sm-2 control-label"><b class="text-danger">*</b> Email</label>
+    <div class="col-sm-10">
+      <input type="email" class="form-control" name="email" id="email" required>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="subject" class="col-sm-2 control-label"><b class="text-danger">*</b> Subject</label>
+    <div class="col-sm-10">
+      <input type="text" class="form-control" name="subject" id="subject" required
+        value="OpCode Solutions - General Inquiry">
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="message" class="col-sm-2 control-label"><b class="text-danger">*</b> Message</label>
+    <div class="col-sm-10">
+      <textarea class="form-control" name="message" id="message" rows="8" required>
+Hi,
+
+I&#39;d like to get more information about XXXXXXXXX.
+
+Can you get back to me please?
+
+Thanks
+</textarea>
+    </div>
+  </div>
+  
+  <div class="form-group">
+    <div class="col-sm-offset-2 col-sm-10">
+      <input type="submit" class="btn btn-success" role="button" value="Send">
+    </div>
+  </div>
+
+  <input type='hidden' name='page-load-timestamp' id='page-load-timestamp' value='No Javascript'>
+  <input type='hidden' name='page-submit-timestamp' id='page-submit-timestamp' value='No Javascript'>
+  <input type='hidden' name='page-load-to-submit-time' id='page-load-to-submit-time' value='No Javascript'>
+  <input type='hidden' name='recipient' id='recipient' value='opcode'>
+  <input type='hidden' name='lang' id='lang' value='en'>
+  <input type='hidden' name='source' id='source' value='/en/contact/'>
+
+</form>
+<script>
+  var promocodeElement = document.getElementById('promocode');
+  if (promocodeElement) {
+    promocodeElement.value = new URLSearchParams(window.location.search).get('promocode');
+  }
+
+  function getTimestampString(date) {
+    var timestampPart = 'timestampPart';
+    var timeZonePart = 'timeZonePart';
+    try {
+      timestampPart = date.toLocaleString("en-CA");
+    } catch (e) {
+      timestampPart = 'Failed to compute timestampPart: ' + e;
+    }
+    try {
+      timeZonePart = Intl.DateTimeFormat().resolvedOptions().timeZone;
+    } catch (e) {
+      timeZonePart = 'Failed to compute timeZonePart: ' + e;
+    }
+    return timestampPart + ' (' + timeZonePart + ')';
+  }
+  var pageLoadTimestamp = new Date();
+  document.getElementById('source').value = window.location.href + ' ';
+  document.getElementById('page-load-timestamp').value = getTimestampString(pageLoadTimestamp);
+  document.getElementById('contact-form').onsubmit = function () {
+    var subjectElement = document.getElementById('subject');
+    var name = document.getElementById('name').value
+    if (!subjectElement.value.endsWith(name)) {
+      subjectElement.value += ' - ' + document.getElementById('name').value;
+    }
+    var pageSubmitTimestamp = new Date();
+    var pageLoadToSubmitMillis = pageSubmitTimestamp.getTime() - pageLoadTimestamp.getTime();
+    document.getElementById('page-submit-timestamp').value = getTimestampString(pageSubmitTimestamp);
+    document.getElementById('page-load-to-submit-time').value = (pageLoadToSubmitMillis / 1000.0) + " seconds";
+    return true;
+  }
+</script>
+    </div>
+  </div>
+</div>
+<hr>
+<div class="container">
+  <div class="row">
+    <iframe
+      src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d178982.06970781877!2d-73.69833477112023!3d45.49810304397687!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4cc92280c2794e0d%3A0xcd7d1bbc1e18d888!2s4070%20Rue%20de%20Louisbourg%2C%20Montr%C3%A9al%2C%20QC%20H4J%201K5%2C%20Canada!5e0!3m2!1sen!2sus!4v1699723286394!5m2!1sen!2sus"
+      width="100%" height="320" style="border:0;" allowfullscreen="" loading="lazy"
+      referrerpolicy="no-referrer-when-downgrade"></iframe>
+  </div>
+</div>]]></content><author><name>OpCode Solutions</name><email>info@opcodesolutions.com</email></author><summary type="html"><![CDATA[Contact us to get a free estimate for your project: 514.360.1620]]></summary></entry><entry xml:lang="en"><title type="html">Contact Us - Thank You</title><link href="https://opcodesolutions.com/en/contact/thank-you/" rel="alternate" type="text/html" title="Contact Us - Thank You" /><published></published><updated></updated><id></id><content type="html" xml:base="https://opcodesolutions.com/en/contact/thank-you/"><![CDATA[<div class="container">
+  <h1>Contact Us - Thank You</h1>
+  <br>
+  <h4>Thanks for contacting us. Our goal is to get back to you within <u>2 buniness days</u>.</h4>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+
+</div>]]></content><author><name>OpCode Solutions</name><email>info@opcodesolutions.com</email></author><summary type="html"><![CDATA[Thanks for contacting us. Our goal is to get back to you within 2 buniness days.]]></summary></entry><entry xml:lang="en"><title type="html">Contact Us - Oops</title><link href="https://opcodesolutions.com/en/contact/oops/" rel="alternate" type="text/html" title="Contact Us - Oops" /><published></published><updated></updated><id></id><content type="html" xml:base="https://opcodesolutions.com/en/contact/oops/"><![CDATA[<div class="container">
+  <h1>Contact Us - Oops</h1>
+  <br>
+  <h4>Sorry, an error occurred. Please contact us directly: <script>writeMailtoLink("WVZjMWJXSXdRblpqUjA1MldrZFdlbUl5ZURGa1IyeDJZbTVOZFZreU9YUT0=");</script></h4>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+
+</div>]]></content><author><name>OpCode Solutions</name><email>info@opcodesolutions.com</email></author><summary type="html"><![CDATA[Sorry, an error occurred. Please contact us directly.]]></summary></entry><entry xml:lang="en"><title type="html">Hosting</title><link href="https://opcodesolutions.com/en/hosting/" rel="alternate" type="text/html" title="Hosting" /><published></published><updated></updated><id></id><content type="html" xml:base="https://opcodesolutions.com/en/hosting/"><![CDATA[<div class="container">
+
+    <h1>Managed Hosting</h1>
+    <p>We developped your application and we know how to host it. With managed hosting, we take care of everything. We ensure
+      your application always runs smoothly and your data is always safe. See the options below for managed hosting.</p>
+    <br />
+    <div class="row">
+      <div class="col-sm-10 col-sm-offset-1">
+        <table class="table table-hover">
+          <thead>
+            <tr>
+              <th></th>
+              <th class="text-center">Shared Servers</th>
+              <th class="text-center">Dedicated Servers</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="vert-align">Price</td>
+              <td class="vert-align text-center">$20 / month<br /> <small>(cancel or upgrade anytime)</small></td>
+              <td class="vert-align text-center">Starts at $50 / month<br /> <small>(payable one year in advance)</small></td>
+            </tr>
+            <tr>
+              <td class="vert-align">Fully managed<br /> <small>No technical knowledge required</small></td>
+              <td class="vert-align text-center"><span class="glyphicon glyphicon-ok bigger"></span></td>
+              <td class="vert-align text-center"><span class="glyphicon glyphicon-ok bigger"></span></td>
+            </tr>
+            <tr>
+              <td class="vert-align">Data backup and replication<br /> <small>Protects against data loss</small></td>
+              <td class="vert-align text-center"><span class="glyphicon glyphicon-ok bigger"></span></td>
+              <td class="vert-align text-center"><span class="glyphicon glyphicon-ok bigger"></span></td>
+            </tr>
+            <tr>
+              <td class="vert-align">Regular system updates<br /> <small>Keeps your application safe</small></td>
+              <td class="vert-align text-center"><span class="glyphicon glyphicon-ok bigger"></span></td>
+              <td class="vert-align text-center"><span class="glyphicon glyphicon-ok bigger"></span></td>
+            </tr>
+            <tr>
+              <td class="vert-align">SSL certificate<br /> <small>Secure https access</small></td>
+              <td class="vert-align text-center"><span class="glyphicon glyphicon-ok bigger"></span></td>
+              <td class="vert-align text-center"><span class="glyphicon glyphicon-ok bigger"></span></td>
+            </tr>
+            <tr>
+              <td class="vert-align">Light usage<br /> <small>Maximum 1 request / second</small></td>
+              <td class="vert-align text-center"><span class="glyphicon glyphicon-ok bigger"></span></td>
+              <td class="vert-align text-center"><span class="glyphicon glyphicon-ok bigger"></span></td>
+            </tr>
+            <tr>
+              <td class="vert-align">Custom domain name<br /> <small>https://yourdomain.com</small></td>
+              <td class="vert-align text-center"><span class="glyphicon glyphicon-ok bigger"></span></td>
+              <td class="vert-align text-center"><span class="glyphicon glyphicon-ok bigger"></span></td>
+            </tr>
+            <tr>
+              <td class="vert-align">Heavy usage<br /> <small>Up to hundreds of requests / second</small></td>
+              <td class="vert-align text-center"></td>
+              <td class="vert-align text-center"><span class="glyphicon glyphicon-ok bigger"></span></td>
+            </tr>
+            <tr>
+              <td class="vert-align">Isolated environment</td>
+              <td class="vert-align text-center"></td>
+              <td class="vert-align text-center"><span class="glyphicon glyphicon-ok bigger"></span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <h2>Hosting at your Premises</h2>
+    <p>If you already have all the infrastructure required to host your application, you may want to leverage it. We will
+      provide you with the application package that you can deploy in your production environment. In that case, you will be
+      responsible of maintenance tasks like backing-up your data, applying system patches, etc. In terms of infrastructure, you
+      need:</p>
+    <ul>
+      <li>Database (MySQL)</li>
+      <li>JVM (Oracle Java)</li>
+      <li>J2EE Web Container (Tomcat)</li>
+      <li>Domain name, DNS and SSL certificate</li>
+      <li>We also recommend using apache HTTP server (as proxy) and Ubuntu LTS</li>
+    </ul>
+
+    <br />
+    <p>
+      <a class="btn btn-primary" href="/en/contact/" role="button">Contact us &raquo;</a>
+    </p>
+  </div>]]></content><author><name>OpCode Solutions</name><email>info@opcodesolutions.com</email></author><summary type="html"><![CDATA[Get peace of mind with managed hosting. We take care of backing up your data, applying system updates, managing load and more.]]></summary></entry><entry xml:lang="en"><title type="html">Demo</title><link href="https://opcodesolutions.com/en/demo/" rel="alternate" type="text/html" title="Demo" /><published></published><updated></updated><id></id><content type="html" xml:base="https://opcodesolutions.com/en/demo/"><![CDATA[<div class="container">
+    <h1>Demo</h1>
+    <p>The applications we develop run on any web-connected device. Here are some screenshots showing the application accessed
+      from a desktop and a mobile.</p>
+
+    <br />
+
+    <div class="row text-center">
+      <div class="col-sm-9">
+        <p>Login page on Desktop</p>
+        <a href="/demo_desktop_login.png"><img src="/demo_desktop_login.png" class="img_bordered img-responsive"></a><br>
+        <br>
+      </div>
+      <div class="col-sm-3">
+        <p>Login page on Mobile</p>
+        <a href="/demo_mobile_login.png"><img src="/demo_mobile_login.png" class="img_bordered img-responsive"></a><br> <br>
+      </div>
+    </div>
+
+    <div class="row text-center">
+      <div class="col-sm-9">
+        <p>Search and results on Desktop</p>
+        <a href="/demo_desktop_search.png"><img src="/demo_desktop_search.png" class="img_bordered img-responsive"></a><br>
+        <br>
+      </div>
+      <div class="col-sm-3">
+        <p>Search and results on Mobile</p>
+        <a href="/demo_mobile_search.png"><img src="/demo_mobile_search.png" class="img_bordered img-responsive"></a><br>
+        <br>
+      </div>
+    </div>
+
+    <div class="row text-center">
+      <div class="col-sm-9">
+        <p>Data entry on Desktop</p>
+        <a href="/demo_desktop_data_entry.png"><img src="/demo_desktop_data_entry.png" class="img_bordered img-responsive"></a><br>
+        <br>
+      </div>
+      <div class="col-sm-3">
+        <p>Data entry on Mobile</p>
+        <a href="/demo_mobile_data_entry.png"><img src="/demo_mobile_data_entry.png" class="img_bordered img-responsive"></a><br>
+        <br>
+      </div>
+    </div>
+
+    <br />
+    <p>
+      <a class="btn btn-primary" href="/en/pricing/" role="button">Pricing &raquo;</a>
+    </p>
+  </div>]]></content><author><name>OpCode Solutions</name><email>info@opcodesolutions.com</email></author><summary type="html"><![CDATA[The applications we develop run on any web-connected device. See the demo.]]></summary></entry><entry xml:lang="en"><title type="html">Technology</title><link href="https://opcodesolutions.com/en/technology/" rel="alternate" type="text/html" title="Technology" /><published></published><updated></updated><id></id><content type="html" xml:base="https://opcodesolutions.com/en/technology/"><![CDATA[<div class="container">
+    <h1>Technology</h1>
+    <p>
+      The technologies used in your software will allow you to securely access your software 24 hours a day, 7 days a week, from
+      any web-connected device around the globe: Desktop, iPhone/iPad, Android, BlackBerry, etc.<br /> <br /> Here are some
+      technologies and tools often used for application development:
+    </p>
+    <div class="text-center">
+      <div class="logo_thumbnail">
+        <a target="_blank" href="https://google.com/search?q=Oracle Java"><img class="img-thumbnail" alt="java"
+          src="/technologies/java.png" /><br />Oracle Java</a>
+      </div>
+      <div class="logo_thumbnail">
+        <a target="_blank" href="https://google.com/search?q=Apache Tomcat"><img class="img-thumbnail" alt="tomcat"
+          src="/technologies/tomcat.jpg" /><br />Apache Tomcat</a>
+      </div>
+      <div class="logo_thumbnail">
+        <a target="_blank" href="https://google.com/search?q=Hibernate"><img class="img-thumbnail" alt="hibernate"
+          src="/technologies/hibernate.jpg" /><br />Hibernate</a>
+      </div>
+      <div class="logo_thumbnail">
+        <a target="_blank" href="https://google.com/search?q=Debian GNU/Linux"><img class="img-thumbnail" alt="debian"
+          src="/technologies/debian.jpg" /><br />Debian GNU/Linux</a>
+      </div>
+      <div class="logo_thumbnail">
+        <a target="_blank" href="https://google.com/search?q=Eclipse IDE"><img class="img-thumbnail" alt="eclipse"
+          src="/technologies/eclipse.jpg" /><br />Eclipse IDE</a>
+      </div>
+      <div class="logo_thumbnail">
+        <a target="_blank" href="https://google.com/search?q=Subversion"><img class="img-thumbnail" alt="subversion"
+          src="/technologies/subversion.jpg" /><br />Subversion</a>
+      </div>
+      <div class="logo_thumbnail">
+        <a target="_blank" href="https://google.com/search?q=MySQL"><img class="img-thumbnail" alt="mysql"
+          src="/technologies/mysql.jpg" /><br />MySQL</a>
+      </div>
+      <div class="logo_thumbnail">
+        <a target="_blank" href="https://google.com/search?q=GNU tools"><img class="img-thumbnail" alt="gnu"
+          src="/technologies/gnu.jpg" /><br />GNU tools</a>
+      </div>
+      <div class="logo_thumbnail">
+        <a target="_blank" href="https://google.com/search?q=Wireshark"><img class="img-thumbnail" alt="wireshark"
+          src="/technologies/wireshark.jpg" /><br />Wireshark</a>
+      </div>
+      <div class="logo_thumbnail">
+        <a target="_blank" href="https://google.com/search?q=VisualVM"><img class="img-thumbnail" alt="visualvm"
+          src="/technologies/visualvm.jpg" /><br />VisualVM</a>
+      </div>
+      <div class="logo_thumbnail">
+        <a target="_blank" href="https://google.com/search?q=JProfiler"><img class="img-thumbnail" alt="jprofiler"
+          src="/technologies/jprofiler.jpg" /><br />JProfiler</a>
+      </div>
+      <div class="logo_thumbnail">
+        <a target="_blank" href="https://google.com/search?q=XML"><img class="img-thumbnail" alt="xml"
+          src="/technologies/xml.jpg" /><br />XML</a>
+      </div>
+      <div class="logo_thumbnail">
+        <a target="_blank" href="https://google.com/search?q=HTML 5"><img class="img-thumbnail" alt="html_5"
+          src="/technologies/html_5.jpg" /><br />HTML5</a>
+      </div>
+      <div class="logo_thumbnail">
+        <a target="_blank" href="https://google.com/search?q=CSS 3"><img class="img-thumbnail" alt="css_3"
+          src="/technologies/css_3.jpg" /><br />CSS3</a>
+      </div>
+      <div class="logo_thumbnail">
+        <a target="_blank" href="https://google.com/search?q=JavaScript"><img class="img-thumbnail" alt="javascript"
+          src="/technologies/javascript.jpg" /><br />JavaScript</a>
+      </div>
+      <div class="logo_thumbnail">
+        <a target="_blank" href="https://google.com/search?q=JSON"><img class="img-thumbnail" alt="json"
+          src="/technologies/json.jpg" /><br />JSON</a>
+      </div>
+      <div class="logo_thumbnail">
+        <a target="_blank" href="https://google.com/search?q=Apache Ant"><img class="img-thumbnail" alt="ant"
+          src="/technologies/ant.jpg" /><br />Apache Ant</a>
+      </div>
+      <div class="logo_thumbnail">
+        <a target="_blank" href="https://google.com/search?q=Apache Ivy"><img class="img-thumbnail" alt="ivy"
+          src="/technologies/ivy.jpg" /><br />Apache Ivy</a>
+      </div>
+      <div class="logo_thumbnail">
+        <a target="_blank" href="https://google.com/search?q=Ubuntu"><img class="img-thumbnail" alt="ubuntu"
+          src="/technologies/ubuntu.png" /><br />Ubuntu</a>
+      </div>
+      <div class="logo_thumbnail">
+        <a target="_blank" href="https://google.com/search?q=Apache Maven"><img class="img-thumbnail" alt="maven"
+          src="/technologies/maven.jpg" /><br />Apache Maven</a>
+      </div>
+      <div class="logo_thumbnail">
+        <a target="_blank" href="https://google.com/search?q=Spring Framework"><img class="img-thumbnail" alt="spring"
+          src="/technologies/spring.jpg" /><br />Spring Framework</a>
+      </div>
+      <div class="logo_thumbnail">
+        <a target="_blank" href="https://google.com/search?q=Linux"><img class="img-thumbnail" alt="linux"
+          src="/technologies/linux.jpg" /><br />Linux</a>
+      </div>
+      <div class="logo_thumbnail">
+        <a target="_blank" href="https://google.com/search?q=Apache Axis2"><img class="img-thumbnail" alt="axis2"
+          src="/technologies/axis2.jpg" /><br />Apache Axis2</a>
+      </div>
+      <div class="logo_thumbnail">
+        <a target="_blank" href="https://google.com/search?q=Apache Mina"><img class="img-thumbnail" alt="apache_mina"
+          src="/technologies/apache_mina.png" /><br />Apache Mina</a>
+      </div>
+      <div class="logo_thumbnail">
+        <a target="_blank" href="https://google.com/search?q=QuickFix"><img class="img-thumbnail" alt="quickfix"
+          src="/technologies/quickfix.jpg" /><br />QuickFix</a>
+      </div>
+      <div class="logo_thumbnail">
+        <a target="_blank" href="https://google.com/search?q=Apache JMeter"><img class="img-thumbnail" alt="jmeter"
+          src="/technologies/jmeter.jpg" /><br />Apache JMeter</a>
+      </div>
+      <div class="logo_thumbnail">
+        <a target="_blank" href="https://google.com/search?q=Oracle Database"><img class="img-thumbnail" alt="oracle"
+          src="/technologies/oracle.jpg" /><br />Oracle Database</a>
+      </div>
+      <div class="logo_thumbnail">
+        <a target="_blank" href="https://google.com/search?q=Jetty"><img class="img-thumbnail" alt="jetty"
+          src="/technologies/jetty.jpg" /><br />Jetty</a>
+      </div>
+      <div class="logo_thumbnail">
+        <a target="_blank" href="https://google.com/search?q=JBoss"><img class="img-thumbnail" alt="jboss"
+          src="/technologies/jboss.jpg" /><br />JBoss</a>
+      </div>
+      <div class="logo_thumbnail">
+        <a target="_blank" href="https://google.com/search?q=Red Hat"><img class="img-thumbnail" alt="red_hat"
+          src="/technologies/red_hat.jpg" /><br />Red Hat</a>
+      </div>
+      <div class="logo_thumbnail">
+        <a target="_blank" href="https://google.com/search?q=Sybase"><img class="img-thumbnail" alt="sybase"
+          src="/technologies/sybase.jpg" /><br />Sybase</a>
+      </div>
+      <div class="logo_thumbnail">
+        <a target="_blank" href="https://google.com/search?q=MS SQL Server"><img class="img-thumbnail" alt="microsoft_sql_server"
+          src="/technologies/microsoft_sql_server.jpg" /><br />MS SQL Server</a>
+      </div>
+      <div class="logo_thumbnail">
+        <a target="_blank" href="https://google.com/search?q=Google Web Toolkit"><img class="img-thumbnail"
+          alt="google_web_toolkit" src="/technologies/google_web_toolkit.jpg" /><br />Google Web Toolkit</a>
+      </div>
+      <div class="logo_thumbnail">
+        <a target="_blank" href="https://google.com/search?q=OpenLDAP"><img class="img-thumbnail" alt="open_ldap"
+          src="/technologies/open_ldap.jpg" /><br />OpenLDAP</a>
+      </div>
+      <div class="logo_thumbnail">
+        <a target="_blank" href="https://google.com/search?q=Apache ActiveMQ"><img class="img-thumbnail" alt="activemq"
+          src="/technologies/activemq.jpg" /><br />Apache ActiveMQ</a>
+      </div>
+      <div class="logo_thumbnail">
+        <a target="_blank" href="https://google.com/search?q=Google App Engine"><img class="img-thumbnail"
+          alt="google_app_engine" src="/technologies/google_app_engine.jpg" /><br />Google App Engine</a>
+      </div>
+      <div class="logo_thumbnail">
+        <a target="_blank" href="https://google.com/search?q=Mule ESB"><img class="img-thumbnail" alt="mule_esb"
+          src="/technologies/mule_esb.jpg" /><br />Mule ESB</a>
+      </div>
+      <div class="logo_thumbnail">
+        <a target="_blank" href="https://google.com/search?q=Android SDK"><img class="img-thumbnail" alt="android"
+          src="/technologies/android.jpg" /><br />Android SDK</a>
+      </div>
+      <div class="logo_thumbnail">
+        <a target="_blank" href="https://google.com/search?q=Oracle Weblogic"><img class="img-thumbnail" alt="weblogic"
+          src="/technologies/weblogic.jpg" /><br />Oracle Weblogic</a>
+      </div>
+      <div class="logo_thumbnail">
+        <a target="_blank" href="https://google.com/search?q=IBM AIX OS"><img class="img-thumbnail" alt="aix"
+          src="/technologies/aix.jpg" /><br />IBM AIX OS</a>
+      </div>
+      <br />
+      <p>Legal Notice: Most if not all logos and names above are trademarks and/or copyrighted by their respective owners. They
+        are listed here with "fair use" in mind.</p>
+    </div>
+
+  </div>]]></content><author><name>OpCode Solutions</name><email>info@opcodesolutions.com</email></author><summary type="html"><![CDATA[We carefully chose every single piece of our technology stack. This allows us to develop custom applications at a fast pace.]]></summary></entry><entry xml:lang="en"><title type="html">Pricing</title><link href="https://opcodesolutions.com/en/pricing/" rel="alternate" type="text/html" title="Pricing" /><published></published><updated></updated><id></id><content type="html" xml:base="https://opcodesolutions.com/en/pricing/"><![CDATA[<div class="container">
+    <h1>Pricing</h1>
+    <p>
+      Our clients have very different needs and it is not possible to come up with a unique price for everyone. However, some
+      features are requested by many clients and we came up with a straightforward (and fair) way to quote a price. The table below
+      shows how we calculate our prices. <a href="/en/contact/">Contact us</a> to get an estimate for your project.
+    </p>
+    <br />
+
+    <div class="row">
+      <div class="col-sm-10 col-sm-offset-1">
+        <table class="table table-hover">
+          <thead>
+            <tr>
+              <th>Feature</th>
+              <th class="text-center">Cost</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="vert-align">New project<br /> <small>Needs analysis, solution design</small></td>
+              <td class="vert-align text-center"><span class="text-ok"><strong>$1000</strong></span><br /> <small>(one
+                  time fee)</small></td>
+            </tr>
+            <tr>
+              <td class="vert-align">User management system
+                <ul>
+                  <li><small>Username/password protection</small></li>
+                  <li><small>Unlimited users and roles</small></li>
+                  <li><small>Permission access control</small></li>
+                </ul>
+              </td>
+              <td class="vert-align text-center"><span class="text-ok"><strong>$0</strong></span><br /> <small>(included)</small></td>
+            </tr>
+            <tr>
+              <td class="vert-align">Access from any device<br /> <small>Desktop, tablet, mobile (see <a href="/en/demo/">demo</a>)
+              </small></td>
+              <td class="vert-align text-center"><span class="text-ok"><strong>$0</strong></span><br /> <small>(included)</small></td>
+            </tr>
+            <tr>
+              <td class="vert-align">Fast navigation<br /> <small>Below 1 sec, nine times out of ten, measured on server</small></td>
+              <td class="vert-align text-center"><span class="text-ok"><strong>$0</strong></span><br /> <small>(included)</small></td>
+            </tr>
+            <tr>
+              <td class="vert-align">Polished design</td>
+              <td class="vert-align text-center"><span class="text-ok"><strong>$0</strong></span><br /> <small>(included)</small></td>
+            </tr>
+            <tr>
+              <td class="vert-align">Extra DB table<br /> <small>Includes create-read-update-delete user interface</small></td>
+              <td class="vert-align text-center"><span class="text-ok"><strong>$500</strong></span> <small>(per table)</small><br />+
+                <span class="text-ok"><strong>$50</strong></span> <small>(per column)</small></td>
+            </tr>
+            <tr>
+              <td class="vert-align">Accept online payments<br /> <small>Requires PayPal account (free)</small></td>
+              <td class="vert-align text-center"><span class="text-ok"><strong>$500</strong></span></td>
+            </tr>
+            <tr>
+              <td class="vert-align">Any other custom feature
+                <ul>
+                  <li><small>Data migration</small></li>
+                  <li><small>Integration with 3<sup>rd</sup> party system
+                  </small></li>
+                  <li><small>Batch processing</small></li>
+                  <li><small>And more</small></li>
+                </ul>
+              </td>
+              <td class="vert-align text-center"><span class="text-ok"><strong>Variable</strong></span><br /> <small>(<a
+                  href="/en/contact/">contact us</a>)
+              </small></td>
+            </tr>
+            <tr>
+              <td class="vert-align">Test environment<br /> <small>For you to test and approve your new system</small></td>
+              <td class="vert-align text-center"><span class="text-ok"><strong>$0</strong></span><br /> <small>(included)</small></td>
+            </tr>
+            <tr>
+              <td class="vert-align">Bug fixes and minor adjustments</td>
+              <td class="vert-align text-center"><span class="text-ok"><strong>$0</strong></span><br /> <small>(included)</small></td>
+            </tr>
+            <tr>
+              <td class="vert-align">Performance optimisations<br /> <small>When needed</small></td>
+              <td class="vert-align text-center"><span class="text-ok"><strong>$0</strong></span><br /> <small>(included)</small></td>
+            </tr>
+            <tr>
+              <td class="vert-align">Access to source code</td>
+              <td class="vert-align text-center"><span class="text-ok"><strong>$0</strong></span><br /> <small>(included)</small></td>
+            </tr>
+            <tr>
+              <td class="vert-align">Production environment</td>
+              <td class="vert-align text-center"><span class="text-ok"><strong>Variable</strong></span><br /> <small>(see
+                  <a href="/en/hosting/">hosting options</a>)
+              </small></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <br />
+    <p>
+      <a class="btn btn-primary" href="/en/hosting/" role="button">Hosting &raquo;</a>
+    </p>
+  </div>]]></content><author><name>OpCode Solutions</name><email>info@opcodesolutions.com</email></author><summary type="html"><![CDATA[We have very competitive prices. See how we calculate our prices.]]></summary></entry><entry xml:lang="en"><title type="html">Solutions</title><link href="https://opcodesolutions.com/en/solutions/" rel="alternate" type="text/html" title="Solutions" /><published></published><updated></updated><id></id><content type="html" xml:base="https://opcodesolutions.com/en/solutions/"><![CDATA[<div class="container">
+    <h1>Application Development</h1>
+    <p>A custom application is designed solely to meet the needs of your business, nothing more, nothing less. Unlike
+      "generic" softwares, your custom application will be perfectly adjusted to your business processes, whatever they may be. In
+      addition, your custom application belongs to you, you will not have any recurring licensing fees and you can adapt your
+      software to your needs over the years. A custom application can allow you to:</p>
+
+    <br />
+
+    <div class="row">
+      <div class="col-xs-11 col-xs-offset-1">
+        <p>
+          <span class="glyphicon glyphicon-ok"></span> Accept online payments
+        </p>
+        <p>
+          <span class="glyphicon glyphicon-ok"></span> Let your customers use your products/services online at any time (24/7)
+        </p>
+        <p>
+          <span class="glyphicon glyphicon-ok"></span> Gain more credibility with your customers
+        </p>
+        <p>
+          <span class="glyphicon glyphicon-ok"></span> Automate routine tasks and speed up your business
+        </p>
+        <p>
+          <span class="glyphicon glyphicon-ok"></span> Reduce costs and increase production capacity
+        </p>
+        <p>
+          <span class="glyphicon glyphicon-ok"></span> Reduce errors and improve quality
+        </p>
+        <p>
+          <span class="glyphicon glyphicon-ok"></span> Migrate your old system to the new technology
+        </p>
+        <p>
+          <span class="glyphicon glyphicon-ok"></span> Give you an edge over the competition
+        </p>
+        <p>
+          <span class="glyphicon glyphicon-ok"></span> Produce reports and improve your business' performance
+        </p>
+        <p>
+          <span class="glyphicon glyphicon-ok"></span> Manage your business from anywhere
+        </p>
+        <p>
+          <span class="glyphicon glyphicon-ok"></span> Free your time and allow you to focus on growth
+        </p>
+        <p>
+          <span class="glyphicon glyphicon-ok"></span> And more...
+        </p>
+      </div>
+    </div>
+    <br />
+    <p>
+      <a class="btn btn-primary" href="/en/demo/" role="button">Demo &raquo;</a>
+    </p>
+  </div>]]></content><author><name>OpCode Solutions</name><email>info@opcodesolutions.com</email></author><summary type="html"><![CDATA[Our custom solutions will accelerate the growth of your business in many ways. Learn how.]]></summary></entry><entry xml:lang="fr"><title type="html">Accueil</title><link href="https://opcodesolutions.com/fr/" rel="alternate" type="text/html" title="Accueil" /><published></published><updated></updated><id></id><content type="html" xml:base="https://opcodesolutions.com/fr/"><![CDATA[<div class="jumbotron">
+    <div class="container">
+      <h1>Applications pour Entreprises</h1>
+      <p>Au-delà d'un site web et d'un blog, nous développons des applications pour entreprises. Nos solutions sur mesure
+        feront grandir votre entreprise de plusieurs façons.</p>
+      <p>
+        <a href="/fr/solutions/" class="btn btn-success btn-lg" role="button">En savoir plus &raquo;</a>
+      </p>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="row">
+      <div class="col-md-4">
+        <h2>
+          <span class="glyphicon glyphicon-ok"></span> Accessible
+        </h2>
+        <p>Vivez au présent et gérez vos affaires en tout temps. Peu importe quand et où vous êtes, vous pouvez garder un oeil
+          sur vos affaires et faire avancer les choses. Tout ce dont vous avez besoin est d'un accès internet: ordinateur, tablette,
+          mobile.</p>
+        <p>
+          <a class="btn btn-primary" href="/fr/demo/" role="button">Démo &raquo;</a>
+        </p>
+      </div>
+      <div class="col-md-4">
+        <h2>
+          <span class="glyphicon glyphicon-ok"></span> Abordable
+        </h2>
+        <p>Nos prix sont très compétitifs. Nous simplifions les méthodes de travail et choisissons soigneusement chaque élément de
+          technologie. Nous sauvons du temps, vous économisez de l'argent. Spécifiez vos besoins et nous ferons un estimé
+          gratuitement.</p>
+        <p>
+          <a class="btn btn-primary" href="/fr/prix/" role="button">Nos Prix &raquo;</a>
+        </p>
+      </div>
+      <div class="col-md-4">
+        <h2>
+          <span class="glyphicon glyphicon-ok"></span> Autogéré
+        </h2>
+        <p>Aucune aptitude technique n'est requise. L'hébergement autogéré vous offre la tranquillité d'esprit. Nous prenons en
+          charge la copie de vos données, les mises à jour du système et plus. Concentrez-vous sur votre entreprise, et non sur vos
+          serveurs.</p>
+        <p>
+          <a class="btn btn-primary" href="/fr/hebergement/" role="button">Hébergement &raquo;</a>
+        </p>
+      </div>
+    </div>
+  </div>]]></content><author><name>OpCode Solutions</name><email>info@opcodesolutions.com</email></author><summary type="html"><![CDATA[Développeur d'applications pour entreprises. Optimisez votre entreprise.]]></summary></entry><entry xml:lang="fr"><title type="html">Contact</title><link href="https://opcodesolutions.com/fr/contact/" rel="alternate" type="text/html" title="Contact" /><published></published><updated></updated><id></id><content type="html" xml:base="https://opcodesolutions.com/fr/contact/"><![CDATA[<div class="container">
+  <h1>Contactez-nous</h1>
+  <br />
+  <div class="row">
+    <div class="col-md-3">
+      <address>
+        <strong>Demande générale</strong>
+        <p>
+          <script>writeMailtoLink("WVZjMWJXSXdRblpqUjA1MldrZFdlbUl5ZURGa1IyeDJZbTVOZFZreU9YUT0=");</script>
+        </p>
+
+        <strong>Support TI</strong>
+        <p>
+          <script>writeMailtoLink("WXpOV2QyTkhPWGxrUlVKMlkwZE9kbHBIVm5waU1uZ3haRWRzZG1KdVRYVlpNamww");</script>
+        </p>
+
+        <strong>Facturation</strong>
+        <p>
+          <script>writeMailtoLink("V20xR2FtUklWbmxaV0ZKd1lqSTFRV0l6UW1waU1sSnNZekk1YzJSWVVuQmlNalY2VEcxT2RtSlJQVDA9");</script>
+        </p>
+
+        <strong>Adresse postale</strong>
+        <p>
+          Solutions OpCode, Inc.<br>
+          4070 Rue de Louisbourg<br>
+          Montréal, QC<br>
+          H4J 1K5
+        </p>
+
+        <strong>Téléphone</strong>
+        <p>+1 (514) 360-1620</p>
+
+        <strong>Fondateur</strong>
+        <p>
+          Jonathan Demers, ing.<br />
+          <a title="Jonathan Demers" href="https://www.linkedin.com/in/jonathan-demers-ing/"
+            target="_blank">linkedin.com/in/jonathan-demers-ing/</a>
+        </p>
+      </address>
+    </div>
+    <div class="col-md-9" style="border-left: 1px solid #eee;">
+<form class="form-horizontal" role="form" id="contact-form" method="POST"
+  action="https://web-tools.opcodesolutions.com/mailer" target="_blank">
+
+  <div class="form-group">
+    <label for="company" class="col-sm-2 control-label">Compagnie</label>
+    <div class="col-sm-10">
+      <input type="text" class="form-control" name="company" id="company">
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="name" class="col-sm-2 control-label"><b class="text-danger">*</b> Nom</label>
+    <div class="col-sm-10">
+      <input type="text" class="form-control" name="name" id="name" required>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="email" class="col-sm-2 control-label"><b class="text-danger">*</b> Courriel</label>
+    <div class="col-sm-10">
+      <input type="email" class="form-control" name="email" id="email" required>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="subject" class="col-sm-2 control-label"><b class="text-danger">*</b> Sujet</label>
+    <div class="col-sm-10">
+      <input type="text" class="form-control" name="subject" id="subject" required
+        value="Solutions OpCode - Demande générale">
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="message" class="col-sm-2 control-label"><b class="text-danger">*</b> Message</label>
+    <div class="col-sm-10">
+      <textarea class="form-control" name="message" id="message" rows="8" required>
+Bonjour,
+
+J&#39;aimerais obtenir plus d&#39;informations au sujet de XXXXXXXXX.
+
+Pouvez-vous me revenir svp.
+
+Merci
+</textarea>
+    </div>
+  </div>
+  
+  <div class="form-group">
+    <div class="col-sm-offset-2 col-sm-10">
+      <input type="submit" class="btn btn-success" role="button" value="Envoyer">
+    </div>
+  </div>
+
+  <input type='hidden' name='page-load-timestamp' id='page-load-timestamp' value='No Javascript'>
+  <input type='hidden' name='page-submit-timestamp' id='page-submit-timestamp' value='No Javascript'>
+  <input type='hidden' name='page-load-to-submit-time' id='page-load-to-submit-time' value='No Javascript'>
+  <input type='hidden' name='recipient' id='recipient' value='opcode'>
+  <input type='hidden' name='lang' id='lang' value='fr'>
+  <input type='hidden' name='source' id='source' value='/fr/contact/'>
+
+</form>
+<script>
+  var promocodeElement = document.getElementById('promocode');
+  if (promocodeElement) {
+    promocodeElement.value = new URLSearchParams(window.location.search).get('promocode');
+  }
+
+  function getTimestampString(date) {
+    var timestampPart = 'timestampPart';
+    var timeZonePart = 'timeZonePart';
+    try {
+      timestampPart = date.toLocaleString("en-CA");
+    } catch (e) {
+      timestampPart = 'Failed to compute timestampPart: ' + e;
+    }
+    try {
+      timeZonePart = Intl.DateTimeFormat().resolvedOptions().timeZone;
+    } catch (e) {
+      timeZonePart = 'Failed to compute timeZonePart: ' + e;
+    }
+    return timestampPart + ' (' + timeZonePart + ')';
+  }
+  var pageLoadTimestamp = new Date();
+  document.getElementById('source').value = window.location.href + ' ';
+  document.getElementById('page-load-timestamp').value = getTimestampString(pageLoadTimestamp);
+  document.getElementById('contact-form').onsubmit = function () {
+    var subjectElement = document.getElementById('subject');
+    var name = document.getElementById('name').value
+    if (!subjectElement.value.endsWith(name)) {
+      subjectElement.value += ' - ' + document.getElementById('name').value;
+    }
+    var pageSubmitTimestamp = new Date();
+    var pageLoadToSubmitMillis = pageSubmitTimestamp.getTime() - pageLoadTimestamp.getTime();
+    document.getElementById('page-submit-timestamp').value = getTimestampString(pageSubmitTimestamp);
+    document.getElementById('page-load-to-submit-time').value = (pageLoadToSubmitMillis / 1000.0) + " seconds";
+    return true;
+  }
+</script>
+    </div>
+  </div>
+</div>
+<hr>
+<div class="container">
+  <div class="row">
+    <iframe
+      src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d178982.06970781877!2d-73.69833477112023!3d45.49810304397687!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4cc92280c2794e0d%3A0xcd7d1bbc1e18d888!2s4070%20Rue%20de%20Louisbourg%2C%20Montr%C3%A9al%2C%20QC%20H4J%201K5%2C%20Canada!5e0!3m2!1sen!2sus!4v1699723286394!5m2!1sen!2sus"
+      width="100%" height="320" style="border:0;" allowfullscreen="" loading="lazy"
+      referrerpolicy="no-referrer-when-downgrade"></iframe>
+  </div>
+</div>]]></content><author><name>OpCode Solutions</name><email>info@opcodesolutions.com</email></author><summary type="html"><![CDATA[Contactez-nous pour obtenir un estimé gratuit pour votre projet: 514.360.1620]]></summary></entry><entry xml:lang="fr"><title type="html">Contactez-nous - Merci</title><link href="https://opcodesolutions.com/fr/contact/merci/" rel="alternate" type="text/html" title="Contactez-nous - Merci" /><published></published><updated></updated><id></id><content type="html" xml:base="https://opcodesolutions.com/fr/contact/merci/"><![CDATA[<div class="container">
+  <h1>Contactez-nous - Merci</h1>
+  <br>
+  <h4>Merci de nous contacter. Notre objectif est de vous répondre d'ici <u>2 jours ouvrables</u>.</h4>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+
+</div>]]></content><author><name>OpCode Solutions</name><email>info@opcodesolutions.com</email></author><summary type="html"><![CDATA[Merci de nous contacter. Notre objectif est de vous répondre d'ici 2 jours ouvrables.]]></summary></entry><entry xml:lang="fr"><title type="html">Contactez-nous - Oups</title><link href="https://opcodesolutions.com/fr/contact/oups/" rel="alternate" type="text/html" title="Contactez-nous - Oups" /><published></published><updated></updated><id></id><content type="html" xml:base="https://opcodesolutions.com/fr/contact/oups/"><![CDATA[<div class="container">
+  <h1>Contactez-nous - Oups</h1>
+  <br>
+  <h4>Désolé, une erreur s'est produite. Veuillez nous contacter directement: <script>writeMailtoLink("WVZjMWJXSXdRblpqUjA1MldrZFdlbUl5ZURGa1IyeDJZbTVOZFZreU9YUT0=");</script></h4>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+
+</div>]]></content><author><name>OpCode Solutions</name><email>info@opcodesolutions.com</email></author><summary type="html"><![CDATA[Désolé, une erreur s'est produite. Veuillez nous contacter directement.]]></summary></entry><entry xml:lang="fr"><title type="html">Hébergement</title><link href="https://opcodesolutions.com/fr/hebergement/" rel="alternate" type="text/html" title="Hébergement" /><published></published><updated></updated><id></id><content type="html" xml:base="https://opcodesolutions.com/fr/hebergement/"><![CDATA[<div class="container">
+
+    <h1>Hébergement Autogéré</h1>
+    <p>Nous avons développé votre application et nous savons comment l'héberger. Avec l'hébergement autogéré, nous prenons en
+      charge tous les aspects techniques et d'entrerien. Nous nous assurons que votre application fonctionne toujours bien et que
+      vos données sont en sécurité. Voici les options de l'hébergement autogéré.</p>
+    <br />
+
+    <div class="row">
+      <div class="col-sm-10 col-sm-offset-1">
+        <table class="table table-hover">
+          <thead>
+            <tr>
+              <th></th>
+              <th class="text-center">Serveurs Partagés</th>
+              <th class="text-center">Serveurs Dédiés</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="vert-align">Prix</td>
+              <td class="vert-align text-center">20 $ / mois<br /> <small>(sans contrat)</small></td>
+              <td class="vert-align text-center">À partir de 50 $ / mois<br /> <small>(payable un an à l'avance)</small></td>
+            </tr>
+            <tr>
+              <td class="vert-align">Entièrement géré (par nous)<br /> <small>Aucune aptitude technique requise (par
+                  vous)</small></td>
+              <td class="vert-align text-center"><span class="glyphicon glyphicon-ok bigger"></span></td>
+              <td class="vert-align text-center"><span class="glyphicon glyphicon-ok bigger"></span></td>
+            </tr>
+            <tr>
+              <td class="vert-align">Sauvegarde et réplication des données<br /> <small>Protège contre la perte de
+                  données</small></td>
+              <td class="vert-align text-center"><span class="glyphicon glyphicon-ok bigger"></span></td>
+              <td class="vert-align text-center"><span class="glyphicon glyphicon-ok bigger"></span></td>
+            </tr>
+            <tr>
+              <td class="vert-align">Mises à jour régulières des systèmes<br /> <small>Maintient votre application en
+                  sécurité</small></td>
+              <td class="vert-align text-center"><span class="glyphicon glyphicon-ok bigger"></span></td>
+              <td class="vert-align text-center"><span class="glyphicon glyphicon-ok bigger"></span></td>
+            </tr>
+            <tr>
+              <td class="vert-align">Certificat SSL<br /> <small>Accès sécurisé https</small></td>
+              <td class="vert-align text-center"><span class="glyphicon glyphicon-ok bigger"></span></td>
+              <td class="vert-align text-center"><span class="glyphicon glyphicon-ok bigger"></span></td>
+            </tr>
+            <tr>
+              <td class="vert-align">Utilisation légère<br /> <small>Maximum 1 requête / seconde</small></td>
+              <td class="vert-align text-center"><span class="glyphicon glyphicon-ok bigger"></span></td>
+              <td class="vert-align text-center"><span class="glyphicon glyphicon-ok bigger"></span></td>
+            </tr>
+            <tr>
+              <td class="vert-align">Nom de domaine à votre choix<br /> <small>https://votredomaine.com</small></td>
+              <td class="vert-align text-center"><span class="glyphicon glyphicon-ok bigger"></span></td>
+              <td class="vert-align text-center"><span class="glyphicon glyphicon-ok bigger"></span></td>
+            </tr>
+            <tr>
+              <td class="vert-align">Utilisation intensive<br /> <small>Jusqu'à des centaines de requêtes / seconde</small></td>
+              <td class="vert-align text-center"></td>
+              <td class="vert-align text-center"><span class="glyphicon glyphicon-ok bigger"></span></td>
+            </tr>
+            <tr>
+              <td class="vert-align">Environment isolé</td>
+              <td class="vert-align text-center"></td>
+              <td class="vert-align text-center"><span class="glyphicon glyphicon-ok bigger"></span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <h2>Hébergement dans vos locaux</h2>
+    <p>Si vous avez déjà toutes les infrastructures nécessaires pour héberger des applications, vous pouvez en tirer parti.
+      Nous vous fournirons l'application que vous pourrez déployer dans votre environnement de production. Dans ce cas, vous serez
+      responsable des tâches de maintenance comme la sauvegarde vos données (backup), les mises à jour systèmes, etc. En termes
+      d'infrastructure, vous aurez besoin de:</p>
+    <ul>
+      <li>Base de données (MySQL)</li>
+      <li>JVM (Oracle Java)</li>
+      <li>J2EE Web Container (Tomcat)</li>
+      <li>Nom de domaine, serveur DNS et certificat SSL</li>
+      <li>Nous recommendons aussi le serveur web Apache (comme proxy) et Ubuntu LTS</li>
+    </ul>
+
+    <br />
+    <p>
+      <a class="btn btn-primary" href="/fr/contact/" role="button">Contactez nous &raquo;</a>
+    </p>
+  </div>]]></content><author><name>OpCode Solutions</name><email>info@opcodesolutions.com</email></author><summary type="html"><![CDATA[Ayez l'esprit tranquille avec l'hébergement autogéré. Nous nous occupons de la sauvegarde de vos données, les mises à jour système et plus.]]></summary></entry><entry xml:lang="fr"><title type="html">Technologie</title><link href="https://opcodesolutions.com/fr/technologie/" rel="alternate" type="text/html" title="Technologie" /><published></published><updated></updated><id></id><content type="html" xml:base="https://opcodesolutions.com/fr/technologie/"><![CDATA[<div class="container">
+    <h1>Technologie</h1>
+    <p>
+      Les technologies utilisées dans nos solutions vous permettront d'accéder en toute sécurité de votre logiciel 24 heures par
+      jour, 7 jours par semaine, à partir de n'importe quel appareil connecté à Internet dans le monde entier: Ordinateur de
+      bureau, iPhone / iPad, Android, BlackBerry, etc. <br /> <br /> Voici quelques technologies et des outils souvent utilisés
+      pour le développement d'applications:
+    </p>
+    <div class="text-center">
+      <div class="logo_thumbnail">
+        <a target="_blank" href="https://google.com/search?q=Oracle Java"><img class="img-thumbnail" alt="java"
+          src="/technologies/java.png" /><br />Oracle Java</a>
+      </div>
+      <div class="logo_thumbnail">
+        <a target="_blank" href="https://google.com/search?q=Apache Tomcat"><img class="img-thumbnail" alt="tomcat"
+          src="/technologies/tomcat.jpg" /><br />Apache Tomcat</a>
+      </div>
+      <div class="logo_thumbnail">
+        <a target="_blank" href="https://google.com/search?q=Hibernate"><img class="img-thumbnail" alt="hibernate"
+          src="/technologies/hibernate.jpg" /><br />Hibernate</a>
+      </div>
+      <div class="logo_thumbnail">
+        <a target="_blank" href="https://google.com/search?q=Debian GNU/Linux"><img class="img-thumbnail" alt="debian"
+          src="/technologies/debian.jpg" /><br />Debian GNU/Linux</a>
+      </div>
+      <div class="logo_thumbnail">
+        <a target="_blank" href="https://google.com/search?q=Eclipse IDE"><img class="img-thumbnail" alt="eclipse"
+          src="/technologies/eclipse.jpg" /><br />Eclipse IDE</a>
+      </div>
+      <div class="logo_thumbnail">
+        <a target="_blank" href="https://google.com/search?q=Subversion"><img class="img-thumbnail" alt="subversion"
+          src="/technologies/subversion.jpg" /><br />Subversion</a>
+      </div>
+      <div class="logo_thumbnail">
+        <a target="_blank" href="https://google.com/search?q=MySQL"><img class="img-thumbnail" alt="mysql"
+          src="/technologies/mysql.jpg" /><br />MySQL</a>
+      </div>
+      <div class="logo_thumbnail">
+        <a target="_blank" href="https://google.com/search?q=GNU tools"><img class="img-thumbnail" alt="gnu"
+          src="/technologies/gnu.jpg" /><br />GNU tools</a>
+      </div>
+      <div class="logo_thumbnail">
+        <a target="_blank" href="https://google.com/search?q=Wireshark"><img class="img-thumbnail" alt="wireshark"
+          src="/technologies/wireshark.jpg" /><br />Wireshark</a>
+      </div>
+      <div class="logo_thumbnail">
+        <a target="_blank" href="https://google.com/search?q=VisualVM"><img class="img-thumbnail" alt="visualvm"
+          src="/technologies/visualvm.jpg" /><br />VisualVM</a>
+      </div>
+      <div class="logo_thumbnail">
+        <a target="_blank" href="https://google.com/search?q=JProfiler"><img class="img-thumbnail" alt="jprofiler"
+          src="/technologies/jprofiler.jpg" /><br />JProfiler</a>
+      </div>
+      <div class="logo_thumbnail">
+        <a target="_blank" href="https://google.com/search?q=XML"><img class="img-thumbnail" alt="xml"
+          src="/technologies/xml.jpg" /><br />XML</a>
+      </div>
+      <div class="logo_thumbnail">
+        <a target="_blank" href="https://google.com/search?q=HTML 5"><img class="img-thumbnail" alt="html_5"
+          src="/technologies/html_5.jpg" /><br />HTML5</a>
+      </div>
+      <div class="logo_thumbnail">
+        <a target="_blank" href="https://google.com/search?q=CSS 3"><img class="img-thumbnail" alt="css_3"
+          src="/technologies/css_3.jpg" /><br />CSS3</a>
+      </div>
+      <div class="logo_thumbnail">
+        <a target="_blank" href="https://google.com/search?q=JavaScript"><img class="img-thumbnail" alt="javascript"
+          src="/technologies/javascript.jpg" /><br />JavaScript</a>
+      </div>
+      <div class="logo_thumbnail">
+        <a target="_blank" href="https://google.com/search?q=JSON"><img class="img-thumbnail" alt="json"
+          src="/technologies/json.jpg" /><br />JSON</a>
+      </div>
+      <div class="logo_thumbnail">
+        <a target="_blank" href="https://google.com/search?q=Apache Ant"><img class="img-thumbnail" alt="ant"
+          src="/technologies/ant.jpg" /><br />Apache Ant</a>
+      </div>
+      <div class="logo_thumbnail">
+        <a target="_blank" href="https://google.com/search?q=Apache Ivy"><img class="img-thumbnail" alt="ivy"
+          src="/technologies/ivy.jpg" /><br />Apache Ivy</a>
+      </div>
+      <div class="logo_thumbnail">
+        <a target="_blank" href="https://google.com/search?q=Ubuntu"><img class="img-thumbnail" alt="ubuntu"
+          src="/technologies/ubuntu.png" /><br />Ubuntu</a>
+      </div>
+      <div class="logo_thumbnail">
+        <a target="_blank" href="https://google.com/search?q=Apache Maven"><img class="img-thumbnail" alt="maven"
+          src="/technologies/maven.jpg" /><br />Apache Maven</a>
+      </div>
+      <div class="logo_thumbnail">
+        <a target="_blank" href="https://google.com/search?q=Spring Framework"><img class="img-thumbnail" alt="spring"
+          src="/technologies/spring.jpg" /><br />Spring Framework</a>
+      </div>
+      <div class="logo_thumbnail">
+        <a target="_blank" href="https://google.com/search?q=Linux"><img class="img-thumbnail" alt="linux"
+          src="/technologies/linux.jpg" /><br />Linux</a>
+      </div>
+      <div class="logo_thumbnail">
+        <a target="_blank" href="https://google.com/search?q=Apache Axis2"><img class="img-thumbnail" alt="axis2"
+          src="/technologies/axis2.jpg" /><br />Apache Axis2</a>
+      </div>
+      <div class="logo_thumbnail">
+        <a target="_blank" href="https://google.com/search?q=Apache Mina"><img class="img-thumbnail" alt="apache_mina"
+          src="/technologies/apache_mina.png" /><br />Apache Mina</a>
+      </div>
+      <div class="logo_thumbnail">
+        <a target="_blank" href="https://google.com/search?q=QuickFix"><img class="img-thumbnail" alt="quickfix"
+          src="/technologies/quickfix.jpg" /><br />QuickFix</a>
+      </div>
+      <div class="logo_thumbnail">
+        <a target="_blank" href="https://google.com/search?q=Apache JMeter"><img class="img-thumbnail" alt="jmeter"
+          src="/technologies/jmeter.jpg" /><br />Apache JMeter</a>
+      </div>
+      <div class="logo_thumbnail">
+        <a target="_blank" href="https://google.com/search?q=Oracle Database"><img class="img-thumbnail" alt="oracle"
+          src="/technologies/oracle.jpg" /><br />Oracle Database</a>
+      </div>
+      <div class="logo_thumbnail">
+        <a target="_blank" href="https://google.com/search?q=Jetty"><img class="img-thumbnail" alt="jetty"
+          src="/technologies/jetty.jpg" /><br />Jetty</a>
+      </div>
+      <div class="logo_thumbnail">
+        <a target="_blank" href="https://google.com/search?q=JBoss"><img class="img-thumbnail" alt="jboss"
+          src="/technologies/jboss.jpg" /><br />JBoss</a>
+      </div>
+      <div class="logo_thumbnail">
+        <a target="_blank" href="https://google.com/search?q=Red Hat"><img class="img-thumbnail" alt="red_hat"
+          src="/technologies/red_hat.jpg" /><br />Red Hat</a>
+      </div>
+      <div class="logo_thumbnail">
+        <a target="_blank" href="https://google.com/search?q=Sybase"><img class="img-thumbnail" alt="sybase"
+          src="/technologies/sybase.jpg" /><br />Sybase</a>
+      </div>
+      <div class="logo_thumbnail">
+        <a target="_blank" href="https://google.com/search?q=MS SQL Server"><img class="img-thumbnail" alt="microsoft_sql_server"
+          src="/technologies/microsoft_sql_server.jpg" /><br />MS SQL Server</a>
+      </div>
+      <div class="logo_thumbnail">
+        <a target="_blank" href="https://google.com/search?q=Google Web Toolkit"><img class="img-thumbnail"
+          alt="google_web_toolkit" src="/technologies/google_web_toolkit.jpg" /><br />Google Web Toolkit</a>
+      </div>
+      <div class="logo_thumbnail">
+        <a target="_blank" href="https://google.com/search?q=OpenLDAP"><img class="img-thumbnail" alt="open_ldap"
+          src="/technologies/open_ldap.jpg" /><br />OpenLDAP</a>
+      </div>
+      <div class="logo_thumbnail">
+        <a target="_blank" href="https://google.com/search?q=Apache ActiveMQ"><img class="img-thumbnail" alt="activemq"
+          src="/technologies/activemq.jpg" /><br />Apache ActiveMQ</a>
+      </div>
+      <div class="logo_thumbnail">
+        <a target="_blank" href="https://google.com/search?q=Google App Engine"><img class="img-thumbnail"
+          alt="google_app_engine" src="/technologies/google_app_engine.jpg" /><br />Google App Engine</a>
+      </div>
+      <div class="logo_thumbnail">
+        <a target="_blank" href="https://google.com/search?q=Mule ESB"><img class="img-thumbnail" alt="mule_esb"
+          src="/technologies/mule_esb.jpg" /><br />Mule ESB</a>
+      </div>
+      <div class="logo_thumbnail">
+        <a target="_blank" href="https://google.com/search?q=Android SDK"><img class="img-thumbnail" alt="android"
+          src="/technologies/android.jpg" /><br />Android SDK</a>
+      </div>
+      <div class="logo_thumbnail">
+        <a target="_blank" href="https://google.com/search?q=Oracle Weblogic"><img class="img-thumbnail" alt="weblogic"
+          src="/technologies/weblogic.jpg" /><br />Oracle Weblogic</a>
+      </div>
+      <div class="logo_thumbnail">
+        <a target="_blank" href="https://google.com/search?q=IBM AIX OS"><img class="img-thumbnail" alt="aix"
+          src="/technologies/aix.jpg" /><br />IBM AIX OS</a>
+      </div>
+      <br />
+      <p>Note Légale: La plupart sinon tous les logos et noms ci-haut sont des marques de commerce et/ou droits d'auteurs
+        détenus par leurs propriétaires respectifs. Ils sont mentionnés ici dans un esprit de "fair use".</p>
+    </div>
+
+  </div>]]></content><author><name>OpCode Solutions</name><email>info@opcodesolutions.com</email></author><summary type="html"><![CDATA[Nous avons soigneusement choisi chaque élément de technologie de nos solutions. Cela nous permet de développer des applications sur mesure rapidement.]]></summary></entry><entry xml:lang="fr"><title type="html">Nos Prix</title><link href="https://opcodesolutions.com/fr/prix/" rel="alternate" type="text/html" title="Nos Prix" /><published></published><updated></updated><id></id><content type="html" xml:base="https://opcodesolutions.com/fr/prix/"><![CDATA[<div class="container">
+    <h1>Nos Prix</h1>
+    <p>
+      Nos clients ont des besoins très différents et il n'est pas possible d'avoir un prix unique pour tous. Cependant, certaines
+      fonctionnalités sont plus populaires et nous avons une façon simple (et équitable) d'estimer le prix d'un projet. Le tableau
+      ci-dessous montre comment nous calculons nos prix. <a href="/fr/contact/">Contactez-nous</a> pour obtenir un estimé pour
+      votre projet.
+    </p>
+    <br />
+
+    <div class="row">
+      <div class="col-sm-10 col-sm-offset-1">
+        <table class="table table-hover">
+          <thead>
+            <tr>
+              <th>Fonctionnalité</th>
+              <th class="text-center">Prix</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="vert-align">Nouveau projet<br /> <small>Analyse des besoins, conception de la solutions</small></td>
+              <td class="vert-align text-center"><span class="text-ok"><strong>1000 $</strong></span><br /> <small>(dépense
+                  unique)</small></td>
+            </tr>
+            <tr>
+              <td class="vert-align">Système de gestion d'usagers
+                <ul>
+                  <li><small>Protection par nom d'usager et mot de passe</small></li>
+                  <li><small>Nombre illimité d'usagers et de rôles</small></li>
+                  <li><small>Contrôle d'accès par permissions</small></li>
+                </ul>
+              </td>
+              <td class="vert-align text-center"><span class="text-ok"><strong>0 $</strong></span><br /> <small>(inclus)</small></td>
+            </tr>
+            <tr>
+              <td class="vert-align">Accès avec tout appareil<br /> <small>Ordinateur, tablette, mobile (voir la <a
+                  href="/fr/demo/">démo</a>)
+              </small></td>
+              <td class="vert-align text-center"><span class="text-ok"><strong>0 $</strong></span><br /> <small>(inclus)</small></td>
+            </tr>
+            <tr>
+              <td class="vert-align">Navigation rapide<br /> <small>En moins de 1 seconde, neuf fois sur dix, mesuré au
+                  serveur</small></td>
+              <td class="vert-align text-center"><span class="text-ok"><strong>0 $</strong></span><br /> <small>(inclus)</small></td>
+            </tr>
+            <tr>
+              <td class="vert-align">Présentation soignée</td>
+              <td class="vert-align text-center"><span class="text-ok"><strong>0 $</strong></span><br /> <small>(inclus)</small></td>
+            </tr>
+            <tr>
+              <td class="vert-align">Table BD supplémentaire<br /> <small>Interface usager incluse</small></td>
+              <td class="vert-align text-center"><span class="text-ok"><strong>500 $</strong></span> <small>(par table)</small><br />+
+                <span class="text-ok"><strong>50 $</strong></span> <small>(par column)</small></td>
+            </tr>
+            <tr>
+              <td class="vert-align">Accepter les paiements en ligne<br /> <small>Un compte PayPal est requis (gratuit)</small></td>
+              <td class="vert-align text-center"><span class="text-ok"><strong>500 $</strong></span></td>
+            </tr>
+            <tr>
+              <td class="vert-align">Toute autre fonction personnalisée
+                <ul>
+                  <li><small>Migration de données</small></li>
+                  <li><small>Intégration avec d'autres systèmes</small></li>
+                  <li><small>Traitement en lot</small></li>
+                  <li><small>Et plus</small></li>
+                </ul>
+              </td>
+              <td class="vert-align text-center"><span class="text-ok"><strong>Variable</strong></span><br /> <small>(<a
+                  href="/fr/contact/">contactez-nous</a>)
+              </small></td>
+            </tr>
+            <tr>
+              <td class="vert-align">Environnement de test<br /> <small>Pour vous permettre de tester et d'approuver
+                  votre nouveau système</small></td>
+              <td class="vert-align text-center"><span class="text-ok"><strong>0 $</strong></span><br /> <small>(inclus)</small></td>
+            </tr>
+            <tr>
+              <td class="vert-align">Corrections de bugs et des ajustements mineurs</td>
+              <td class="vert-align text-center"><span class="text-ok"><strong>0 $</strong></span><br /> <small>(inclus)</small></td>
+            </tr>
+            <tr>
+              <td class="vert-align">Optimisations de performance<br /> <small>Lorsque nécessaire</small></td>
+              <td class="vert-align text-center"><span class="text-ok"><strong>0 $</strong></span><br /> <small>(inclus)</small></td>
+            </tr>
+            <tr>
+              <td class="vert-align">Accès au code source</td>
+              <td class="vert-align text-center"><span class="text-ok"><strong>0 $</strong></span><br /> <small>(inclus)</small></td>
+            </tr>
+            <tr>
+              <td class="vert-align">Environnement de production</td>
+              <td class="vert-align text-center"><span class="text-ok"><strong>Variable</strong></span><br /> <small>(voir
+                  les <a href="/fr/hebergement/">options d'hébergement</a>)
+              </small></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <br />
+    <p>
+      <a class="btn btn-primary" href="/fr/hebergement/" role="button">Hébergement &raquo;</a>
+    </p>
+  </div>]]></content><author><name>OpCode Solutions</name><email>info@opcodesolutions.com</email></author><summary type="html"><![CDATA[Nous avons des prix très compétitifs. Voyez comment nous calculons nos prix.]]></summary></entry><entry xml:lang="fr"><title type="html">Démo</title><link href="https://opcodesolutions.com/fr/demo/" rel="alternate" type="text/html" title="Démo" /><published></published><updated></updated><id></id><content type="html" xml:base="https://opcodesolutions.com/fr/demo/"><![CDATA[<div class="container">
+    <h1>Démo</h1>
+    <p>Les applications que nous développons sont accessible avec tout appareil possédant un navigateur web: ordinateur,
+      tablette, mobile. Voici des captures d'écran montrant une application accédée à partir d'un ordinateur de bureau et d'un
+      téléphone intelligent (mobile).</p>
+
+    <br />
+
+    <div class="row text-center">
+      <div class="col-sm-9">
+        <p>Page de connexion - Desktop</p>
+        <a href="/demo_desktop_login.png"><img src="/demo_desktop_login.png" class="img_bordered img-responsive"></a><br>
+        <br>
+      </div>
+      <div class="col-sm-3">
+        <p>Page de connexion - Mobile</p>
+        <a href="/demo_mobile_login.png"><img src="/demo_mobile_login.png" class="img_bordered img-responsive"></a><br> <br>
+      </div>
+    </div>
+
+    <div class="row text-center">
+      <div class="col-sm-9">
+        <p>Recherche - Desktop</p>
+        <a href="/demo_desktop_search.png"><img src="/demo_desktop_search.png" class="img_bordered img-responsive"></a><br>
+        <br>
+      </div>
+      <div class="col-sm-3">
+        <p>Recherche - Mobile</p>
+        <a href="/demo_mobile_search.png"><img src="/demo_mobile_search.png" class="img_bordered img-responsive"></a><br>
+        <br>
+      </div>
+    </div>
+
+    <div class="row text-center">
+      <div class="col-sm-9">
+        <p>Saisie de données - Desktop</p>
+        <a href="/demo_desktop_data_entry.png"><img src="/demo_desktop_data_entry.png" class="img_bordered img-responsive"></a><br>
+        <br>
+      </div>
+      <div class="col-sm-3">
+        <p>Saisie de données - Mobile</p>
+        <a href="/demo_mobile_data_entry.png"><img src="/demo_mobile_data_entry.png" class="img_bordered img-responsive"></a><br>
+        <br>
+      </div>
+    </div>
+
+    <br />
+    <p>
+      <a class="btn btn-primary" href="/fr/prix/" role="button">Nos Prix &raquo;</a>
+    </p>
+  </div>]]></content><author><name>OpCode Solutions</name><email>info@opcodesolutions.com</email></author><summary type="html"><![CDATA[Les applications que nous développons sont accessible avec tout appareil possédant un navigateur web: ordinateur, tablette, mobile. Voir la démo.]]></summary></entry><entry xml:lang="fr"><title type="html">Solutions</title><link href="https://opcodesolutions.com/fr/solutions/" rel="alternate" type="text/html" title="Solutions" /><published></published><updated></updated><id></id><content type="html" xml:base="https://opcodesolutions.com/fr/solutions/"><![CDATA[<div class="container">
+    <h1>Développement d'Applications</h1>
+    <p>Une application sur mesure est conçu uniquement pour répondre aux besoins de votre entreprise, rien de plus, rien de
+      moins. Contrairement aux logiciels «génériques», votre application personnalisée sera parfaitement ajusté à vos processus
+      d'affaires, quels qu'ils soient. De plus, votre application personnalisée vous appartient; vous n'aurez pas de frais de
+      licence récurrents et vous pouvez l'adapter à vos besoins au fil des ans. Une application personnalisée peut vous permettre
+      de:</p>
+
+    <br />
+
+    <div class="row">
+      <div class="col-xs-11 col-xs-offset-1">
+        <p>
+          <span class="glyphicon glyphicon-ok"></span> Accepter les paiements en ligne
+        </p>
+        <p>
+          <span class="glyphicon glyphicon-ok"></span> Laissez vos clients utiliser vos produits/services en ligne en tout temps
+          (24/7)
+        </p>
+        <p>
+          <span class="glyphicon glyphicon-ok"></span> Gagner plus de crédibilité auprès de vos clients
+        </p>
+        <p>
+          <span class="glyphicon glyphicon-ok"></span> Gérer vos affaires en tout temps (ordinateur, tablette, mobile)
+        </p>
+        <p>
+          <span class="glyphicon glyphicon-ok"></span> Automatiser les tâches routinières et accélérer vos affaires
+        </p>
+        <p>
+          <span class="glyphicon glyphicon-ok"></span> Réduire les coûts et augmenter votre capacité de production
+        </p>
+        <p>
+          <span class="glyphicon glyphicon-ok"></span> Diminuer les erreurs et améliorer la qualité
+        </p>
+        <p>
+          <span class="glyphicon glyphicon-ok"></span> Migrez votre ancien système vers les nouvelles technologies
+        </p>
+        <p>
+          <span class="glyphicon glyphicon-ok"></span> Vous donner un avantage sur la compétition
+        </p>
+        <p>
+          <span class="glyphicon glyphicon-ok"></span> Produire des rapports et améliorer la performance de votre entreprise
+        </p>
+        <p>
+          <span class="glyphicon glyphicon-ok"></span> Libérer votre temps et vous permettre de vous concentrer sur la croissance
+        </p>
+        <p>
+          <span class="glyphicon glyphicon-ok"></span> Et bien plus...
+        </p>
+      </div>
+    </div>
+    <br />
+    <p>
+      <a class="btn btn-primary" href="/fr/demo/" role="button">Démo &raquo;</a>
+    </p>
+  </div>]]></content><author><name>OpCode Solutions</name><email>info@opcodesolutions.com</email></author><summary type="html"><![CDATA[Nos solutions personnalisées permettront d'accélérer la croissance de votre entreprise de plusieurs façons. Voyez comment.]]></summary></entry><entry><title type="html">Contact</title><link href="https://opcodesolutions.com/tech/contact/" rel="alternate" type="text/html" title="Contact" /><published></published><updated></updated><id></id><content type="html" xml:base="https://opcodesolutions.com/tech/contact/"><![CDATA[<h2 id="to-contact-opcode-solutions-inc">To Contact OpCode Solutions Inc.</h2>
+
+<p>Please visit <a href="https://opcodesolutions.com/en/contact/">https://opcodesolutions.com/en/contact/</a></p>
+
+<p>Or send an email to <a href="mailto:info@opcodesolutions.com">info@opcodesolutions.com</a></p>]]></content><author><name>OpCode Solutions</name><email>info@opcodesolutions.com</email></author></entry><entry><title type="html"></title><link href="https://opcodesolutions.com/404.html" rel="alternate" type="text/html" title="" /><published></published><updated></updated><id></id><content type="html" xml:base="https://opcodesolutions.com/404.html"><![CDATA[<div class="container">
+  <h1>404</h1>
+
+  <p><strong>Page not found :(</strong></p>
+  <p>The requested page could not be found.</p>
+</div>]]></content><author><name>OpCode Solutions</name><email>info@opcodesolutions.com</email></author></entry></feed>
