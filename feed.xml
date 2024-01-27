@@ -3,7 +3,7 @@
   <generator uri="https://jekyllrb.com/" version="4.3.2">Jekyll</generator>
   <link href="https://opcodesolutions.com/feed.xml" rel="self" type="application/atom+xml"/>
   <link href="https://opcodesolutions.com/" rel="alternate" type="text/html"/>
-  <updated>2024-01-27T09:00:47-05:00</updated>
+  <updated>2024-01-27T09:30:40-05:00</updated>
   <id>https://opcodesolutions.com/feed.xml</id>
   <title type="html">OpCode Solutions</title>
   <subtitle>Optimize Your Processes</subtitle>
@@ -15,7 +15,7 @@
     <title type="html">A/B Testing Landing Pages When Launching New Product</title>
     <link href="https://opcodesolutions.com/tech/a-b-testing-landing-pages-when-launching-new-product/" rel="alternate" type="text/html" title="A/B Testing Landing Pages When Launching New Product"/>
     <published>2023-11-12T00:00:00-05:00</published>
-    <updated>2023-11-12T00:00:00-05:00</updated>
+    <updated>2024-01-27T00:00:00-05:00</updated>
     <id>https://opcodesolutions.com/tech/a-b-testing-landing-pages-when-launching-new-product</id>
     <author>
       <name>OpCode Solutions</name>
@@ -27,7 +27,7 @@
     <title type="html">Apache Reverse Proxy with Secure TLS WebSocket (wss://)</title>
     <link href="https://opcodesolutions.com/tech/apache-reverse-proxy-with-secure-tls-websocket-wss/" rel="alternate" type="text/html" title="Apache Reverse Proxy with Secure TLS WebSocket (wss://)"/>
     <published>2022-12-13T00:00:00-05:00</published>
-    <updated>2022-12-13T00:00:00-05:00</updated>
+    <updated>2024-01-27T00:00:00-05:00</updated>
     <id>https://opcodesolutions.com/tech/apache-reverse-proxy-with-secure-tls-websocket-wss</id>
     <author>
       <name>OpCode Solutions</name>
@@ -39,7 +39,7 @@
     <title type="html">Debian -bash: envsubst: command not found</title>
     <link href="https://opcodesolutions.com/tech/debian-bash-envsubst-command-not-found/" rel="alternate" type="text/html" title="Debian -bash: envsubst: command not found"/>
     <published>2022-12-04T00:00:00-05:00</published>
-    <updated>2022-12-04T00:00:00-05:00</updated>
+    <updated>2024-01-27T00:00:00-05:00</updated>
     <id>https://opcodesolutions.com/tech/debian-bash-envsubst-command-not-found</id>
     <author>
       <name>OpCode Solutions</name>
@@ -51,7 +51,7 @@
     <title type="html">Script to automate VM creation on Proxmox VE</title>
     <link href="https://opcodesolutions.com/tech/script-to-automate-vm-creation-on-proxmox-ve/" rel="alternate" type="text/html" title="Script to automate VM creation on Proxmox VE"/>
     <published>2022-12-02T00:00:00-05:00</published>
-    <updated>2022-12-02T00:00:00-05:00</updated>
+    <updated>2024-01-27T00:00:00-05:00</updated>
     <id>https://opcodesolutions.com/tech/script-to-automate-vm-creation-on-proxmox-ve</id>
     <author>
       <name>OpCode Solutions</name>
@@ -63,7 +63,7 @@
     <title type="html">Debian -bash: netstat: command not found</title>
     <link href="https://opcodesolutions.com/tech/debian-bash-netstat-command-not-found/" rel="alternate" type="text/html" title="Debian -bash: netstat: command not found"/>
     <published>2022-12-01T00:00:00-05:00</published>
-    <updated>2022-12-01T00:00:00-05:00</updated>
+    <updated>2024-01-27T00:00:00-05:00</updated>
     <id>https://opcodesolutions.com/tech/debian-bash-netstat-command-not-found</id>
     <author>
       <name>OpCode Solutions</name>
@@ -75,7 +75,7 @@
     <title type="html">Increase disk size of Debian cloud image</title>
     <link href="https://opcodesolutions.com/tech/increase-disk-size-of-debian-cloud-image/" rel="alternate" type="text/html" title="Increase disk size of Debian cloud image"/>
     <published>2022-12-01T00:00:00-05:00</published>
-    <updated>2022-12-01T00:00:00-05:00</updated>
+    <updated>2024-01-27T00:00:00-05:00</updated>
     <id>https://opcodesolutions.com/tech/increase-disk-size-of-debian-cloud-image</id>
     <author>
       <name>OpCode Solutions</name>
@@ -87,7 +87,7 @@
     <title type="html">How to Migrate 3 MySQL Databases to Amazon RDS in 5 Minutes</title>
     <link href="https://opcodesolutions.com/tech/how-to-migrate-3-mysql-databases-to-amazon-rds-in-5-minutes/" rel="alternate" type="text/html" title="How to Migrate 3 MySQL Databases to Amazon RDS in 5 Minutes"/>
     <published>2014-12-23T00:00:00-05:00</published>
-    <updated>2014-12-23T00:00:00-05:00</updated>
+    <updated>2024-01-27T00:00:00-05:00</updated>
     <id>https://opcodesolutions.com/tech/how-to-migrate-3-mysql-databases-to-amazon-rds-in-5-minutes</id>
     <author>
       <name>OpCode Solutions</name>
@@ -99,7 +99,7 @@
     <title type="html">ImageIO.read() causes OutOfMemoryError</title>
     <link href="https://opcodesolutions.com/tech/imageio-read-causes-outofmemoryerror/" rel="alternate" type="text/html" title="ImageIO.read() causes OutOfMemoryError"/>
     <published>2014-11-24T00:00:00-05:00</published>
-    <updated>2014-11-24T00:00:00-05:00</updated>
+    <updated>2024-01-27T00:00:00-05:00</updated>
     <id>https://opcodesolutions.com/tech/imageio-read-causes-outofmemoryerror</id>
     <author>
       <name>OpCode Solutions</name>
@@ -111,7 +111,7 @@
     <title type="html">HTTPS Wildcard Subdomain: DNS + Apache + Tomcat Config</title>
     <link href="https://opcodesolutions.com/tech/https-wildcard-subdomain-dns-apache-tomcat-config/" rel="alternate" type="text/html" title="HTTPS Wildcard Subdomain: DNS + Apache + Tomcat Config"/>
     <published>2014-11-19T00:00:00-05:00</published>
-    <updated>2014-11-19T00:00:00-05:00</updated>
+    <updated>2024-01-27T00:00:00-05:00</updated>
     <id>https://opcodesolutions.com/tech/https-wildcard-subdomain-dns-apache-tomcat-config</id>
     <author>
       <name>OpCode Solutions</name>
@@ -123,7 +123,7 @@
     <title type="html">Ubuntu Apache Reverse Proxy Rewrite HTML Links</title>
     <link href="https://opcodesolutions.com/tech/ubuntu-apache-reverse-proxy-rewrite-html-links/" rel="alternate" type="text/html" title="Ubuntu Apache Reverse Proxy Rewrite HTML Links"/>
     <published>2014-11-07T00:00:00-05:00</published>
-    <updated>2014-11-07T00:00:00-05:00</updated>
+    <updated>2024-01-27T00:00:00-05:00</updated>
     <id>https://opcodesolutions.com/tech/ubuntu-apache-reverse-proxy-rewrite-html-links</id>
     <author>
       <name>OpCode Solutions</name>
@@ -135,7 +135,7 @@
     <title type="html">Programmatically Configure Hibernate (JPA) with DBCP</title>
     <link href="https://opcodesolutions.com/tech/programmatically-configure-hibernate-jpa-with-dbcp/" rel="alternate" type="text/html" title="Programmatically Configure Hibernate (JPA) with DBCP"/>
     <published>2014-11-04T00:00:00-05:00</published>
-    <updated>2014-11-04T00:00:00-05:00</updated>
+    <updated>2024-01-27T00:00:00-05:00</updated>
     <id>https://opcodesolutions.com/tech/programmatically-configure-hibernate-jpa-with-dbcp</id>
     <author>
       <name>OpCode Solutions</name>
@@ -147,7 +147,7 @@
     <title type="html">How to fix java.lang.OutOfMemoryError: Java heap space</title>
     <link href="https://opcodesolutions.com/tech/solve-java-lang-outofmemoryerror-java-heap-space/" rel="alternate" type="text/html" title="How to fix java.lang.OutOfMemoryError: Java heap space"/>
     <published>2014-11-04T00:00:00-05:00</published>
-    <updated>2014-11-04T00:00:00-05:00</updated>
+    <updated>2024-01-27T00:00:00-05:00</updated>
     <id>https://opcodesolutions.com/tech/solve-java-lang-outofmemoryerror-java-heap-space</id>
     <author>
       <name>OpCode Solutions</name>
@@ -159,7 +159,7 @@
     <title type="html">How to fix java.lang.OutOfMemoryError: PermGen space</title>
     <link href="https://opcodesolutions.com/tech/java-lang-outofmemoryerror-permgen-space/" rel="alternate" type="text/html" title="How to fix java.lang.OutOfMemoryError: PermGen space"/>
     <published>2014-05-30T00:00:00-04:00</published>
-    <updated>2014-05-30T00:00:00-04:00</updated>
+    <updated>2024-01-27T00:00:00-05:00</updated>
     <id>https://opcodesolutions.com/tech/java-lang-outofmemoryerror-permgen-space</id>
     <author>
       <name>OpCode Solutions</name>
@@ -171,7 +171,7 @@
     <title type="html">New website for my software development company</title>
     <link href="https://opcodesolutions.com/tech/new-website-for-my-software-development-company/" rel="alternate" type="text/html" title="New website for my software development company"/>
     <published>2014-05-29T00:00:00-04:00</published>
-    <updated>2014-05-29T00:00:00-04:00</updated>
+    <updated>2024-01-27T00:00:00-05:00</updated>
     <id>https://opcodesolutions.com/tech/new-website-for-my-software-development-company</id>
     <author>
       <name>OpCode Solutions</name>
@@ -183,7 +183,7 @@
     <title type="html">VisualVM slow with heap dump files</title>
     <link href="https://opcodesolutions.com/tech/visualvm-slow-with-heap-dump-files/" rel="alternate" type="text/html" title="VisualVM slow with heap dump files"/>
     <published>2010-06-12T00:00:00-04:00</published>
-    <updated>2010-06-12T00:00:00-04:00</updated>
+    <updated>2024-01-27T00:00:00-05:00</updated>
     <id>https://opcodesolutions.com/tech/visualvm-slow-with-heap-dump-files</id>
     <author>
       <name>OpCode Solutions</name>
@@ -195,7 +195,7 @@
     <title type="html">Oracle to Acquire Sun</title>
     <link href="https://opcodesolutions.com/tech/oracle-to-acquire-sun/" rel="alternate" type="text/html" title="Oracle to Acquire Sun"/>
     <published>2009-04-20T00:00:00-04:00</published>
-    <updated>2009-04-20T00:00:00-04:00</updated>
+    <updated>2024-01-27T00:00:00-05:00</updated>
     <id>https://opcodesolutions.com/tech/oracle-to-acquire-sun</id>
     <author>
       <name>OpCode Solutions</name>
@@ -207,7 +207,7 @@
     <title type="html">kill -3 is your friend</title>
     <link href="https://opcodesolutions.com/tech/kill-3-is-your-friend/" rel="alternate" type="text/html" title="kill -3 is your friend"/>
     <published>2009-04-19T00:00:00-04:00</published>
-    <updated>2009-04-19T00:00:00-04:00</updated>
+    <updated>2024-01-27T00:00:00-05:00</updated>
     <id>https://opcodesolutions.com/tech/kill-3-is-your-friend</id>
     <author>
       <name>OpCode Solutions</name>
@@ -219,7 +219,7 @@
     <title type="html">Remote Debugging in Java</title>
     <link href="https://opcodesolutions.com/tech/remote-debugging-in-java/" rel="alternate" type="text/html" title="Remote Debugging in Java"/>
     <published>2009-04-18T00:00:00-04:00</published>
-    <updated>2009-04-18T00:00:00-04:00</updated>
+    <updated>2024-01-27T00:00:00-05:00</updated>
     <id>https://opcodesolutions.com/tech/remote-debugging-in-java</id>
     <author>
       <name>OpCode Solutions</name>
