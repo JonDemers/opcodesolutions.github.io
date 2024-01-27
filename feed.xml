@@ -1,1 +1,230 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.2">Jekyll</generator><link href="https://opcodesolutions.com/feed.xml" rel="self" type="application/atom+xml" /><link href="https://opcodesolutions.com/" rel="alternate" type="text/html" /><updated>2024-01-27T08:24:25-05:00</updated><id>https://opcodesolutions.com/feed.xml</id><title type="html">OpCode Solutions</title><subtitle>Optimize Your Processes</subtitle><author><name>OpCode Solutions</name><email>info@opcodesolutions.com</email></author><entry><title type="html">A/B Testing Landing Pages When Launching New Product</title><link href="https://opcodesolutions.com/tech/a-b-testing-landing-pages-when-launching-new-product/" rel="alternate" type="text/html" title="A/B Testing Landing Pages When Launching New Product" /><published>2023-11-12T00:00:00-05:00</published><updated>2023-11-12T00:00:00-05:00</updated><id>https://opcodesolutions.com/tech/a-b-testing-landing-pages-when-launching-new-product</id><author><name>OpCode Solutions</name><email>info@opcodesolutions.com</email></author><summary type="html"><![CDATA[So you have a new product or service? You are not sure how to promote it online?]]></summary></entry><entry><title type="html">Apache Reverse Proxy with Secure TLS WebSocket (wss://)</title><link href="https://opcodesolutions.com/tech/apache-reverse-proxy-with-secure-tls-websocket-wss/" rel="alternate" type="text/html" title="Apache Reverse Proxy with Secure TLS WebSocket (wss://)" /><published>2022-12-13T00:00:00-05:00</published><updated>2022-12-13T00:00:00-05:00</updated><id>https://opcodesolutions.com/tech/apache-reverse-proxy-with-secure-tls-websocket-wss</id><author><name>OpCode Solutions</name><email>info@opcodesolutions.com</email></author><summary type="html"><![CDATA[Configuring Apache reverse proxy with WebSocket can be tricky. It is even trickier if the WebSocket is secured with TLS (wss://). Here is how to do it.]]></summary></entry><entry><title type="html">Debian -bash: envsubst: command not found</title><link href="https://opcodesolutions.com/tech/debian-bash-envsubst-command-not-found/" rel="alternate" type="text/html" title="Debian -bash: envsubst: command not found" /><published>2022-12-04T00:00:00-05:00</published><updated>2022-12-04T00:00:00-05:00</updated><id>https://opcodesolutions.com/tech/debian-bash-envsubst-command-not-found</id><author><name>OpCode Solutions</name><email>info@opcodesolutions.com</email></author><summary type="html"><![CDATA[Solution]]></summary></entry><entry><title type="html">Script to automate VM creation on Proxmox VE</title><link href="https://opcodesolutions.com/tech/script-to-automate-vm-creation-on-proxmox-ve/" rel="alternate" type="text/html" title="Script to automate VM creation on Proxmox VE" /><published>2022-12-02T00:00:00-05:00</published><updated>2022-12-02T00:00:00-05:00</updated><id>https://opcodesolutions.com/tech/script-to-automate-vm-creation-on-proxmox-ve</id><author><name>OpCode Solutions</name><email>info@opcodesolutions.com</email></author><summary type="html"><![CDATA[This script will create a VM on Proxmox VE without requiring any user interation. Upon completion, you’ll be able to ssh to the VM with your ssh key, just like you’d do with a VM hosted on a major cloud provider like AWS.]]></summary></entry><entry><title type="html">Debian -bash: netstat: command not found</title><link href="https://opcodesolutions.com/tech/debian-bash-netstat-command-not-found/" rel="alternate" type="text/html" title="Debian -bash: netstat: command not found" /><published>2022-12-01T00:00:00-05:00</published><updated>2022-12-01T00:00:00-05:00</updated><id>https://opcodesolutions.com/tech/debian-bash-netstat-command-not-found</id><author><name>OpCode Solutions</name><email>info@opcodesolutions.com</email></author><summary type="html"><![CDATA[Solution]]></summary></entry><entry><title type="html">Increase disk size of Debian cloud image</title><link href="https://opcodesolutions.com/tech/increase-disk-size-of-debian-cloud-image/" rel="alternate" type="text/html" title="Increase disk size of Debian cloud image" /><published>2022-12-01T00:00:00-05:00</published><updated>2022-12-01T00:00:00-05:00</updated><id>https://opcodesolutions.com/tech/increase-disk-size-of-debian-cloud-image</id><author><name>OpCode Solutions</name><email>info@opcodesolutions.com</email></author><summary type="html"><![CDATA[Generic Debian cloud images come with small disk size by default: 2GB. We can resize/increase the disk storage after the VM is created, but this is not convenient because we’d have to do this for each VM we create.]]></summary></entry><entry><title type="html">How to Migrate 3 MySQL Databases to Amazon RDS in 5 Minutes</title><link href="https://opcodesolutions.com/tech/how-to-migrate-3-mysql-databases-to-amazon-rds-in-5-minutes/" rel="alternate" type="text/html" title="How to Migrate 3 MySQL Databases to Amazon RDS in 5 Minutes" /><published>2014-12-23T00:00:00-05:00</published><updated>2014-12-23T00:00:00-05:00</updated><id>https://opcodesolutions.com/tech/how-to-migrate-3-mysql-databases-to-amazon-rds-in-5-minutes</id><author><name>OpCode Solutions</name><email>info@opcodesolutions.com</email></author><summary type="html"><![CDATA[I had a LAMT (Linux-Apache-MySQL-Tomcat) on Amazon EC2 and I wanted to move all remaining MySQL databases (3) to an existing Amazon RDS instance. This would allow me to shutdown the MySQL instance on EC2, freeing RAM for Tomcat and leveraging RDS automated backups for those 3 databases in case of a disaster. The databases to migrate only contain low volume TEST data, but I already have that RDS instance, so why not use it?]]></summary></entry><entry><title type="html">ImageIO.read() causes OutOfMemoryError</title><link href="https://opcodesolutions.com/tech/imageio-read-causes-outofmemoryerror/" rel="alternate" type="text/html" title="ImageIO.read() causes OutOfMemoryError" /><published>2014-11-24T00:00:00-05:00</published><updated>2014-11-24T00:00:00-05:00</updated><id>https://opcodesolutions.com/tech/imageio-read-causes-outofmemoryerror</id><author><name>OpCode Solutions</name><email>info@opcodesolutions.com</email></author><summary type="html"><![CDATA[The problem]]></summary></entry><entry><title type="html">HTTPS Wildcard Subdomain: DNS + Apache + Tomcat Config</title><link href="https://opcodesolutions.com/tech/https-wildcard-subdomain-dns-apache-tomcat-config/" rel="alternate" type="text/html" title="HTTPS Wildcard Subdomain: DNS + Apache + Tomcat Config" /><published>2014-11-19T00:00:00-05:00</published><updated>2014-11-19T00:00:00-05:00</updated><id>https://opcodesolutions.com/tech/https-wildcard-subdomain-dns-apache-tomcat-config</id><author><name>OpCode Solutions</name><email>info@opcodesolutions.com</email></author><summary type="html"><![CDATA[I recently had to configure HTTPS on a wildcard subdomain with Apache HTTP server as reverse proxy to a Tomcat backend. I had few more requirements:]]></summary></entry><entry><title type="html">Ubuntu Apache Reverse Proxy Rewrite HTML Links</title><link href="https://opcodesolutions.com/tech/ubuntu-apache-reverse-proxy-rewrite-html-links/" rel="alternate" type="text/html" title="Ubuntu Apache Reverse Proxy Rewrite HTML Links" /><published>2014-11-07T00:00:00-05:00</published><updated>2014-11-07T00:00:00-05:00</updated><id>https://opcodesolutions.com/tech/ubuntu-apache-reverse-proxy-rewrite-html-links</id><author><name>OpCode Solutions</name><email>info@opcodesolutions.com</email></author><summary type="html"><![CDATA[I just spent few hours on this, so I will share a few tips. If you want to setup a reverse proxy and rewrite links in html pages, you can use Apache module mod_proxy_html.]]></summary></entry><entry><title type="html">Programmatically Configure Hibernate (JPA) with DBCP</title><link href="https://opcodesolutions.com/tech/programmatically-configure-hibernate-jpa-with-dbcp/" rel="alternate" type="text/html" title="Programmatically Configure Hibernate (JPA) with DBCP" /><published>2014-11-04T00:00:00-05:00</published><updated>2014-11-04T00:00:00-05:00</updated><id>https://opcodesolutions.com/tech/programmatically-configure-hibernate-jpa-with-dbcp</id><author><name>OpCode Solutions</name><email>info@opcodesolutions.com</email></author><summary type="html"><![CDATA[I recently had deadlock issues with c3p0 and statement caching. Long story short, after investigating c3p0 code, I decided to switch to DBCP (maybe I’ll write a post with the long story).]]></summary></entry><entry><title type="html">How to fix java.lang.OutOfMemoryError: Java heap space</title><link href="https://opcodesolutions.com/tech/solve-java-lang-outofmemoryerror-java-heap-space/" rel="alternate" type="text/html" title="How to fix java.lang.OutOfMemoryError: Java heap space" /><published>2014-11-04T00:00:00-05:00</published><updated>2014-11-04T00:00:00-05:00</updated><id>https://opcodesolutions.com/tech/solve-java-lang-outofmemoryerror-java-heap-space</id><author><name>OpCode Solutions</name><email>info@opcodesolutions.com</email></author><summary type="html"><![CDATA[If you get an OutOfMemoryError with the message “Java heap space” (not to be confused with message “PermGen space”), it simply means the JVM ran out of memory. When it occurs, you basically have 2 options:]]></summary></entry><entry><title type="html">How to fix java.lang.OutOfMemoryError: PermGen space</title><link href="https://opcodesolutions.com/tech/java-lang-outofmemoryerror-permgen-space/" rel="alternate" type="text/html" title="How to fix java.lang.OutOfMemoryError: PermGen space" /><published>2014-05-30T00:00:00-04:00</published><updated>2014-05-30T00:00:00-04:00</updated><id>https://opcodesolutions.com/tech/java-lang-outofmemoryerror-permgen-space</id><author><name>OpCode Solutions</name><email>info@opcodesolutions.com</email></author><summary type="html"><![CDATA[When you get an OutOfMemoryError with the message “PermGen space” (not to be confused with message “Java heap space”), this means the memory used for class definition is exhausted. Fortunately, most of the time, this is easy to fix.]]></summary></entry><entry><title type="html">New website for my software development company</title><link href="https://opcodesolutions.com/tech/new-website-for-my-software-development-company/" rel="alternate" type="text/html" title="New website for my software development company" /><published>2014-05-29T00:00:00-04:00</published><updated>2014-05-29T00:00:00-04:00</updated><id>https://opcodesolutions.com/tech/new-website-for-my-software-development-company</id><author><name>OpCode Solutions</name><email>info@opcodesolutions.com</email></author><summary type="html"><![CDATA[My application development company just got a new website. It shows more relevant information and has a lean design powered by Bootstrap. It is now hosted on Amazon EC2. If you need a software for your business, call us. We will discuss your project and we’ll give you a free quote, see our pricing and application hosting packages. All the applications we develop run on desktop, tablet and smartphone out of the box.]]></summary></entry><entry><title type="html">VisualVM slow with heap dump files</title><link href="https://opcodesolutions.com/tech/visualvm-slow-with-heap-dump-files/" rel="alternate" type="text/html" title="VisualVM slow with heap dump files" /><published>2010-06-12T00:00:00-04:00</published><updated>2010-06-12T00:00:00-04:00</updated><id>https://opcodesolutions.com/tech/visualvm-slow-with-heap-dump-files</id><author><name>OpCode Solutions</name><email>info@opcodesolutions.com</email></author><summary type="html"><![CDATA[One great feature of VisualVM is that it can read heap dump files. Heap dumps are useful to diagnose memory leaks. See this post for more details about memory leaks and how to solve them.]]></summary></entry><entry><title type="html">Oracle to Acquire Sun</title><link href="https://opcodesolutions.com/tech/oracle-to-acquire-sun/" rel="alternate" type="text/html" title="Oracle to Acquire Sun" /><published>2009-04-20T00:00:00-04:00</published><updated>2009-04-20T00:00:00-04:00</updated><id>https://opcodesolutions.com/tech/oracle-to-acquire-sun</id><author><name>OpCode Solutions</name><email>info@opcodesolutions.com</email></author><summary type="html"><![CDATA[After IBM, now is the turn to Oracle. Oracle buys Sun and pays $7.4 billion for that acquisition ($9.50 per share), $5.6 billion if we take into account Sun’s cash. Is that a good thing or a bad thing for the Java community? Probably a good thing as it will allow Sun’s project to benefit from Oracle’s technologies. But only future will tell.]]></summary></entry><entry><title type="html">kill -3 is your friend</title><link href="https://opcodesolutions.com/tech/kill-3-is-your-friend/" rel="alternate" type="text/html" title="kill -3 is your friend" /><published>2009-04-19T00:00:00-04:00</published><updated>2009-04-19T00:00:00-04:00</updated><id>https://opcodesolutions.com/tech/kill-3-is-your-friend</id><author><name>OpCode Solutions</name><email>info@opcodesolutions.com</email></author><summary type="html"><![CDATA[One nice feature of Java runtime is when you send the QUIT signal to a Java process, it outputs the full thread dump to stdout. To send the that signal, just open a terminal and type:]]></summary></entry><entry><title type="html">Remote Debugging in Java</title><link href="https://opcodesolutions.com/tech/remote-debugging-in-java/" rel="alternate" type="text/html" title="Remote Debugging in Java" /><published>2009-04-18T00:00:00-04:00</published><updated>2009-04-18T00:00:00-04:00</updated><id>https://opcodesolutions.com/tech/remote-debugging-in-java</id><author><name>OpCode Solutions</name><email>info@opcodesolutions.com</email></author><summary type="html"><![CDATA[One thing people ask me from time to time is how to debug a remote Java application. This can be very useful when you experience problems at customer site, but cannot reproduce them in a development environment. We all know logs files do not always contain all information required to solve the issues. In such case, remote debugging can be very useful.]]></summary></entry></feed>
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <generator uri="https://jekyllrb.com/" version="4.3.2">Jekyll</generator>
+  <link href="https://opcodesolutions.com/feed.xml" rel="self" type="application/atom+xml"/>
+  <link href="https://opcodesolutions.com/" rel="alternate" type="text/html"/>
+  <updated>2024-01-27T09:00:47-05:00</updated>
+  <id>https://opcodesolutions.com/feed.xml</id>
+  <title type="html">OpCode Solutions</title>
+  <subtitle>Optimize Your Processes</subtitle>
+  <author>
+    <name>OpCode Solutions</name>
+    <email>info@opcodesolutions.com</email>
+  </author>
+  <entry>
+    <title type="html">A/B Testing Landing Pages When Launching New Product</title>
+    <link href="https://opcodesolutions.com/tech/a-b-testing-landing-pages-when-launching-new-product/" rel="alternate" type="text/html" title="A/B Testing Landing Pages When Launching New Product"/>
+    <published>2023-11-12T00:00:00-05:00</published>
+    <updated>2023-11-12T00:00:00-05:00</updated>
+    <id>https://opcodesolutions.com/tech/a-b-testing-landing-pages-when-launching-new-product</id>
+    <author>
+      <name>OpCode Solutions</name>
+      <email>info@opcodesolutions.com</email>
+    </author>
+    <summary type="html"><![CDATA[So you have a new product or service? You are not sure how to promote it online?]]></summary>
+  </entry>
+  <entry>
+    <title type="html">Apache Reverse Proxy with Secure TLS WebSocket (wss://)</title>
+    <link href="https://opcodesolutions.com/tech/apache-reverse-proxy-with-secure-tls-websocket-wss/" rel="alternate" type="text/html" title="Apache Reverse Proxy with Secure TLS WebSocket (wss://)"/>
+    <published>2022-12-13T00:00:00-05:00</published>
+    <updated>2022-12-13T00:00:00-05:00</updated>
+    <id>https://opcodesolutions.com/tech/apache-reverse-proxy-with-secure-tls-websocket-wss</id>
+    <author>
+      <name>OpCode Solutions</name>
+      <email>info@opcodesolutions.com</email>
+    </author>
+    <summary type="html"><![CDATA[Configuring Apache reverse proxy with WebSocket can be tricky. It is even trickier if the WebSocket is secured with TLS (wss://). Here is how to do it.]]></summary>
+  </entry>
+  <entry>
+    <title type="html">Debian -bash: envsubst: command not found</title>
+    <link href="https://opcodesolutions.com/tech/debian-bash-envsubst-command-not-found/" rel="alternate" type="text/html" title="Debian -bash: envsubst: command not found"/>
+    <published>2022-12-04T00:00:00-05:00</published>
+    <updated>2022-12-04T00:00:00-05:00</updated>
+    <id>https://opcodesolutions.com/tech/debian-bash-envsubst-command-not-found</id>
+    <author>
+      <name>OpCode Solutions</name>
+      <email>info@opcodesolutions.com</email>
+    </author>
+    <summary type="html"><![CDATA[Solution]]></summary>
+  </entry>
+  <entry>
+    <title type="html">Script to automate VM creation on Proxmox VE</title>
+    <link href="https://opcodesolutions.com/tech/script-to-automate-vm-creation-on-proxmox-ve/" rel="alternate" type="text/html" title="Script to automate VM creation on Proxmox VE"/>
+    <published>2022-12-02T00:00:00-05:00</published>
+    <updated>2022-12-02T00:00:00-05:00</updated>
+    <id>https://opcodesolutions.com/tech/script-to-automate-vm-creation-on-proxmox-ve</id>
+    <author>
+      <name>OpCode Solutions</name>
+      <email>info@opcodesolutions.com</email>
+    </author>
+    <summary type="html"><![CDATA[This script will create a VM on Proxmox VE without requiring any user interation. Upon completion, you’ll be able to ssh to the VM with your ssh key, just like you’d do with a VM hosted on a major cloud provider like AWS.]]></summary>
+  </entry>
+  <entry>
+    <title type="html">Debian -bash: netstat: command not found</title>
+    <link href="https://opcodesolutions.com/tech/debian-bash-netstat-command-not-found/" rel="alternate" type="text/html" title="Debian -bash: netstat: command not found"/>
+    <published>2022-12-01T00:00:00-05:00</published>
+    <updated>2022-12-01T00:00:00-05:00</updated>
+    <id>https://opcodesolutions.com/tech/debian-bash-netstat-command-not-found</id>
+    <author>
+      <name>OpCode Solutions</name>
+      <email>info@opcodesolutions.com</email>
+    </author>
+    <summary type="html"><![CDATA[Solution]]></summary>
+  </entry>
+  <entry>
+    <title type="html">Increase disk size of Debian cloud image</title>
+    <link href="https://opcodesolutions.com/tech/increase-disk-size-of-debian-cloud-image/" rel="alternate" type="text/html" title="Increase disk size of Debian cloud image"/>
+    <published>2022-12-01T00:00:00-05:00</published>
+    <updated>2022-12-01T00:00:00-05:00</updated>
+    <id>https://opcodesolutions.com/tech/increase-disk-size-of-debian-cloud-image</id>
+    <author>
+      <name>OpCode Solutions</name>
+      <email>info@opcodesolutions.com</email>
+    </author>
+    <summary type="html"><![CDATA[Generic Debian cloud images come with small disk size by default: 2GB. We can resize/increase the disk storage after the VM is created, but this is not convenient because we’d have to do this for each VM we create.]]></summary>
+  </entry>
+  <entry>
+    <title type="html">How to Migrate 3 MySQL Databases to Amazon RDS in 5 Minutes</title>
+    <link href="https://opcodesolutions.com/tech/how-to-migrate-3-mysql-databases-to-amazon-rds-in-5-minutes/" rel="alternate" type="text/html" title="How to Migrate 3 MySQL Databases to Amazon RDS in 5 Minutes"/>
+    <published>2014-12-23T00:00:00-05:00</published>
+    <updated>2014-12-23T00:00:00-05:00</updated>
+    <id>https://opcodesolutions.com/tech/how-to-migrate-3-mysql-databases-to-amazon-rds-in-5-minutes</id>
+    <author>
+      <name>OpCode Solutions</name>
+      <email>info@opcodesolutions.com</email>
+    </author>
+    <summary type="html"><![CDATA[I had a LAMT (Linux-Apache-MySQL-Tomcat) on Amazon EC2 and I wanted to move all remaining MySQL databases (3) to an existing Amazon RDS instance. This would allow me to shutdown the MySQL instance on EC2, freeing RAM for Tomcat and leveraging RDS automated backups for those 3 databases in case of a disaster. The databases to migrate only contain low volume TEST data, but I already have that RDS instance, so why not use it?]]></summary>
+  </entry>
+  <entry>
+    <title type="html">ImageIO.read() causes OutOfMemoryError</title>
+    <link href="https://opcodesolutions.com/tech/imageio-read-causes-outofmemoryerror/" rel="alternate" type="text/html" title="ImageIO.read() causes OutOfMemoryError"/>
+    <published>2014-11-24T00:00:00-05:00</published>
+    <updated>2014-11-24T00:00:00-05:00</updated>
+    <id>https://opcodesolutions.com/tech/imageio-read-causes-outofmemoryerror</id>
+    <author>
+      <name>OpCode Solutions</name>
+      <email>info@opcodesolutions.com</email>
+    </author>
+    <summary type="html"><![CDATA[The problem]]></summary>
+  </entry>
+  <entry>
+    <title type="html">HTTPS Wildcard Subdomain: DNS + Apache + Tomcat Config</title>
+    <link href="https://opcodesolutions.com/tech/https-wildcard-subdomain-dns-apache-tomcat-config/" rel="alternate" type="text/html" title="HTTPS Wildcard Subdomain: DNS + Apache + Tomcat Config"/>
+    <published>2014-11-19T00:00:00-05:00</published>
+    <updated>2014-11-19T00:00:00-05:00</updated>
+    <id>https://opcodesolutions.com/tech/https-wildcard-subdomain-dns-apache-tomcat-config</id>
+    <author>
+      <name>OpCode Solutions</name>
+      <email>info@opcodesolutions.com</email>
+    </author>
+    <summary type="html"><![CDATA[I recently had to configure HTTPS on a wildcard subdomain with Apache HTTP server as reverse proxy to a Tomcat backend. I had few more requirements:]]></summary>
+  </entry>
+  <entry>
+    <title type="html">Ubuntu Apache Reverse Proxy Rewrite HTML Links</title>
+    <link href="https://opcodesolutions.com/tech/ubuntu-apache-reverse-proxy-rewrite-html-links/" rel="alternate" type="text/html" title="Ubuntu Apache Reverse Proxy Rewrite HTML Links"/>
+    <published>2014-11-07T00:00:00-05:00</published>
+    <updated>2014-11-07T00:00:00-05:00</updated>
+    <id>https://opcodesolutions.com/tech/ubuntu-apache-reverse-proxy-rewrite-html-links</id>
+    <author>
+      <name>OpCode Solutions</name>
+      <email>info@opcodesolutions.com</email>
+    </author>
+    <summary type="html"><![CDATA[I just spent few hours on this, so I will share a few tips. If you want to setup a reverse proxy and rewrite links in html pages, you can use Apache module mod_proxy_html.]]></summary>
+  </entry>
+  <entry>
+    <title type="html">Programmatically Configure Hibernate (JPA) with DBCP</title>
+    <link href="https://opcodesolutions.com/tech/programmatically-configure-hibernate-jpa-with-dbcp/" rel="alternate" type="text/html" title="Programmatically Configure Hibernate (JPA) with DBCP"/>
+    <published>2014-11-04T00:00:00-05:00</published>
+    <updated>2014-11-04T00:00:00-05:00</updated>
+    <id>https://opcodesolutions.com/tech/programmatically-configure-hibernate-jpa-with-dbcp</id>
+    <author>
+      <name>OpCode Solutions</name>
+      <email>info@opcodesolutions.com</email>
+    </author>
+    <summary type="html"><![CDATA[I recently had deadlock issues with c3p0 and statement caching. Long story short, after investigating c3p0 code, I decided to switch to DBCP (maybe I’ll write a post with the long story).]]></summary>
+  </entry>
+  <entry>
+    <title type="html">How to fix java.lang.OutOfMemoryError: Java heap space</title>
+    <link href="https://opcodesolutions.com/tech/solve-java-lang-outofmemoryerror-java-heap-space/" rel="alternate" type="text/html" title="How to fix java.lang.OutOfMemoryError: Java heap space"/>
+    <published>2014-11-04T00:00:00-05:00</published>
+    <updated>2014-11-04T00:00:00-05:00</updated>
+    <id>https://opcodesolutions.com/tech/solve-java-lang-outofmemoryerror-java-heap-space</id>
+    <author>
+      <name>OpCode Solutions</name>
+      <email>info@opcodesolutions.com</email>
+    </author>
+    <summary type="html"><![CDATA[If you get an OutOfMemoryError with the message “Java heap space” (not to be confused with message “PermGen space”), it simply means the JVM ran out of memory. When it occurs, you basically have 2 options:]]></summary>
+  </entry>
+  <entry>
+    <title type="html">How to fix java.lang.OutOfMemoryError: PermGen space</title>
+    <link href="https://opcodesolutions.com/tech/java-lang-outofmemoryerror-permgen-space/" rel="alternate" type="text/html" title="How to fix java.lang.OutOfMemoryError: PermGen space"/>
+    <published>2014-05-30T00:00:00-04:00</published>
+    <updated>2014-05-30T00:00:00-04:00</updated>
+    <id>https://opcodesolutions.com/tech/java-lang-outofmemoryerror-permgen-space</id>
+    <author>
+      <name>OpCode Solutions</name>
+      <email>info@opcodesolutions.com</email>
+    </author>
+    <summary type="html"><![CDATA[When you get an OutOfMemoryError with the message “PermGen space” (not to be confused with message “Java heap space”), this means the memory used for class definition is exhausted. Fortunately, most of the time, this is easy to fix.]]></summary>
+  </entry>
+  <entry>
+    <title type="html">New website for my software development company</title>
+    <link href="https://opcodesolutions.com/tech/new-website-for-my-software-development-company/" rel="alternate" type="text/html" title="New website for my software development company"/>
+    <published>2014-05-29T00:00:00-04:00</published>
+    <updated>2014-05-29T00:00:00-04:00</updated>
+    <id>https://opcodesolutions.com/tech/new-website-for-my-software-development-company</id>
+    <author>
+      <name>OpCode Solutions</name>
+      <email>info@opcodesolutions.com</email>
+    </author>
+    <summary type="html"><![CDATA[My application development company just got a new website. It shows more relevant information and has a lean design powered by Bootstrap. It is now hosted on Amazon EC2. If you need a software for your business, call us. We will discuss your project and we’ll give you a free quote, see our pricing and application hosting packages. All the applications we develop run on desktop, tablet and smartphone out of the box.]]></summary>
+  </entry>
+  <entry>
+    <title type="html">VisualVM slow with heap dump files</title>
+    <link href="https://opcodesolutions.com/tech/visualvm-slow-with-heap-dump-files/" rel="alternate" type="text/html" title="VisualVM slow with heap dump files"/>
+    <published>2010-06-12T00:00:00-04:00</published>
+    <updated>2010-06-12T00:00:00-04:00</updated>
+    <id>https://opcodesolutions.com/tech/visualvm-slow-with-heap-dump-files</id>
+    <author>
+      <name>OpCode Solutions</name>
+      <email>info@opcodesolutions.com</email>
+    </author>
+    <summary type="html"><![CDATA[One great feature of VisualVM is that it can read heap dump files. Heap dumps are useful to diagnose memory leaks. See this post for more details about memory leaks and how to solve them.]]></summary>
+  </entry>
+  <entry>
+    <title type="html">Oracle to Acquire Sun</title>
+    <link href="https://opcodesolutions.com/tech/oracle-to-acquire-sun/" rel="alternate" type="text/html" title="Oracle to Acquire Sun"/>
+    <published>2009-04-20T00:00:00-04:00</published>
+    <updated>2009-04-20T00:00:00-04:00</updated>
+    <id>https://opcodesolutions.com/tech/oracle-to-acquire-sun</id>
+    <author>
+      <name>OpCode Solutions</name>
+      <email>info@opcodesolutions.com</email>
+    </author>
+    <summary type="html"><![CDATA[After IBM, now is the turn to Oracle. Oracle buys Sun and pays $7.4 billion for that acquisition ($9.50 per share), $5.6 billion if we take into account Sun’s cash. Is that a good thing or a bad thing for the Java community? Probably a good thing as it will allow Sun’s project to benefit from Oracle’s technologies. But only future will tell.]]></summary>
+  </entry>
+  <entry>
+    <title type="html">kill -3 is your friend</title>
+    <link href="https://opcodesolutions.com/tech/kill-3-is-your-friend/" rel="alternate" type="text/html" title="kill -3 is your friend"/>
+    <published>2009-04-19T00:00:00-04:00</published>
+    <updated>2009-04-19T00:00:00-04:00</updated>
+    <id>https://opcodesolutions.com/tech/kill-3-is-your-friend</id>
+    <author>
+      <name>OpCode Solutions</name>
+      <email>info@opcodesolutions.com</email>
+    </author>
+    <summary type="html"><![CDATA[One nice feature of Java runtime is when you send the QUIT signal to a Java process, it outputs the full thread dump to stdout. To send the that signal, just open a terminal and type:]]></summary>
+  </entry>
+  <entry>
+    <title type="html">Remote Debugging in Java</title>
+    <link href="https://opcodesolutions.com/tech/remote-debugging-in-java/" rel="alternate" type="text/html" title="Remote Debugging in Java"/>
+    <published>2009-04-18T00:00:00-04:00</published>
+    <updated>2009-04-18T00:00:00-04:00</updated>
+    <id>https://opcodesolutions.com/tech/remote-debugging-in-java</id>
+    <author>
+      <name>OpCode Solutions</name>
+      <email>info@opcodesolutions.com</email>
+    </author>
+    <summary type="html"><![CDATA[One thing people ask me from time to time is how to debug a remote Java application. This can be very useful when you experience problems at customer site, but cannot reproduce them in a development environment. We all know logs files do not always contain all information required to solve the issues. In such case, remote debugging can be very useful.]]></summary>
+  </entry>
+</feed>
