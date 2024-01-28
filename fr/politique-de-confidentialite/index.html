@@ -1,32 +1,7 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <!-- Google tag (gtag.js) -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FZBKJQQG7D"></script>
-  <script>
-    const ANONYMIZED_ANALYTICS = false;
-    if (ANONYMIZED_ANALYTICS) {
-      window.dataLayer = window.dataLayer || [];
-      function gtag() { dataLayer.push(arguments); }
-      gtag('js', new Date());
-      gtag('config', 'G-FZBKJQQG7D', {
-        send_page_view: true,
-        client_storage: 'none',
-        client_id: Math.random().toString(16).slice(2),
-      });
-    } else {
-      window.dataLayer = window.dataLayer || [];
-      function gtag() { dataLayer.push(arguments); }
-      if (document.cookie.indexOf("optimal-browsing=accept") < 0) {
-        gtag('consent', 'default', {
-          'ad_storage': 'denied',
-          'analytics_storage': 'denied'
-        });
-      }
-      gtag('js', new Date());
-      gtag('config', 'G-FZBKJQQG7D');
-    }
-  </script>
+  
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -128,12 +103,6 @@
 
 <p>Ces informations sont collectées à des fins d’administration et de maintenance de routine et ne sont pas personnellement identifiables.</p>
 
-<h2 id="cookies">Cookies</h2>
-
-<p>Nous utilisons des cookies pour stocker des informations sur vos préférences et votre historique de navigation. Les cookies améliorent votre expérience en fournissant un contenu personnalisé. Vous avez la possibilité d’ajuster les paramètres de votre navigateur pour refuser les cookies, mais veuillez noter que cela peut avoir un impact sur votre capacité à utiliser certaines fonctionnalités de notre site Web.</p>
-
-<p><button type="button" class="btn btn-primary" onclick="resetOptimalBrowsing()">Réinitialiser les préférences</button></p>
-
 <h2 id="publicité-et-autres-tiers">Publicité et autres tiers</h2>
 
 <p>Les annonceurs et partenaires tiers peuvent utiliser des cookies, des scripts et des balises Web pour suivre les activités des visiteurs sur notre site Web. Ces technologies sont soumises aux politiques de confidentialité de tiers et nous n’avons aucun contrôle sur leur utilisation.</p>
@@ -209,46 +178,8 @@
     <p class="pull-right">&copy; Solutions OpCode 2024</p>
   </footer>
 </div>
-<nav id="optimal-browsing" class="navbar navbar-inverse navbar-fixed-bottom">
-  <div class="container">
-    <div class="navbar-text"><p class="lead" style="color: white">Technologies de navigation optimales</p>
-      <p><strong>Nous utilisons des <i>Technologies de navigation optimales</i> pour améliorer votre expérience utilisateur et améliorer notre service. En cliquant sur « Accepter », vous acceptez l'utilisation de ces technologies. Si vous ne souhaitez pas continuer, cliquez sur « Refuser ».</strong></p>
-      <p><a title="Politique de confidentialité" href="/fr/politique-de-confidentialite/">Politique de confidentialité</a></p>
-      <p class="pull-left"><button type="button" class="btn btn-primary navbar-btn"
-          onclick="acceptOptimalBrowsing()">Accepter</button></p>
-      <p class="pull-right"><button type="button" class="btn btn-primary navbar-btn"
-          onclick="declineOptimalBrowsing()">Refuser</button></p>
-    </div>
-  </div>
-</nav>
-<script>
-  function processOptimalBrowsingPreference() {
-    if (ANONYMIZED_ANALYTICS || document.cookie.indexOf("optimal-browsing=") >= 0) {
-      document.getElementById('optimal-browsing').style = "display: none;";
-    } else {
-      document.getElementById('optimal-browsing').style = "";
-    }
-  }
-  function acceptOptimalBrowsing() {
-    var expires = new Date();
-    expires.setFullYear(expires.getFullYear() + 1);
-    document.cookie = 'optimal-browsing=accept; path=/; expires=' + expires.toUTCString() + ';';
-    gtag('consent', 'update', {
-      'ad_storage': 'granted',
-      'analytics_storage': 'granted'
-    });
-    processOptimalBrowsingPreference();
-  }
-  function declineOptimalBrowsing() {
-    document.cookie = 'optimal-browsing=decline; path=/';
-    processOptimalBrowsingPreference();
-  }
-  function resetOptimalBrowsing() {
-    document.cookie = "optimal-browsing=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
-    processOptimalBrowsingPreference();
-  }
-  processOptimalBrowsingPreference();
-</script>
+
+
 
 <script src="https://code.jquery.com/jquery-1.12.4.min.js"
   integrity="sha384-nvAa0+6Qg9clwYCGGPpDQLVpLNn0fRaROjHqs13t4Ggj3Ez50XnGQqc/r8MhnRDZ" crossorigin="anonymous"></script>

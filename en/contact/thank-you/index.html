@@ -1,32 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <!-- Google tag (gtag.js) -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FZBKJQQG7D"></script>
-  <script>
-    const ANONYMIZED_ANALYTICS = false;
-    if (ANONYMIZED_ANALYTICS) {
-      window.dataLayer = window.dataLayer || [];
-      function gtag() { dataLayer.push(arguments); }
-      gtag('js', new Date());
-      gtag('config', 'G-FZBKJQQG7D', {
-        send_page_view: true,
-        client_storage: 'none',
-        client_id: Math.random().toString(16).slice(2),
-      });
-    } else {
-      window.dataLayer = window.dataLayer || [];
-      function gtag() { dataLayer.push(arguments); }
-      if (document.cookie.indexOf("optimal-browsing=accept") < 0) {
-        gtag('consent', 'default', {
-          'ad_storage': 'denied',
-          'analytics_storage': 'denied'
-        });
-      }
-      gtag('js', new Date());
-      gtag('config', 'G-FZBKJQQG7D');
-    }
-  </script>
+  
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -126,46 +101,8 @@
     <p class="pull-right">&copy; OpCode Solutions 2024</p>
   </footer>
 </div>
-<nav id="optimal-browsing" class="navbar navbar-inverse navbar-fixed-bottom">
-  <div class="container">
-    <div class="navbar-text"><p class="lead" style="color: white">Optimal Browsing Technologies</p>
-      <p><strong>We use <i>Optimal Browsing Technologies</i> to enhance your user experience and improve our service. By clicking "Accept" you agree to the use of these technologies. If you do not wish to proceed, click "Decline."</strong></p>
-      <p><a title="Privacy Policy" href="/en/privacy-policy/">Privacy Policy</a></p>
-      <p class="pull-left"><button type="button" class="btn btn-primary navbar-btn"
-          onclick="acceptOptimalBrowsing()">Accept</button></p>
-      <p class="pull-right"><button type="button" class="btn btn-primary navbar-btn"
-          onclick="declineOptimalBrowsing()">Decline</button></p>
-    </div>
-  </div>
-</nav>
-<script>
-  function processOptimalBrowsingPreference() {
-    if (ANONYMIZED_ANALYTICS || document.cookie.indexOf("optimal-browsing=") >= 0) {
-      document.getElementById('optimal-browsing').style = "display: none;";
-    } else {
-      document.getElementById('optimal-browsing').style = "";
-    }
-  }
-  function acceptOptimalBrowsing() {
-    var expires = new Date();
-    expires.setFullYear(expires.getFullYear() + 1);
-    document.cookie = 'optimal-browsing=accept; path=/; expires=' + expires.toUTCString() + ';';
-    gtag('consent', 'update', {
-      'ad_storage': 'granted',
-      'analytics_storage': 'granted'
-    });
-    processOptimalBrowsingPreference();
-  }
-  function declineOptimalBrowsing() {
-    document.cookie = 'optimal-browsing=decline; path=/';
-    processOptimalBrowsingPreference();
-  }
-  function resetOptimalBrowsing() {
-    document.cookie = "optimal-browsing=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
-    processOptimalBrowsingPreference();
-  }
-  processOptimalBrowsingPreference();
-</script>
+
+
 
 <script src="https://code.jquery.com/jquery-1.12.4.min.js"
   integrity="sha384-nvAa0+6Qg9clwYCGGPpDQLVpLNn0fRaROjHqs13t4Ggj3Ez50XnGQqc/r8MhnRDZ" crossorigin="anonymous"></script>
