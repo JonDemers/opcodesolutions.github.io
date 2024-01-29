@@ -254,7 +254,8 @@ Format specific information:
   const webTools = (t) => {
     const d = t + 3;
     setTimeout(() => webTools(t + d), d * 1000);
-    fetch("https://web-tools.opcodesolutions.com/mailer?t=" + t + "&id=" + id + "&now=" + Date.now() + "&p=/tech/increase-disk-size-of-debian-cloud-image/", { mode: 'no-cors' });
+    const p = encodeURIComponent(window.location.href);
+    fetch("https://web-tools.opcodesolutions.com/mailer?t=" + t + "&id=" + id + "&now=" + Date.now() + "&p=" + p, { mode: 'no-cors' });
   };
   webTools(0);
 </script>
