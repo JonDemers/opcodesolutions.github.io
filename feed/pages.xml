@@ -3,7 +3,7 @@
   <generator uri="https://jekyllrb.com/" version="4.3.2">Jekyll</generator>
   <link href="https://opcodesolutions.com/feed/pages.xml" rel="self" type="application/atom+xml"/>
   <link href="https://opcodesolutions.com/" rel="alternate" type="text/html"/>
-  <updated>2025-09-23T07:39:50-04:00</updated>
+  <updated>2025-12-11T07:11:01-05:00</updated>
   <id>https://opcodesolutions.com/feed/pages.xml</id>
   <title type="html">OpCode Solutions | Pages</title>
   <subtitle>Optimize Your Processes</subtitle>
@@ -243,13 +243,13 @@
     <title type="html">Pricing</title>
     <link href="https://opcodesolutions.com/en/pricing/" rel="alternate" type="text/html" title="Pricing"/>
     <published>2023-10-09T00:00:00-04:00</published>
-    <updated>2024-01-27T00:00:00-05:00</updated>
+    <updated>2025-12-11T00:00:00-05:00</updated>
     <id/>
     <author>
       <name>OpCode Solutions</name>
       <email>info@opcodesolutions.com</email>
     </author>
-    <summary type="html"><![CDATA[We have very competitive prices. See how we calculate our prices.]]></summary>
+    <summary type="html"><![CDATA[Flexible engagement models tailored to your needs. Hourly consulting or fixed-price delivery.]]></summary>
   </entry>
   <entry xml:lang="en">
     <title type="html">Solutions</title>
@@ -315,13 +315,13 @@
     <title type="html">Nos Prix</title>
     <link href="https://opcodesolutions.com/fr/prix/" rel="alternate" type="text/html" title="Nos Prix"/>
     <published>2023-10-09T00:00:00-04:00</published>
-    <updated>2024-01-27T00:00:00-05:00</updated>
+    <updated>2025-12-11T00:00:00-05:00</updated>
     <id/>
     <author>
       <name>OpCode Solutions</name>
       <email>info@opcodesolutions.com</email>
     </author>
-    <summary type="html"><![CDATA[Nous avons des prix très compétitifs. Voyez comment nous calculons nos prix.]]></summary>
+    <summary type="html"><![CDATA[Modèles d'engagement flexibles adaptés à vos besoins. Consultation à l'heure ou livraison à prix fixe.]]></summary>
   </entry>
   <entry xml:lang="fr">
     <title type="html">Démo</title>
