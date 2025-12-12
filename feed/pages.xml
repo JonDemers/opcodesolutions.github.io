@@ -3,7 +3,7 @@
   <generator uri="https://jekyllrb.com/" version="4.3.2">Jekyll</generator>
   <link href="https://opcodesolutions.com/feed/pages.xml" rel="self" type="application/atom+xml"/>
   <link href="https://opcodesolutions.com/" rel="alternate" type="text/html"/>
-  <updated>2025-12-11T07:11:01-05:00</updated>
+  <updated>2025-12-12T06:59:27-05:00</updated>
   <id>https://opcodesolutions.com/feed/pages.xml</id>
   <title type="html">OpCode Solutions | Pages</title>
   <subtitle>Optimize Your Processes</subtitle>
@@ -207,13 +207,13 @@
     <title type="html">Hosting</title>
     <link href="https://opcodesolutions.com/en/hosting/" rel="alternate" type="text/html" title="Hosting"/>
     <published>2023-10-09T00:00:00-04:00</published>
-    <updated>2024-01-27T00:00:00-05:00</updated>
+    <updated>2025-12-12T00:00:00-05:00</updated>
     <id/>
     <author>
       <name>OpCode Solutions</name>
       <email>info@opcodesolutions.com</email>
     </author>
-    <summary type="html"><![CDATA[Get peace of mind with managed hosting. We take care of backing up your data, applying system updates, managing load and more.]]></summary>
+    <summary type="html"><![CDATA[We handle all the technical complexity of hosting your application, or deploy to your own infrastructure. You choose.]]></summary>
   </entry>
   <entry xml:lang="en">
     <title type="html">Demo</title>
@@ -231,7 +231,7 @@
     <title type="html">Technology</title>
     <link href="https://opcodesolutions.com/en/technology/" rel="alternate" type="text/html" title="Technology"/>
     <published>2023-10-09T00:00:00-04:00</published>
-    <updated>2024-01-27T00:00:00-05:00</updated>
+    <updated>2025-12-12T00:00:00-05:00</updated>
     <id/>
     <author>
       <name>OpCode Solutions</name>
@@ -291,19 +291,19 @@
     <title type="html">Hébergement</title>
     <link href="https://opcodesolutions.com/fr/hebergement/" rel="alternate" type="text/html" title="Hébergement"/>
     <published>2023-10-09T00:00:00-04:00</published>
-    <updated>2024-01-27T00:00:00-05:00</updated>
+    <updated>2025-12-12T00:00:00-05:00</updated>
     <id/>
     <author>
       <name>OpCode Solutions</name>
       <email>info@opcodesolutions.com</email>
     </author>
-    <summary type="html"><![CDATA[Ayez l'esprit tranquille avec l'hébergement autogéré. Nous nous occupons de la sauvegarde de vos données, les mises à jour système et plus.]]></summary>
+    <summary type="html"><![CDATA[Nous gérons toute la complexité technique de l'hébergement de votre application, ou déployons sur votre propre infrastructure. À vous de choisir.]]></summary>
   </entry>
   <entry xml:lang="fr">
     <title type="html">Technologie</title>
     <link href="https://opcodesolutions.com/fr/technologie/" rel="alternate" type="text/html" title="Technologie"/>
     <published>2023-10-09T00:00:00-04:00</published>
-    <updated>2024-01-27T00:00:00-05:00</updated>
+    <updated>2025-12-12T00:00:00-05:00</updated>
     <id/>
     <author>
       <name>OpCode Solutions</name>
@@ -339,7 +339,7 @@
     <title type="html">Solutions</title>
     <link href="https://opcodesolutions.com/fr/solutions/" rel="alternate" type="text/html" title="Solutions"/>
     <published>2023-10-09T00:00:00-04:00</published>
-    <updated>2024-01-27T00:00:00-05:00</updated>
+    <updated>2025-12-12T00:00:00-05:00</updated>
     <id/>
     <author>
       <name>OpCode Solutions</name>
